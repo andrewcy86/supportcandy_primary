@@ -1,0 +1,19 @@
+{
+  "name": "patt/supportcandy",
+  "description": "Primary SupportCandy Extension",
+  "keywords": ["wordpress", "SupportCandy"],
+  "homepage": "https://epa.gov",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrew Yuen",
+      "email": "yuen.andrew@epa.gov",
+      "homepage": "https://epa.gov"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.3.2",
+    "composer/installers": "v1.9.0"
+  }
+}
