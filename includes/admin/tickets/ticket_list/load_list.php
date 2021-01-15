@@ -19,7 +19,7 @@ $wpsc_on_and_off_auto_refresh = get_option('wpsc_on_and_off_auto_refresh');
 $agent_permissions = $wpscfunction->get_current_agent_permissions();
 //include WPSC_ABSPATH.'includes/admin/tickets/ticket_list/filters/get_label_count.php';
 
-include WPPATT_ABSPATH.'/includes/admin/pages/scripts/request_cleanup.php';
+include WPPATT_ABSPATH.'includes/admin/pages/scripts/request_cleanup.php';
 
 ?>
 <style>
