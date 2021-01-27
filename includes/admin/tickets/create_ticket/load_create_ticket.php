@@ -580,7 +580,7 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 	            console.log({SEMS_data_2:SEMS_data_2});	
 	            console.log({SEMS_data_x:SEMS_data_x});		                        
 			}
-			
+            
             dataform.append('super_fund', super_fund_bool);
             
             //dataform.append('boxinfo', SEMS_data);
@@ -665,6 +665,8 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 			?>
 			jQuery('#create_ticket_body').html(wpsc_admin.loading_html);
 			//wpsc_doScrolling('.wpsc_tl_action_bar',1000);
+			console.log({dataform:dataform});
+			
 		  jQuery.ajax({
 		    url: wpsc_admin.ajax_url,
 		    type: 'POST',
@@ -673,6 +675,8 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 		    contentType: false
 		  })
 		  .done(function (response_str) {
+		    console.log('ajax done');
+		    console.log( response_str );
 		    var response = JSON.parse(response_str);
 				if(response.redirct_url==''){
 					jQuery('#create_ticket_body').html(response.thank_you_page);
