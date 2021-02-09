@@ -32,6 +32,9 @@ $email = 1;
 
 $padded_request_id = Patt_Custom_Func::convert_request_db_id($ticket_id);
 
+//Restore from archive
+Patt_Custom_Func::restore_archive($ticket_id);
+
 //insert notification for each request
 Patt_Custom_Func::insert_new_notification('email-request-restored',$pattagentid_array,$padded_request_id,$data,$email);
 

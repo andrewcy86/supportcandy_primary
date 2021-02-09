@@ -31,6 +31,10 @@ $ticket_widgets = get_terms([
 
 $role_id = get_user_option('wpsc_agent_role');
 
+//PATT START
+$is_active = Patt_Custom_Func::ticket_active( $ticket_id );
+//PATT END
+
 include_once WPSC_ABSPATH . 'includes/admin/tickets/create_ticket/class-fields-formatting.php';
 $fields_format = new WPSC_Ticket_Field_Formatting();
 
@@ -205,7 +209,10 @@ echo $padded_request_id;
  echo '<span class="wpsp_admin_label" style="background-color:#000000;color:#ffffff;"><i class="fas fa-database"></i> ECMS</span>';
 
             }
- ?>           
+if($is_active == 0){
+echo '<br /><br /><span style="font-size: 1.1em; color:#FF0000;"><i class="fas fa-archive"></i> This request is archived</span><br />';
+}
+?>
 <!--PATT END -->
 
 		  <?php } ?>		
@@ -651,7 +658,13 @@ PATT END */
 						?>
 							<div class="row"  id="wpsc_add_people_widget" style="background-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_bg_color']?> !important;color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_text_color']?> !important;border-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_border_color']?> !important;">
 							      <h4 class="widget_header"><i class="fas fa-envelope"></i> <?php echo $ticket_widget_name;?>
-											<button id="wpsc_individual_add_people" onclick="wpsc_get_add_ticket_users(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" ><i class="fas fa-edit"></i></button>
+											<!--PATT START-->
+                                            <?php 
+                                            if($is_active == 1) {
+                                            ?>
+                                            <button id="wpsc_individual_add_people" onclick="wpsc_get_add_ticket_users(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" ><i class="fas fa-edit"></i></button>
+                                            <?php } ?>
+                                            <!--PATT END-->
 										</h4>
 										<hr class="widget_divider">
 										

@@ -119,7 +119,9 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
     
     // Change status
     function change_status( $ticket_id, $status_id, $prev_status ){
-      global $wpscfunction, $current_user;
+    //PATT BEGIN
+      global $wpdb, $wpscfunction, $current_user;
+    //PATT END
       $status_obj = get_term_by('id',$status_id,'wpsc_statuses');
       $prev_status_obj = get_term_by('id',$prev_status,'wpsc_statuses'); 
       if($current_user->ID){
@@ -127,6 +129,29 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
       } else {
         $log_str = sprintf( __('status changed to %1$s','supportcandy'), '<strong>'.$status_obj->name.'</strong>' );
       }
+      //PATT BEGIN FOR REPORTING
+      // Define current time
+      $date_time = date('Y-m-d H:i:s');
+      // Traslate $ticket_id to $request_id
+      $request_id = Patt_Custom_Func::ticket_to_request_id( $ticket_id );
+      // This is for Time to process intial request report
+      if($status_id == 4){
+      // Check to see if timestamp exists
+     $table_timestamp = $wpdb->prefix . 'wpsc_epa_timestamps';
+     $get_request_timestamp = $wpdb->get_row("select id, count(id) as count from " . $table_timestamp . " where request_id = '".$request_id."'");
+     $request_timestamp_id = $get_request_timestamp->id;
+     $request_timestamp_count = $get_request_timestamp->count;
+     
+     // Delete previous value
+      if($request_timestamp_count > 0) {
+          $wpdb->delete( $table_timestamp, array( 'id' => $request_timestamp_id ) );
+      }
+      
+      $wpdb->insert($table_timestamp, array('request_id' => $request_id, 'type' => $status_obj->name, 'user' => $current_user->display_name, 'timestamp' => $date_time) ); 
+
+      }
+      
+      //PATT END
       $args = array(
         'ticket_id'      => $ticket_id,
         'reply_body'     => $log_str,

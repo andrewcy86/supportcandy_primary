@@ -3,7 +3,7 @@
  * Plugin Name: SupportCandy
  * Plugin URI: https://wordpress.org/plugins/supportcandy/
  * Description: Easy & Powerful support ticket system for WordPress
- * Version: 2.1.7.1
+ * Version: 2.1.7
  * Author: SupportCandy
  * Author URI: https://supportcandy.net/
  * Requires at least: 4.4
@@ -20,7 +20,7 @@ if ( ! class_exists( 'Support_Candy' ) ) :
   
   final class Support_Candy {
     
-    public $version    = '2.1.7.1';
+    public $version    = '2.1.7';
 		public $db_version = '2.0';
     
     public function __construct() {

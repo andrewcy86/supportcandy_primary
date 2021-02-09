@@ -565,21 +565,27 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 			var dataform = new FormData(jQuery('#wpsc_frm_create_ticket')[0]);
 			
 			if( !super_fund_bool ) {
-				//New get DataTable data in the form of an
+				//New get DataTable data in the form 
 	            var data = jQuery('#boxinfodatatable').DataTable().rows().data().toArray(); 
 	            var data = JSON.stringify(jQuery('#boxinfodatatable').toJson()).replace(/\\/g,'\\');
 	            dataform.append('boxinfo', data);
 	            console.log({load_data:data});
 			} else {
+				
+				var data = jQuery('#boxinfodatatable').DataTable().rows().data().toArray(); 
+	            var data = JSON.stringify(jQuery('#boxinfodatatable').toJson()).replace(/\\/g,'\\');
+	            dataform.append('boxinfo', data);
+	            console.log({load_data:data});
+	            
+	            // OLD: dropzone for SEMS removed and replaced with same for ECMS
 				// Add Superfund SEMS datatable data
-	            var SEMS_data = jQuery('#boxinfodatatableSEMS').DataTable().rows().data().toArray(); // Not needed?
-	            var SEMS_data_x = JSON.stringify( jQuery('#boxinfodatatableSEMS').toJson() ).replace(/\\/g,'\\');
-	            SEMS_data_2 = JSON.stringify( SEMS_data );
-	            dataform.append('superfund_data', SEMS_data_2);
-	            console.log({load_data:SEMS_data});
-	            console.log({SEMS_data_2:SEMS_data_2});	
-	            console.log({SEMS_data_x:SEMS_data_x});		                        
+	            //var SEMS_data = jQuery('#boxinfodatatableSEMS').DataTable().rows().data().toArray(); // Not needed?
+	            //var SEMS_data_x = JSON.stringify( jQuery('#boxinfodatatableSEMS').toJson() ).replace(/\\/g,'\\');
+	            //SEMS_data_2 = JSON.stringify( SEMS_data );
+	            //dataform.append('superfund_data', SEMS_data_2);
+	            	                        
 			}
+			
             
             dataform.append('super_fund', super_fund_bool);
             
