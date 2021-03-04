@@ -12,6 +12,9 @@ if (!($current_user->ID)) {exit;}
 if (!isset($source)) {
 	$term       = isset($_REQUEST) && isset($_REQUEST['term']) ? sanitize_text_field($_REQUEST['term']) : '';
 	$field_slug = isset($_REQUEST) && isset($_REQUEST['field']) ? sanitize_text_field($_REQUEST['field']) : '';
+	// PATT Start // Adds optional ability to filter out requesters
+	$no_requesters = isset($_REQUEST) && isset($_REQUEST['no_requesters']) ? sanitize_text_field($_REQUEST['no_requesters']) : false;
+	// PATT End
 }
 
 if($field_slug == 'ticket_id'){
@@ -115,6 +118,7 @@ switch ($field_slug) {
 					'value'     => $value,
 					'compare'   => 'LIKE'
 				);
+				
 			}
 			
 			$agents = get_terms([
@@ -127,13 +131,31 @@ switch ($field_slug) {
 			]);
 			
 			foreach($agents as $agent){
-				$agent_name = get_term_meta($agent->term_id,'label',true);
-				$output[]   = array(
-					'label'    => $agent_name,
-					'value'    => '',
-					'flag_val' => $agent->term_id,
-					'slug'     => $field_slug,
-				);
+				
+				// PATT Start
+				// Adds optional ability to filter out requesters
+				if( $no_requesters ) {
+					$agent_role = get_term_meta($agent->term_id,'role',true);
+					if( $agent_role != 3 ) {
+						$agent_name = get_term_meta($agent->term_id,'label',true);
+						$output[]   = array(
+							'label'    => $agent_name,
+							'value'    => '',
+							'flag_val' => $agent->term_id,
+							'slug'     => $field_slug,
+						);
+					}
+				} else {
+					$agent_name = get_term_meta($agent->term_id,'label',true);
+					$output[]   = array(
+						'label'    => $agent_name,
+						'value'    => '',
+						'flag_val' => $agent->term_id,
+						'slug'     => $field_slug,
+					);
+					
+				}
+				// PATT End
 			}
 			break;
 			

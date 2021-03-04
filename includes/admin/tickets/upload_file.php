@@ -34,7 +34,8 @@ if( !$isError ){
     }
     if (!(in_array($extension,$wpsc_attachment_type))) {
       $isError = true;
-      $errorMessege = __('Error: file format not supported!','supportcandy');
+      //$errorMessege = __('Error: file format not supported!','supportcandy');
+      $errorMessege = 'Error: file format not supported!';
     }
 }
 
