@@ -179,8 +179,9 @@ echo " (".$rejected_comment.")";
 }
 ?>
 <!--PATT END -->
-
-<!--PATT BEGIN TESTING ONLY REMOVE -->
+<!--
+<!--
+PATT BEGIN TESTING ONLY REMOVE
 <form>
 <span style="color: #808080">
 <strong>**FOR TESTING ONLY**</strong><br />
@@ -190,7 +191,9 @@ Please fill in the agent's <strong>email address</strong> who will also receive 
 <strong>**FOR TESTING ONLY**</strong><br />
 </form>
 </span>
-<!--PATT END TESTING ONLY REMOVE -->
+PATT END TESTING ONLY REMOVE 
+-->
+
       <h4>
 	 	 <?php if(apply_filters('wpsc_show_hide_ticket_subject',true)){?>
 <!--PATT BEGIN -->

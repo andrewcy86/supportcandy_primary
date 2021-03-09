@@ -9,7 +9,24 @@ switch ($setting_action) {
   
   case 'init': include WPSC_ABSPATH . 'includes/admin/tickets/init.php';
     break;
-		
+
+// PATT BEGIN
+	case 'boxes': include WPPATT_ABSPATH . 'includes/admin/pages/boxes-init.php';
+    break;
+    
+    case 'folderfile': include WPPATT_ABSPATH . 'includes/admin/pages/folderfile-init.php';
+    break;
+
+    case 'boxdetails': include WPPATT_ABSPATH . 'includes/admin/pages/box-details-init.php';
+    break;
+    
+    case 'shipping': include WPPATT_ABSPATH . 'includes/admin/pages/shipping-init.php';
+    break;
+    
+    case 'requestdelete': include WPPATT_ABSPATH . 'includes/admin/pages/request-delete-init.php';
+    break;
+// PATT END
+
 	case 'sign_in': include WPSC_ABSPATH . 'includes/admin/tickets/sign_in/sign_in.php';
     break;
 		
