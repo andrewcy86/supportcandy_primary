@@ -25,6 +25,12 @@ switch ($setting_action) {
     
     case 'requestdelete': include WPPATT_ABSPATH . 'includes/admin/pages/request-delete-init.php';
     break;
+    
+    case 'recall': include WPPATT_ABSPATH . 'includes/admin/pages/recall-init.php';
+    break;
+    
+    case 'return': include WPPATT_ABSPATH . 'includes/admin/pages/return-init.php';
+    break;
 // PATT END
 
 	case 'sign_in': include WPSC_ABSPATH . 'includes/admin/tickets/sign_in/sign_in.php';

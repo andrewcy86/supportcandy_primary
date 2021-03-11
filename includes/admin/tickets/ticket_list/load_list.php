@@ -95,7 +95,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 {
 ?>
 <button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_delete_tickets" style="<?php echo $action_default_btn_css?>"><i class="fa fa-trash"></i> <?php _e('Archive','supportcandy')?></button>
-<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner" style="<?php $subfolder_path_pre = site_url( '', 'relative'); $subfolder_path = strtok($subfolder_path_pre, '/');  echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo '/'.$subfolder_path.'/web/app/mu-plugins/pattracking/includes/barcode/';?>'"><i class="fas fa-barcode"></i> Location Scanner</button>
+<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WPPATT_PLUGIN_URL . 'includes/barcode/';?>'"><i class="fas fa-barcode"></i> Location Scanner</button>
 <?php
 }
 ?>		
