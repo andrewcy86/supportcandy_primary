@@ -378,7 +378,7 @@ if ( ! class_exists( 'WPSC_Ticket_Form_Field' ) ) :
               <?php echo $this->label['custom_fields_'.$field->term_id];?> <?php echo $this->required? '<span style="color:red;">*</span>':'';?>
             </label>
             <?php if($this->extra_info['custom_fields_extra_info_'.$field->term_id]){?><p class="help-block" style="<?php echo $extra_info_css?>"><?php echo $this->extra_info['custom_fields_extra_info_'.$field->term_id];?></p><?php }?>
-						<input type="text" id="<?php echo $this->slug;?>" class="form-control wpsc_customer_name" placeholder="<?php echo $this->placeholder; ?>" name="<?php echo $this->slug;?>" autocomplete="off" value="<?php echo is_user_logged_in() ? $current_user->display_name :'' ?>" <?php echo $readonly ?>  onkeypress="wpsc_text_limit(event,this,<?php echo $this->limit ?>);">
+						<input type="text" id="<?php echo $this->slug;?>" class="form-control wpsc_customer_name" placeholder="<?php echo $this->placeholder; ?>" name="<?php echo $this->slug;?>" autocomplete="off" value="<?php echo is_user_logged_in() ? $current_user->display_name :'' ?>" <?php echo $readonly ?>  onkeypress="wpsc_text_limit(event,this,<?php echo $this->limit ?>);" readonly>
 						 
 						<input type="hidden" id="ticket_description" name="ticket_description" value="Request Created: <?php date_default_timezone_set('US/Eastern'); echo date("m/d/Y"); ?>" />
 
@@ -401,7 +401,7 @@ if ( ! class_exists( 'WPSC_Ticket_Form_Field' ) ) :
             </label>
             <?php if($this->extra_info['custom_fields_extra_info_'.$field->term_id]){?><p class="help-block" style="<?php echo $extra_info_css?>" ><?php echo $this->extra_info['custom_fields_extra_info_'.$field->term_id];?></p><?php }?>
 						<input type="text" id="<?php echo $this->slug;?>" class="form-control wpsc_email" placeholder= "<?php echo $this->placeholder;?>" name="<?php echo $this->slug;?>" autocomplete="off" value="<?php echo is_user_logged_in() ? $current_user->user_email :'' ?>" 
-						<?php echo $readonly ?> onkeypress="wpsc_text_limit(event,this,<?php echo $this->limit ?>);">
+						<?php echo $readonly ?> onkeypress="wpsc_text_limit(event,this,<?php echo $this->limit ?>);" readonly>
 					</div>
 					<?php
 				}
