@@ -86,6 +86,7 @@ ob_start();
 				//PATT BEGIN
                 $disabled = '';
 
+				//Disable New Request
                 if (in_array($status->term_id, array($new_tag->term_id))) {
                     $disabled = 'disabled';
                 }
