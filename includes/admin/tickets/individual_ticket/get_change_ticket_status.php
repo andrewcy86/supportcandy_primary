@@ -53,7 +53,7 @@ ob_start();
 
 <div class="form-group">
 		<label for="wpsc_default_ticket_status"><?php _e('Ticket Status','supportcandy');?></label>
-		<select class="form-control" name="status">
+		<select class="form-control" name="edit_status" id="edit_status">
 			<?php
 			//PATT BEGIN
 			$hidden_status = '';
@@ -85,19 +85,16 @@ ob_start();
 				$selected = $status_id == $status->term_id ? 'selected="selected"' : '';
 				//PATT BEGIN
                 $disabled = '';
-
-				//Disable New Request
+                $hidden_status = '<input type="hidden" name="status" id="status" value="'.$status_id.'" />';
+                
                 if (in_array($status->term_id, array($new_tag->term_id))) {
                     $disabled = 'disabled';
                 }
                 if (in_array($status->term_id, $shipping_array)) {
                     $disabled = 'disabled';
-                    $hidden_status = '<input type="hidden" name="status" value="63" />';
                 }
-                
                 if (in_array($status_id, $pre_received_array) && in_array($status->term_id, $post_received_array)) {
                     $disabled = 'disabled';
-                    $hidden_status = '<input type="hidden" name="status" value="5" />';
                 }
                 
                 echo '<option '.$selected.' value="'.$status->term_id.'" '.$disabled.'>'.$wpsc_custom_status_localize['custom_status_'.$status->term_id].'</option>';
@@ -246,6 +243,14 @@ ob_start();
 <script>
 // PATT BEGIN
 jQuery(document).ready(function() {
+ 
+jQuery("#edit_status").change(function() {
+
+    var value = jQuery(this).val();
+
+    jQuery('#status').val(value);
+
+});
 
        jQuery("#comment-alert").hide();
        
@@ -304,7 +309,7 @@ jQuery('#reject_comment').bind('input propertychange', function() {
 
 
 jQuery(".wpsc_popup_action").click(function () {
-
+        
 if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
     alert('No automatic shelf assignments made.');
 } else {
