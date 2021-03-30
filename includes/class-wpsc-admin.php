@@ -30,7 +30,7 @@ if ( ! class_exists( 'WPSC_Admin' ) ) :
         wp_enqueue_style('wpsc-bootstrap-css', WPSC_PLUGIN_URL.'asset/css/bootstrap-iso.css?version='.WPSC_VERSION );
         
         //PATT BEGIN
-        wp_enqueue_script( 'bootstrap-cdn-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' );
+        wp_enqueue_script( 'bootstrap-cdn-js', WPPATT_PLUGIN_URL . 'asset/js/bootstrap.min.js' );
         //PATT END
         
         //Font-Awesom
