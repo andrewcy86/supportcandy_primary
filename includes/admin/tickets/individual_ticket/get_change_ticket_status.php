@@ -56,6 +56,7 @@ ob_start();
 		<select class="form-control" name="status">
 			<?php
 			//PATT BEGIN
+			$hidden_status = '';
 			$sems_check = $wpscfunction->get_ticket_meta($ticket_id,'super_fund');
                 
             if(in_array("true", $sems_check)) {
@@ -84,12 +85,18 @@ ob_start();
 				$selected = $status_id == $status->term_id ? 'selected="selected"' : '';
 				//PATT BEGIN
                 $disabled = '';
+
+                if (in_array($status->term_id, array($new_tag->term_id))) {
+                    $disabled = 'disabled';
+                }
                 if (in_array($status->term_id, $shipping_array)) {
                     $disabled = 'disabled';
+                    $hidden_status = '<input type="hidden" name="status" value="63" />';
                 }
                 
                 if (in_array($status_id, $pre_received_array) && in_array($status->term_id, $post_received_array)) {
                     $disabled = 'disabled';
+                    $hidden_status = '<input type="hidden" name="status" value="5" />';
                 }
                 
                 echo '<option '.$selected.' value="'.$status->term_id.'" '.$disabled.'>'.$wpsc_custom_status_localize['custom_status_'.$status->term_id].'</option>';
@@ -98,6 +105,7 @@ ob_start();
 			endforeach;
 			?>
 		</select>
+		<?php echo $hidden_status; ?>
 	</div>
 <?php
 $rejected_comment_check = $wpscfunction->get_ticket_meta($ticket_id,'rejected_comment');
