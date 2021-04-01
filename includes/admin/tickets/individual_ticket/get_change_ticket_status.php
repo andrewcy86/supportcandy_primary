@@ -186,7 +186,9 @@ $west_cui_tag = get_term_by('slug', 'wcui', 'wpsc_categories');
 } else {
 //PATT END
 
-echo '<input type="hidden" name="category" value="'.Patt_Custom_Func::get_default_digitization_center($ticket_id).'">';
+//CHANGE WHEN PATT DB SETUP TO SUPPORT DIGTIZATION CENTER WEST 
+//echo '<input type="hidden" name="category" value="'.Patt_Custom_Func::get_default_digitization_center($ticket_id).'">';
+echo '<input type="hidden" name="category" value="62">';
 
 //PATT BEGIN
 }
@@ -279,7 +281,7 @@ jQuery('#reject_comment').bind('input propertychange', function() {
 });
 
 
-jQuery('[name=status]').on('change', function() {
+jQuery('[name=edit_status]').on('change', function() {
 request_status = jQuery('[name=status]').val();
        
        if(request_status == <?php echo $initial_review_rejected_tag->term_id; ?>) {
@@ -309,10 +311,10 @@ jQuery('#reject_comment').bind('input propertychange', function() {
 
 
 jQuery(".wpsc_popup_action").click(function () {
-        
 if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
     alert('No automatic shelf assignments made.');
 } else {
+    alert(jQuery("[name=category]").val());
 jQuery.post(
 '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',{
 postvartktid: '<?php echo $ticket_id ?>',
