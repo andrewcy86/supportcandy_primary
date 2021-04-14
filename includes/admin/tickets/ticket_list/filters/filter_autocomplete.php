@@ -132,30 +132,38 @@ switch ($field_slug) {
 			
 			foreach($agents as $agent){
 				
-				// PATT Start
-				// Adds optional ability to filter out requesters
-				if( $no_requesters ) {
-					$agent_role = get_term_meta($agent->term_id,'role',true);
-					if( $agent_role != 3 ) {
-						$agent_name = get_term_meta($agent->term_id,'label',true);
-						$output[]   = array(
-							'label'    => $agent_name,
-							'value'    => '',
-							'flag_val' => $agent->term_id,
-							'slug'     => $field_slug,
-						);
-					}
-				} else {
+			// PATT Start
+			// Adds optional ability to filter out requesters
+			if( $no_requesters ) {
+				$agent_role = get_term_meta($agent->term_id,'role',true);
+				if( $agent_role != 3 ) {
 					$agent_name = get_term_meta($agent->term_id,'label',true);
+					$wp_user_id = get_term_meta($agent->term_id,'user_id',true);
+					$user_obj = get_userdata( $wp_user_id );
 					$output[]   = array(
 						'label'    => $agent_name,
 						'value'    => '',
 						'flag_val' => $agent->term_id,
 						'slug'     => $field_slug,
+						'wp_user_id' => $wp_user_id,
+						'wp_user_obj' => $user_obj
 					);
-					
 				}
-				// PATT End
+			} else {
+				$agent_name = get_term_meta($agent->term_id,'label',true);
+				$wp_user_id = get_term_meta($agent->term_id,'user_id',true);
+				$user_obj = get_userdata( $wp_user_id );
+				$output[]   = array(
+					'label'    => $agent_name,
+					'value'    => '',
+					'flag_val' => $agent->term_id,
+					'slug'     => $field_slug,
+					'wp_user_id' => $wp_user_id,
+					'wp_user_obj' => $user_obj
+				);
+				
+			}
+			// PATT End
 			}
 			break;
 			

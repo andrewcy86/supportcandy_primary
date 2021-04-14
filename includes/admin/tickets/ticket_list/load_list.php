@@ -84,6 +84,18 @@ color: rgb(255, 255, 255) !important;
     max-width: 325px !important;
 }
 
+@media only screen and (max-width: 768px) {
+#btn_location_scanner_desktop {
+  display: none !important;
+}
+}
+
+@media screen and (min-width: 769px) {
+#btn_location_scanner_mobile {
+  display: none !important;
+}  
+}
+
 </style>
 <div class="row wpsc_tl_action_bar" style="background-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;">
   <div class="col-sm-12">
@@ -95,7 +107,8 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 {
 ?>
 <button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_delete_tickets" style="<?php echo $action_default_btn_css?>"><i class="fa fa-trash"></i> <?php _e('Archive','supportcandy')?></button>
-<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-location';?>'"><i class="fas fa-barcode"></i> Barcode Scanner</button>
+<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner_mobile" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-location';?>'"><i class="fas fa-barcode"></i> Barcode Scanner</button>
+<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner_desktop" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-manual-location';?>'"><i class="fas fa-barcode"></i> Barcode Scanner</button>
 <?php
 }
 ?>		
