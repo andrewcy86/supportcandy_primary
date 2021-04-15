@@ -195,6 +195,7 @@ $thankyou_html = ob_get_clean();
 $response = array(
   'redirct_url'    => get_option('wpsc_thankyou_url'),
   'thank_you_page' => $thankyou_html,
+  'ticket_id' => $ticket_id,
 );
 
 echo json_encode($response);
