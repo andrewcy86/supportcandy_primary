@@ -28,6 +28,10 @@ a:link, a:visited {
   color:#107799;
 }
 
+div.dataTables_processing { 
+    z-index: 1; 
+}
+
 div.dataTables_wrapper {
         width: 100%;
         margin: 0;
@@ -296,6 +300,7 @@ jQuery(document).ready(function(){
   jQuery('[data-toggle="tooltip"]').tooltip();
   var dataTable = jQuery('#tbl_templates_requests').DataTable({
     'autoWidth': true,
+    'processing': true,
     'drawCallback': function( settings ) {
 
 jQuery('[data-toggle="tooltip"]').tooltip();
