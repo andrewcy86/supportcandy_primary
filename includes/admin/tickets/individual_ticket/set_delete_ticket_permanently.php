@@ -38,7 +38,7 @@ if ( is_array( $get_associated_doc_ticket_meta ) ) {
 
 //PATT BEGIN
 $get_associated_boxes = $wpdb->get_results("
-SELECT id, storage_location_id FROM wpqa_wpsc_epa_boxinfo 
+SELECT id, storage_location_id FROM " . $wpdb->prefix . "wpsc_epa_boxinfo 
 WHERE ticket_id = '" . $ticket_id . "'
 ");
 
@@ -53,7 +53,7 @@ aisle,
 bay,
 shelf,
 position
-FROM wpqa_wpsc_epa_storage_location
+FROM " . $wpdb->prefix . "wpsc_epa_storage_location
 WHERE id = '" . $associated_storage_ids . "'"
 			);
 			
@@ -67,7 +67,7 @@ $box_storage_status = $wpdb->get_row(
 "SELECT 
 occupied,
 remaining
-FROM wpqa_wpsc_epa_storage_status
+FROM " . $wpdb->prefix . "wpsc_epa_storage_status
 WHERE shelf_id = '" . $box_sotrage_shelf_id . "'"
 			);
 
@@ -76,7 +76,7 @@ $box_storage_status_remaining = $box_storage_status->remaining;
 $box_storage_status_remaining_added = $box_storage_status->remaining + 1;
 
 if ($box_storage_status_remaining <= 4) {
-$table_ss = 'wpqa_wpsc_epa_storage_status';
+$table_ss = $wpdb->prefix .'wpsc_epa_storage_status';
 $ssr_update = array('remaining' => $box_storage_status_remaining_added);
 $ssr_where = array('shelf_id' => $box_sotrage_shelf_id, 'digitization_center' => $box_storage_digitization_center);
 $wpdb->update($table_ss , $ssr_update, $ssr_where);
@@ -90,6 +90,33 @@ $wpdb->update($table_ss , $sso_update, $sso_where);
 
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_storage_location', array( 'id' => $associated_storage_ids));
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_boxinfo', array( 'id' => $associated_box_ids));
+		$wpdb->delete($wpdb->prefix.'wpsc_epa_folderdocinfo_files_archive', array( 'box_id' => $associated_box_ids));
+
+// DELETE Associated Recalls
+$get_recall_request_id = $wpdb->get_row(
+"SELECT 
+id
+FROM " . $wpdb->prefix . "wpsc_epa_recallrequest
+WHERE box_id = '" . $associated_box_ids . "'"
+			);
+$recall_request_id = $get_recall_request_id->id;
+
+$wpdb->delete($wpdb->prefix.'wpsc_epa_recallrequest_users', array( 'recallrequest_id' => $recall_request_id));	
+$wpdb->delete($wpdb->prefix.'wpsc_epa_recallrequest', array( 'box_id' => $associated_box_ids));	
+
+// DELETE Associated Returns
+$get_return_request_id = $wpdb->get_row(
+"SELECT 
+return_id
+FROM " . $wpdb->prefix . "wpsc_epa_return_items
+WHERE box_id = '" . $associated_box_ids . "'"
+			);
+$return_request_id = $get_return_request_id->return_id;
+
+$wpdb->delete($wpdb->prefix.'wpsc_epa_return', array( 'id' => $return_request_id));	
+$wpdb->delete($wpdb->prefix.'wpsc_epa_return_users', array( 'return_id' => $return_request_id));	
+$wpdb->delete($wpdb->prefix.'wpsc_epa_return_items', array( 'return_id' => $return_request_id));	
+
 	}
 //PATT END
 
