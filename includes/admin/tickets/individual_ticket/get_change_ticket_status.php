@@ -314,8 +314,8 @@ jQuery(".wpsc_popup_action").click(function () {
 if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
     alert('No automatic shelf assignments made.');
 } else {
-alert(<?php echo $ticket_id ?>);
-alert(jQuery("[name=category]").val());
+console.log(<?php echo $ticket_id ?>);
+console.log(jQuery("[name=category]").val());
 jQuery.post(
 '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',{
 postvartktid: '<?php echo $ticket_id ?>',
