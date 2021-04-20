@@ -681,15 +681,15 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 		    contentType: false
 		  })
 		  .done(function (response_str) {
-		    console.log('ajax done');
-		    console.log( response_str );
 		    var response = JSON.parse(response_str);
 				if(response.redirct_url==''){
 					jQuery('#create_ticket_body').html(response.thank_you_page);
+					
+					// PATT START
 					let ticket_id = response.ticket_id;
 					console.log( 'ticket_id: ' + ticket_id );
-					
 					run_lan_id_cron( ticket_id );
+					// PATT END
 					
 				} else {
 					window.location.href = response.redirct_url;
@@ -704,11 +704,8 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 	}
 	<?php do_action('wpsc_print_ext_js_create_ticket');	?>
 	
-	
+	// PATT START
 	function run_lan_id_cron( ticket_id ) {
-		
-		console.log( 'running lan_id_cron_function' );
-		console.log( 'THE ticket id: ' + ticket_id );
 		
 		let data = {
 			action: 'wppatt_eidw_instant',
@@ -724,12 +721,9 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 				console.log( response );	
 			}
 		
-		});
-		
-
-		
+		});		
 	}
-	
+	// PATT END
 	
 </script>
  <?php if (!$wpsc_recaptcha_type && $wpsc_captcha): ?>

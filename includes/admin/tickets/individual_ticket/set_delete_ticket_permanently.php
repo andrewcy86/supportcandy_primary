@@ -89,8 +89,7 @@ $wpdb->update($table_ss , $sso_update, $sso_where);
 }
 
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_storage_location', array( 'id' => $associated_storage_ids));
-		$wpdb->delete($wpdb->prefix.'wpsc_epa_boxinfo', array( 'id' => $associated_box_ids));
-		$wpdb->delete($wpdb->prefix.'wpsc_epa_folderdocinfo_files_archive', array( 'box_id' => $associated_box_ids));
+		$wpdb->delete($wpdb->prefix.'wpsc_epa_shipping_tracking', array( 'ticket_id' => $ticket_id));
 
 // DELETE Associated Recalls
 $get_recall_request_id = $wpdb->get_row(
@@ -102,7 +101,18 @@ WHERE box_id = '" . $associated_box_ids . "'"
 $recall_request_id = $get_recall_request_id->id;
 
 $wpdb->delete($wpdb->prefix.'wpsc_epa_recallrequest_users', array( 'recallrequest_id' => $recall_request_id));	
-$wpdb->delete($wpdb->prefix.'wpsc_epa_recallrequest', array( 'box_id' => $associated_box_ids));	
+
+$get_shipping_recall_id = $wpdb->get_row(
+"SELECT 
+id
+FROM " . $wpdb->prefix . "wpsc_epa_shipping_tracking
+WHERE recallrequest_id = '" . $recall_request_id . "'"
+			);
+$shipping_recall_id = $get_shipping_recall_id->id;
+
+$wpdb->update($wpdb->prefix .'wpsc_epa_shipping_tracking', array('recallrequest_id' => '-99999'), array('id' => $shipping_recall_id));
+$wpdb->delete($wpdb->prefix.'wpsc_epa_recallrequest', array( 'box_id' => $associated_box_ids));
+$wpdb->delete($wpdb->prefix .'wpsc_epa_shipping_tracking', array( 'recallrequest_id' => $recall_request_id));
 
 // DELETE Associated Returns
 $get_return_request_id = $wpdb->get_row(
@@ -113,10 +123,25 @@ WHERE box_id = '" . $associated_box_ids . "'"
 			);
 $return_request_id = $get_return_request_id->return_id;
 
-$wpdb->delete($wpdb->prefix.'wpsc_epa_return', array( 'id' => $return_request_id));	
-$wpdb->delete($wpdb->prefix.'wpsc_epa_return_users', array( 'return_id' => $return_request_id));	
-$wpdb->delete($wpdb->prefix.'wpsc_epa_return_items', array( 'return_id' => $return_request_id));	
+$wpdb->delete($wpdb->prefix.'wpsc_epa_return_users', array( 'return_id' => $return_request_id));
 
+$get_shipping_return_id = $wpdb->get_row(
+"SELECT 
+id
+FROM " . $wpdb->prefix . "wpsc_epa_shipping_tracking
+WHERE return_id = '" . $return_request_id . "'"
+			);
+$shipping_return_id = $get_shipping_return_id->id;
+
+$wpdb->update($wpdb->prefix .'wpsc_epa_shipping_tracking', array('return_id' => '-99999'), array('id' => $shipping_return_id));
+
+$wpdb->delete($wpdb->prefix.'wpsc_epa_return_items', array( 'return_id' => $return_request_id));
+$wpdb->delete($wpdb->prefix.'wpsc_epa_return', array( 'id' => $return_request_id));	
+$wpdb->delete($wpdb->prefix.'wpsc_epa_shipping_tracking', array( 'return_id' => $return_request_id));
+
+// DELETE Files and Box
+		$wpdb->delete($wpdb->prefix.'wpsc_epa_folderdocinfo_files_archive', array( 'box_id' => $associated_box_ids));
+		$wpdb->delete($wpdb->prefix.'wpsc_epa_boxinfo', array( 'id' => $associated_box_ids));
 	}
 //PATT END
 
