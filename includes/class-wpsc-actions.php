@@ -135,9 +135,8 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
       // Traslate $ticket_id to $request_id
       $request_id = Patt_Custom_Func::ticket_to_request_id( $ticket_id );
       // This is for Time to process intial request report
-      if($status_id == 4){
       // Check to see if timestamp exists
-     $table_timestamp = $wpdb->prefix . 'wpsc_epa_timestamps';
+     $table_timestamp = $wpdb->prefix . 'wpsc_epa_timestamps_request';
      $get_request_timestamp = $wpdb->get_row("select id, count(id) as count from " . $table_timestamp . " where request_id = '".$request_id."'");
      $request_timestamp_id = $get_request_timestamp->id;
      $request_timestamp_count = $get_request_timestamp->count;
@@ -149,7 +148,6 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
       
       $wpdb->insert($table_timestamp, array('request_id' => $request_id, 'type' => $status_obj->name, 'user' => $current_user->display_name, 'timestamp' => $date_time) ); 
 
-      }
       
       //PATT END
       $args = array(
