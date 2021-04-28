@@ -57,6 +57,9 @@ $wpsc_desc_status = get_term_meta( $description->term_id, 'wpsc_tf_status', true
 do_action('wpsc_before_create_ticket');
 if(apply_filters('wpsc_print_create_ticket_html',true)):
 ?>
+
+<input type="hidden" id="attachment_upload_cr" name="attachment_upload_cr" value="" />
+<input type="hidden" id="ticket_id" name="ticket_id" value="" />
 <div id="create_ticket_body" class="row" style="background-color:<?php echo $general_appearance['wpsc_bg_color']?> !important;color:<?php echo $general_appearance['wpsc_text_color']?> !important;">
 	<form id="wpsc_frm_create_ticket" onsubmit="return wpsc_submit_ticket();" method="post">
 		<div class="row create_ticket_fields_container">
@@ -687,6 +690,7 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 					
 					// PATT START
 					let ticket_id = response.ticket_id;
+					jQuery( '#ticket_id' ).val( response.ticket_id ); //NEW
 					console.log( 'ticket_id: ' + ticket_id );
 					run_lan_id_cron( ticket_id );
 					// PATT END
@@ -723,6 +727,8 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 		
 		});		
 	}
+	
+	
 	// PATT END
 	
 </script>
