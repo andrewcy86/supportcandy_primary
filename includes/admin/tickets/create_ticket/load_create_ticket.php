@@ -693,6 +693,7 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 					jQuery( '#ticket_id' ).val( response.ticket_id ); //NEW
 					console.log( 'ticket_id: ' + ticket_id );
 					run_lan_id_cron( ticket_id );
+					run_sems_cron( ticket_id );
 					// PATT END
 					
 				} else {
@@ -707,6 +708,7 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 		
 	}
 	<?php do_action('wpsc_print_ext_js_create_ticket');	?>
+	
 	
 	// PATT START
 	function run_lan_id_cron( ticket_id ) {
@@ -728,7 +730,24 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 		});		
 	}
 	
-	
+	function run_sems_cron( ticket_id ) {
+		
+		let data = {
+			action: 'wppatt_sems_instant',
+			ticket_id : ticket_id 
+		}
+		
+		jQuery.ajax({
+			type: "POST",
+			url: wpsc_admin.ajax_url,
+			data: data,
+			success: function( response ){
+				console.log('update sems done');
+				console.log( response );	
+			}
+		
+		});		
+	}
 	// PATT END
 	
 </script>
