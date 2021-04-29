@@ -146,7 +146,7 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
           $wpdb->delete( $table_timestamp, array( 'id' => $request_timestamp_id ) );
       }
       
-      $wpdb->insert($table_timestamp, array('request_id' => $request_id, 'type' => $status_obj->name, 'user' => $current_user->display_name, 'timestamp' => $date_time) ); 
+      $wpdb->insert($table_timestamp, array('request_id' => $ticket_id, 'type' => $status_obj->name, 'user' => $current_user->display_name, 'timestamp' => $date_time) ); 
 
       
       //PATT END
