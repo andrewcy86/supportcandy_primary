@@ -672,7 +672,7 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 				}
 			}
 			?>
-			jQuery('#create_ticket_body').html(wpsc_admin.loading_html);
+			//jQuery('#create_ticket_body').html(wpsc_admin.loading_html);
 			//wpsc_doScrolling('.wpsc_tl_action_bar',1000);
 			console.log({dataform:dataform});
 			
