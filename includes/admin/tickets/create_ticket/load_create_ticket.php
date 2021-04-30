@@ -61,7 +61,12 @@ if(apply_filters('wpsc_print_create_ticket_html',true)):
 <input type="hidden" id="attachment_upload_cr" name="attachment_upload_cr" value="" />
 <input type="hidden" id="ticket_id" name="ticket_id" value="" />
 <div id="create_ticket_body" class="row" style="background-color:<?php echo $general_appearance['wpsc_bg_color']?> !important;color:<?php echo $general_appearance['wpsc_text_color']?> !important;">
-	<form id="wpsc_frm_create_ticket" onsubmit="return wpsc_submit_ticket();" method="post">
+<?php
+//PATT BEGIN
+echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'asset/images/ajax-loader@2x.gif"></div>';
+//PATT END
+?>
+    <form id="wpsc_frm_create_ticket" onsubmit="return wpsc_submit_ticket();" method="post">
 		<div class="row create_ticket_fields_container">
 			<?php 
 			foreach ($fields as $field) {

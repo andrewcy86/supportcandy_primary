@@ -187,8 +187,9 @@ Patt_Custom_Func::insert_new_notification('email-new-request-created-id',$pattag
 ob_start();
 
 //PATT BEGIN
-echo '<div class="wpsc_loading_icon"><img src="'.WPSC_PLUGIN_URL.'asset/images/ajax-loader@2x.gif"></div>';
+echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'asset/images/ajax-loader@2x.gif"></div>';
 //PATT END
+
 ?>
 
 <div class="col-sm-12" id="patt_thankyou" style="margin-top:20px;">
@@ -196,6 +197,7 @@ echo '<div class="wpsc_loading_icon"><img src="'.WPSC_PLUGIN_URL.'asset/images/a
 //PATT BEGIN
 	echo "<script>
 	
+	jQuery('.wpsc_loading_icon_submit_ticket').css('display','block');
 	
 	var set_ticket_id_attachment_id = function () {
     if (jQuery( '#attachment_upload_cr' ).val() != '')
