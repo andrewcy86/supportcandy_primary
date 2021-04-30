@@ -192,7 +192,39 @@ echo '<div class="wpsc_loading_icon"><img src="'.WPSC_PLUGIN_URL.'asset/images/a
 ?>
 
 <div class="col-sm-12" id="patt_thankyou" style="margin-top:20px;">
-	<?php echo html_entity_decode(stripslashes($thankyou_html))?>
+	<?php 
+//PATT BEGIN
+	echo "<script>
+	
+	
+	var set_ticket_id_attachment_id = function () {
+    if (jQuery( '#attachment_upload_cr' ).val() != '')
+    {
+        var txtInput = ". $ticket_id .";
+        var attachment_id = jQuery( '#attachment_upload_cr' ).val();
+        
+        console.log( 'Attachment ID: '+ attachment_id );
+        console.log( 'Ticket ID: '+ txtInput );
+        
+        ajax_link_ticket_id_and_attachment( attachment_id, txtInput );
+        console.log( 'Posted attachment and ticket ID to ajax function.');
+                
+    }
+    else
+    {
+        setTimeout(function(){
+            set_ticket_id_attachment_id()
+            }, 2000);
+    }
+};
+
+set_ticket_id_attachment_id();
+
+
+
+	</script>";
+//PATT END		
+	echo html_entity_decode(stripslashes($thankyou_html))?>
 </div>
 <?php
 $thankyou_html = ob_get_clean();
