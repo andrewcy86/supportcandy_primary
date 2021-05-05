@@ -235,6 +235,7 @@ $response = array(
   'redirct_url'    => get_option('wpsc_thankyou_url'),
   'thank_you_page' => $thankyou_html,
   'ticket_id' => $ticket_id,
+  'is_super_fund' => $args['super_fund'], // PATT Addition
 );
 
 echo json_encode($response);

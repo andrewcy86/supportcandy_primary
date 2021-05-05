@@ -690,6 +690,7 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 		  })
 		  .done(function (response_str) {
 		    var response = JSON.parse(response_str);
+		    console.log( response );
 				if(response.redirct_url==''){
 					jQuery('#create_ticket_body').html(response.thank_you_page);
 					
@@ -698,7 +699,12 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 					jQuery( '#ticket_id' ).val( response.ticket_id ); //NEW
 					console.log( 'ticket_id: ' + ticket_id );
 					run_lan_id_cron( ticket_id );
-					run_sems_cron( ticket_id );
+
+					
+					console.log( 'load create tickets SEMS: ' + response.is_super_fund );
+					if( response.is_super_fund == 'true' ) {
+						run_sems_cron( ticket_id );
+					}
 					// PATT END
 					
 				} else {
