@@ -188,7 +188,12 @@ $critical_tag = get_term_by('slug', 'high', 'wpsc_priorities');
                <option value='Decline'>Decline</option>
              </select>
 <br /><br />
-
+<select id='searchByECMSSEMS' aria-label='Search by ECMS or SEMS'>
+               <option value=''>-- Select ECMS or SEMS --</option>
+               <option value='ECMS'>ECMS</option>
+               <option value='SEMS'>SEMS</option>
+             </select>
+<br /><br />
 <?php		
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
 {
@@ -319,6 +324,7 @@ jQuery('[data-toggle="tooltip"]').tooltip();
       data.po = jQuery('#searchByProgramOffice').val();
       data.dc = jQuery('#searchByDigitizationCenter').val();
       data.rd = jQuery('#searchByRecallDecline').val();
+      data.es = jQuery('#searchByECMSSEMS').val();
       data.sbu = jQuery('#searchByUser').val(); 
 	  data.aaVal = jQuery("input[name='assigned_agent[]']").map(function(){return jQuery(this).val();}).get();     
 	  data.aaName = jQuery(".searched-user").map(function(){return jQuery(this).text();}).get();  
@@ -332,6 +338,7 @@ jQuery('[data-toggle="tooltip"]').tooltip();
       jQuery('#searchByProgramOffice').val(data.po);
       jQuery('#searchByDigitizationCenter').val(data.dc);
       jQuery('#searchByRecallDecline').val(data.rd);
+      jQuery('#searchByECMSSEMS').val(data.es);
 <?php		
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
 {
@@ -369,6 +376,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
           var requestid = jQuery('#searchByRequestID').val();
           var dc = jQuery('#searchByDigitizationCenter').val();
           var rd = jQuery('#searchByRecallDecline').val();
+          var es = jQuery('#searchByECMSSEMS').val();
           
           console.log('Names:');
           console.log(aaName);
@@ -382,6 +390,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
           data.searchByPriority = sp;
           data.searchByDigitizationCenter = dc;
           data.searchByRecallDecline = rd;
+          data.searchByECMSSEMS = es;
           data.currentUser = rs_user;
           data.searchByUser = sbu;
 		  data.searchByUserAAVal = aaVal;
@@ -468,6 +477,11 @@ jQuery("#searchByRecallDecline").change(function(){
     dataTable.draw();
 });
 
+jQuery("#searchByECMSSEMS").change(function(){
+    dataTable.state.save();
+    dataTable.draw();
+});
+
 //jQuery('#searchGeneric').on('input keyup paste', function () {
 //            dataTable.state.save();
 //            dataTable.draw();
@@ -532,6 +546,7 @@ jQuery('#wpsc_individual_refresh_btn').on('click', function(e){
     jQuery('#searchByProgramOffice').val('');
     jQuery('#searchByDigitizationCenter').val('');
     jQuery('#searchByRecallDecline').val('');
+    jQuery('#searchByECMSSEMS').val('');
     jQuery('#searchByBoxID').importTags('');
     dataTable.column(0).checkboxes.deselectAll();
 	dataTable.state.clear();
