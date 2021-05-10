@@ -604,16 +604,18 @@ $email = 1;
 $new_request_tag = get_term_by('slug', 'open', 'wpsc_statuses'); //3
 $initial_review_complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'wpsc_statuses'); //4
 $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses'); //69
+$rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses'); //670
+
 //if($status_id == 4 && $prev_status == 3){
 if($status_id == $initial_review_complete_tag->term_id && $prev_status == $new_request_tag->term_id) {
 Patt_Custom_Func::insert_new_notification('email-prepare-request-shipment',$pattagentid_array,$requestid,$data,$email);
 }
-/* REPLACE WITH CRON JOB
+
 //sends an email/notification if status changes to Initial Review Rejected
-if($status_id == 670) {
+if($status_id == $rejected_tag->term_id) {
 Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$pattagentid_array,$requestid,$data,$email);
 }
-*/
+
 //sends an email/notification if status changes to Cancelled
 //if($status_id == 69) {
 if($status_id == $cancelled_tag->term_id) {
