@@ -110,7 +110,8 @@ $thread_id = $wpscfunction->submit_ticket_thread($args);
 	    $comment = $wpscfunction->replace_macro($reply_body,$ticket_id);
 	    
 	    $user_ids = array();
-	    $current_users_id = $wpdb->get_row( "SELECT ID from wpqa_users WHERE user_email = '" .  $customer_email . "'"); 
+	    $current_users_id = $wpdb->get_row( "SELECT b.ID from " . $wpdb->prefix . "wpsc_ticket a INNER JOIN " . $wpdb->prefix . "users b ON a.customer_email = b.user_email WHERE a.id = '" .  $ticket_id . "'"); 
+	    
         array_push($user_ids, $current_users_id->ID);
         
         $agent_ids = Patt_Custom_Func::agents_assigned_request($ticket_id);

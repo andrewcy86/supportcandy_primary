@@ -57,9 +57,10 @@ $wpsc_desc_status = get_term_meta( $description->term_id, 'wpsc_tf_status', true
 do_action('wpsc_before_create_ticket');
 if(apply_filters('wpsc_print_create_ticket_html',true)):
 ?>
-
+<!-- PATT BEGIN -->
 <input type="hidden" id="attachment_upload_cr" name="attachment_upload_cr" value="" />
 <input type="hidden" id="ticket_id" name="ticket_id" value="" />
+<!-- PATT END -->
 <div id="create_ticket_body" class="row" style="background-color:<?php echo $general_appearance['wpsc_bg_color']?> !important;color:<?php echo $general_appearance['wpsc_text_color']?> !important;">
 <?php
 //PATT BEGIN

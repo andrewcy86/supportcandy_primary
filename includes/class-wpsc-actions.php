@@ -140,12 +140,12 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
      $get_request_timestamp = $wpdb->get_row("select id, count(id) as count from " . $table_timestamp . " where request_id = '".$request_id."'");
      $request_timestamp_id = $get_request_timestamp->id;
      $request_timestamp_count = $get_request_timestamp->count;
-     
+     /*
      // Delete previous value
       if($request_timestamp_count > 0) {
           $wpdb->delete( $table_timestamp, array( 'id' => $request_timestamp_id ) );
       }
-      
+      */
       $wpdb->insert($table_timestamp, array('request_id' => $ticket_id, 'type' => $status_obj->name, 'user' => $current_user->display_name, 'timestamp' => $date_time) ); 
 
       
