@@ -89,7 +89,7 @@ $thread_id = $wpscfunction->submit_ticket_thread($args);
         $agent_ids = Patt_Custom_Func::agents_assigned_request($ticket_id);
         $user_ids_final = array_unique(array_merge($user_ids, $agent_ids));
 
-		Patt_Custom_Func::insert_new_comment_notification( $ticket_id, stripslashses($comment), $user_ids_final, $reply_bcc, 0, 'comment' );
+		Patt_Custom_Func::insert_new_comment_notification( $ticket_id, $comment, $user_ids_final, $reply_bcc, 0, 'comment' );
 		
 //PATT END
 
