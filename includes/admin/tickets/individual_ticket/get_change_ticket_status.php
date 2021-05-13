@@ -320,9 +320,9 @@ postvartktid: '<?php echo $ticket_id ?>',
 postvardcname: jQuery("[name=category]").val()
 },
 function (response) {
-if(jQuery("[name='category']").val()) {
-alert(response);
-}
+//if(jQuery("[name='category']").val()) {
+//alert(response);
+//}
 });
 }
 

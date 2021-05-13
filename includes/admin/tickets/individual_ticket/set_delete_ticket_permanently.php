@@ -34,9 +34,7 @@ if ( is_array( $get_associated_doc_ticket_meta ) ) {
 		$wpdb->delete( $wpdb->prefix . 'wpsc_ticketmeta', array( 'id' => $value['id'] ) );
 	});
 }
-//PATT END
 
-//PATT BEGIN
 $get_associated_boxes = $wpdb->get_results("
 SELECT id, storage_location_id FROM " . $wpdb->prefix . "wpsc_epa_boxinfo 
 WHERE ticket_id = '" . $ticket_id . "'
@@ -142,7 +140,34 @@ $wpdb->delete($wpdb->prefix.'wpsc_epa_shipping_tracking', array( 'return_id' => 
 // DELETE Files and Box
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_folderdocinfo_files_archive', array( 'box_id' => $associated_box_ids));
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_boxinfo', array( 'id' => $associated_box_ids));
-	}
+	
+//DELETING REQUEST REPORTING
+$table_timestamp_request = $wpdb->prefix . 'wpsc_epa_timestamps_request';
+$get_request_timestamp = $wpdb->get_results("select id from " . $table_timestamp_request . " where request_id = '".$ticket_id."'");
+
+foreach($get_request_timestamp as $request_timestamp) {
+    $request_timestamp_id = $request_timestamp->id;
+    // Delete previous value
+    if( !empty($request_timestamp_id) ) {
+      $wpdb->delete( $table_timestamp_request, array( 'id' => $request_timestamp_id ) );
+    }
+}
+
+//DELETING BOX REPORTING
+$box_id = $item->id;
+//PATT DELETING BOX REPORTING
+$table_timestamp_box = $wpdb->prefix . 'wpsc_epa_timestamps_box';
+$get_box_timestamp = $wpdb->get_results("select id from " . $table_timestamp_box . " where box_id = '".$associated_box_ids."'");
+
+foreach($get_box_timestamp as $box_timestamp) {
+    $box_timestamp_id = $box_timestamp->id;
+    // Delete previous value
+    if( !empty($box_timestamp_id) ) {
+      $wpdb->delete( $table_timestamp_box, array( 'id' => $box_timestamp_id ) );
+    }
+}
+
+}
 //PATT END
 
 $wpdb->delete($wpdb->prefix.'wpsc_ticket', array( 'id' => $ticket_id));

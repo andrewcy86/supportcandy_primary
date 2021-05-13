@@ -109,11 +109,71 @@ if((in_array('register_user',$wpsc_allow_rich_text_editor) && !$current_user->ha
 
 <!--PATT BEGIN -->
 <?php
+date_default_timezone_set('US/Eastern');
+
+//Review Complete Timelapse
+$review_complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'wpsc_statuses');
+$review_complete_timestamp = $wpscfunction->get_ticket_meta($ticket_id,'review_complete_timestamp');
+
+if($status_id == $review_complete_tag->term_id && !empty($review_complete_timestamp)) {
+    
+$t=time();
+$timestamp = implode(" ",$review_complete_timestamp);
+
+$date1 = date('Y-m-d',$timestamp);
+$date2 = date('Y-m-d',$t);
+
+$diff = abs(strtotime($date2) - strtotime($date1));
+
+$days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+if ($days <= 7 && $year == 0 && $months == 0 ) {
+?>
+<div class="alert alert-success" role="alert">
+<?php 
+} elseif ($days > 7 && $year == 0 && $months == 0 ) {
+?>
+<div class="alert alert-danger" role="alert">
+<?php } else { ?>
+<div class="alert alert-success" role="alert">
+<?php } ?>
+<span style="font-size: 1em;"><i class="fas fa-hourglass-half" title="Review Complete Alert"></i></span>
+<?php
+echo "<strong>Time elapsed from initial NDP review:</strong> ";
+
+$days_remaining = $days-14;
+
+if($days > 14) {
+$days_remaining = 0;
+}
+
+if($days == 1 ) {
+    $day_val_1 = ' Day';
+} else {
+    $day_val_1 = ' Days';
+}
+
+if($days_remaining == 1) {
+    $day_val_2 = ' Day';
+} else {
+    $day_val_2 = ' Days';
+}
+
+printf("%d $day_val_1\n", $days);
+
+echo "<strong>Remaining:</strong> ";
+
+printf("%d $day_val_2\n", abs($days_remaining));
+
+?>
+</div>
+<?php
+}
+
+//Rejected Timelapse
 $rejected_request_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses');
 
 if($status_id == $rejected_request_tag->term_id) {
-
-date_default_timezone_set('US/Eastern');
 
 $rejected_timestamp = $wpscfunction->get_ticket_meta($ticket_id,'rejected_timestamp');
 $t=time();
