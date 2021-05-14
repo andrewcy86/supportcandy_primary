@@ -109,7 +109,7 @@ if((in_array('register_user',$wpsc_allow_rich_text_editor) && !$current_user->ha
 
 <!--PATT BEGIN -->
 <?php
-date_default_timezone_set('US/Eastern');
+//date_default_timezone_set('US/Eastern');
 
 //Review Complete Timelapse
 $review_complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'wpsc_statuses');
