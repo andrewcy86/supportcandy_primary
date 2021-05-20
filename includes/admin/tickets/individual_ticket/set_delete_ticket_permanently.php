@@ -43,7 +43,24 @@ WHERE ticket_id = '" . $ticket_id . "'
 foreach ($get_associated_boxes as $info) {
 		$associated_box_ids = $info->id;
 		$associated_storage_ids = $info->storage_location_id;
-		
+
+//DELETING FOLDERFILE REPORTING
+
+$table_timestamp_folderfile = $wpdb->prefix . 'wpsc_epa_timestamps_folderfile';
+$get_folderfile_timestamp = $wpdb->get_results("select a.id 
+from " . $table_timestamp_folderfile . " a
+INNER JOIN " . $wpdb->prefix . "wpsc_epa_folderdocinfo_files_archive b ON b.id = a.folderdocinfofile_id
+where b.box_id = '".$associated_box_ids."'");
+
+foreach($get_folderfile_timestamp as $folderfile_timestamp) {
+    $folderfile_timestamp_id = $folderfile_timestamp->id;
+    // Delete previous value
+    if( !empty($folderfile_timestamp_id) ) {
+      $wpdb->delete( $table_timestamp_folderfile, array( 'id' => $folderfile_timestamp_id ) );
+    }
+}
+
+
 		$box_details = $wpdb->get_row(
 "SELECT 
 digitization_center,
