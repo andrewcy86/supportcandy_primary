@@ -115,6 +115,8 @@ WHERE box_id = '" . $associated_box_ids . "'"
 			);
 $recall_request_id = $get_recall_request_id->id;
 
+//delete from timestamp recall reporting
+$wpdb->delete($wpdb->prefix.'wpsc_epa_timestamps_recall', array( 'recall_id' => $recall_request_id));	
 $wpdb->delete($wpdb->prefix.'wpsc_epa_recallrequest_users', array( 'recallrequest_id' => $recall_request_id));	
 
 $get_shipping_recall_id = $wpdb->get_row(
@@ -138,6 +140,8 @@ WHERE box_id = '" . $associated_box_ids . "'"
 			);
 $return_request_id = $get_return_request_id->return_id;
 
+//delete from timestamp decline reporting
+$wpdb->delete($wpdb->prefix.'wpsc_epa_timestamps_decline', array( 'decline_id' => $return_request_id));
 $wpdb->delete($wpdb->prefix.'wpsc_epa_return_users', array( 'return_id' => $return_request_id));
 
 $get_shipping_return_id = $wpdb->get_row(
