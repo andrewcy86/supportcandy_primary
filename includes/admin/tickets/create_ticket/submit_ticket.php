@@ -182,6 +182,8 @@ $data = [];
 
 //$email = 1;
 Patt_Custom_Func::insert_new_notification('email-new-request-created-id',$pattagentid_array,$padded_request_id,$data,$email);
+
+Patt_Custom_Func::update_init_timestamp_request($ticket_id);
 //PATT END
 
 ob_start();
