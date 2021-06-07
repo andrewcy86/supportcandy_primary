@@ -1070,6 +1070,39 @@ function wpsc_set_delete_ticket_permanently(){
     contentType: false
   })
   .done(function (response_str) {
+//PATT BEGIN
+        let data_east = {
+			action: 'wppatt_loc_instant',
+			dc_id : 62
+		}
+		
+		jQuery.ajax({
+			type: "POST",
+			url: wpsc_admin.ajax_url,
+			data: data_east,
+			success: function( response ){
+				console.log('update location east done');
+				console.log( response );	
+			}
+		
+		});
+
+              let data_west = {
+			action: 'wppatt_loc_instant',
+			dc_id : 2
+		}
+		
+				jQuery.ajax({
+			type: "POST",
+			url: wpsc_admin.ajax_url,
+			data: data_west,
+			success: function( response ){
+				console.log('update location east done');
+				console.log( response );	
+			}
+		
+		});
+//PATT END
     wpsc_get_ticket_list();
   });
 }
@@ -1110,6 +1143,39 @@ function wpsc_set_delete_permanently_bulk_ticket(){
      contentType: false
    })
    .done(function (response_str) {
+//PATT BEGIN
+        let data_east = {
+			action: 'wppatt_loc_instant',
+			dc_id : 62
+		}
+		
+		jQuery.ajax({
+			type: "POST",
+			url: wpsc_admin.ajax_url,
+			data: data_east,
+			success: function( response ){
+				console.log('update location east done');
+				console.log( response );	
+			}
+		
+		});
+
+              let data_west = {
+			action: 'wppatt_loc_instant',
+			dc_id : 2
+		}
+		
+				jQuery.ajax({
+			type: "POST",
+			url: wpsc_admin.ajax_url,
+			data: data_west,
+			success: function( response ){
+				console.log('update location east done');
+				console.log( response );	
+			}
+		
+		});
+//PATT END
      toggle_ticket_list_actions();
      wpsc_get_tickets();
      location.reload();

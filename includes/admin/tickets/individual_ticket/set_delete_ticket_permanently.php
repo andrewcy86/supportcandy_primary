@@ -92,7 +92,7 @@ $box_storage_status_remaining_added = $box_storage_status->remaining + 1;
 
 if ($box_storage_status_remaining >= 0 && $box_storage_status_remaining <= 4) {
 $table_ss = $wpdb->prefix .'wpsc_epa_storage_status';
-$ssr_update = array('remaining' => $box_storage_status_remaining_added);
+$ssr_update = array('remaining' => 999);
 $ssr_where = array('shelf_id' => $box_sotrage_shelf_id, 'digitization_center' => $box_storage_digitization_center);
 $wpdb->update($table_ss , $ssr_update, $ssr_where);
 }

@@ -176,6 +176,8 @@ do_action('wpsc_add_admin_page');
         'wpsc-ticket-list',
         array($this,'ticket_list')
       );
+      
+      /* PATT BEGIN
       add_submenu_page(
         'wpsc-tickets',
         __( 'Email Notifications', 'supportcandy' ),
@@ -184,6 +186,8 @@ do_action('wpsc_add_admin_page');
         'wpsc-email-notifications',
         array($this,'email_notifications')
       );
+      PATT END */
+      
       add_submenu_page(
         'wpsc-tickets',
         __( 'Appearance', 'supportcandy' ),

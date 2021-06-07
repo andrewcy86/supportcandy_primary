@@ -140,7 +140,6 @@ $not_assigned_tag = get_term_by('slug', 'not-assigned', 'wpsc_priorities');
 if (count(array_keys($dc_array, $not_assigned_tag->term_id)) == count($dc_array) && !in_array('-99999', $pl_array) && !in_array(6, $pl_array)) {
 //PATT END
 ?>
-
 <!--
 	<div class="form-group">
 		<label for="wpsc_default_ticket_category"><?php _e('Ticket Category','supportcandy');?></label>
@@ -161,7 +160,7 @@ if (count(array_keys($dc_array, $not_assigned_tag->term_id)) == count($dc_array)
 			?>
 		</select>
 	</div>
--->
+
 	<div class="form-group">
 		<label for="wpsc_default_ticket_category"><?php _e('Ticket Category','supportcandy');?></label>
 		<select class="form-control" name="category" >
@@ -180,15 +179,15 @@ $west_cui_tag = get_term_by('slug', 'wcui', 'wpsc_categories');
 <option value="<?php echo $west_cui_tag->term_id; ?>" disabled>West CUI</option>
 		</select>
 	</div>
-
+-->
 <?php
 //PATT BEGIN
 } else {
 //PATT END
 
 //CHANGE WHEN PATT DB SETUP TO SUPPORT DIGTIZATION CENTER WEST 
-//echo '<input type="hidden" name="category" value="'.Patt_Custom_Func::get_default_digitization_center($ticket_id).'">';
-echo '<input type="hidden" name="category" value="62">';
+echo '<input type="hidden" name="category" value="'.Patt_Custom_Func::get_default_digitization_center($ticket_id).'">';
+//echo '<input type="hidden" name="category" value="62">';
 
 //PATT BEGIN
 }
@@ -260,6 +259,7 @@ var request_status = jQuery('[name=status]').val();
     
         <?php
         $new_request_tag = get_term_by('slug', 'open', 'wpsc_statuses');
+        $tabled_request_tag = get_term_by('slug', 'tabled', 'wpsc_statuses');
         $initial_review_rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses');
         $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses');
         ?>
@@ -311,7 +311,7 @@ jQuery('#reject_comment').bind('input propertychange', function() {
 
 
 jQuery(".wpsc_popup_action").click(function () {
-if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
+if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $tabled_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
     alert('No automatic shelf assignments made.');
 } else {
 jQuery.post(
@@ -320,6 +320,25 @@ postvartktid: '<?php echo $ticket_id ?>',
 postvardcname: jQuery("[name=category]").val()
 },
 function (response) {
+    
+
+		let data = {
+			action: 'wppatt_loc_instant',
+			dc_id : jQuery("[name=category]").val()
+		}
+		
+		jQuery.ajax({
+			type: "POST",
+			url: wpsc_admin.ajax_url,
+			data: data,
+			success: function( response ){
+				console.log('update location done');
+				console.log( response );	
+			}
+		
+		});		
+
+	
 //if(jQuery("[name='category']").val()) {
 //alert(response);
 //}
