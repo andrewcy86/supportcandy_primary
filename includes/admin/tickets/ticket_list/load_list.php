@@ -180,9 +180,7 @@ $critical_tag = get_term_by('slug', 'high', 'wpsc_priorities');
         <select id='searchByDigitizationCenter' aria-label="Search by Digitization Center">
            <option value=''>-- Select Digitization Center --</option>
            <option value='East'>East</option>
-           <option value='East CUI' disabled>East CUI</option>
            <option value='West'>West</option>
-           <option value='West CUI' disabled>West CUI</option>
            <option value='Not Assigned'>Not Assigned</option>
          </select>
 <br /><br />
