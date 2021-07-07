@@ -618,7 +618,7 @@ Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$patta
 
 //sends an email/notification if status changes to Cancelled
 //if($status_id == 69) {
-if($status_id == $cancelled_tag->term_id) {
+if($status_id == $cancelled_tag->term_id && $prev_status != $cancelled_tag->term_id) {
 Patt_Custom_Func::insert_new_notification('email-cancelled',$pattagentid_array,$requestid,$data,$email);
 }
 
