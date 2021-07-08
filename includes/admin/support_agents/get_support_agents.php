@@ -28,6 +28,12 @@ $agent_role = get_option('wpsc_agent_role');
 	<button style="margin-left:10px;" class="btn btn-success btn-sm" id="wpsc_add_new_support_agent_btn" onclick="wpsc_get_add_support_agent();"><?php _e('+Add New','supportcandy');?></button>
 </h4>
 
+<?php 
+// PATT BEGIN
+do_action('wpsc_pending_support_agents');
+// PATT END
+?>
+
 <div class="wpsc_padding_space"></div>
 
 <table class="table table-striped table-hover">
