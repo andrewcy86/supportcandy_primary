@@ -17,6 +17,9 @@ $wpsc_custom_status_localize   = get_option('wpsc_custom_status_localize');
 $wpsc_custom_category_localize = get_option('wpsc_custom_category_localize');
 $wpsc_custom_priority_localize = get_option('wpsc_custom_priority_localize');
 //PATT BEGIN
+
+$r3_check = $wpscfunction->get_ticket_meta($ticket_id,'r3_preset');
+
 $customer_name   	= $ticket_data['customer_name'];
 
 $agent_permissions = $wpscfunction->get_current_agent_permissions();
@@ -48,6 +51,15 @@ ob_start();
     $post_received_array = array($ecms_tag->term_id,$inprocess_tag->term_id,$completed_tag->term_id);
 
     $shipping_array = array($shipped_tag->term_id,$received_tag->term_id);
+    
+    $r3_array = array($shipped_tag->term_id,$complete_tag->term_id);
+    
+    // NEW - START
+    $is_ext_shipping = Patt_Custom_Func::using_ext_shipping( $ticket_id );
+    // NEW - END
+    //$debug_text = $is_ext_shipping ? 'true' : 'false';
+    
+    //echo $debug_text;
     //PATT END
     ?>
 
@@ -87,12 +99,26 @@ ob_start();
                 $disabled = '';
                 $hidden_status = '<input type="hidden" name="status" id="status" value="'.$status_id.'" />';
                 
-                if (in_array($status->term_id, array($new_tag->term_id))) {
+                
+                if ( in_array($status->term_id, array($new_tag->term_id)) ) {
                     $disabled = 'disabled';
                 }
-                if (in_array($status->term_id, $shipping_array)) {
-                    $disabled = 'disabled';
+                
+                // NEW - START
+                if( !$is_ext_shipping ) {
+                  if (in_array($status->term_id, $shipping_array)) {
+                      $disabled = 'disabled';
+                  }
                 }
+                
+                if(in_array("1", $r3_check)) {
+                  if (in_array($status->term_id, $r3_array)) {
+                      $disabled = 'disabled';
+                  }
+                }
+                
+                // NEW - END
+                
                 if (in_array($status_id, $pre_received_array) && in_array($status->term_id, $post_received_array)) {
                     $disabled = 'disabled';
                 }
@@ -256,7 +282,7 @@ jQuery("#edit_status").change(function() {
        jQuery("#comment-alert").hide();
        
 var request_status = jQuery('[name=status]').val();
-    
+
         <?php
         $new_request_tag = get_term_by('slug', 'open', 'wpsc_statuses');
         $tabled_request_tag = get_term_by('slug', 'tabled', 'wpsc_statuses');
@@ -311,6 +337,17 @@ jQuery('#reject_comment').bind('input propertychange', function() {
 
 
 jQuery(".wpsc_popup_action").click(function () {
+
+if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $tabled_request_tag->term_id; ?>) {
+jQuery.post(
+'<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/dc_assignment.php',{
+postvartktid: '<?php echo $ticket_id ?>',
+postvardcname: jQuery("[name=category]").val()
+},
+function (response) {
+});
+}
+
 if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $tabled_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
     alert('No automatic shelf assignments made.');
 } else {

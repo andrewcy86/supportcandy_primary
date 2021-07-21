@@ -69,13 +69,13 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
     }
     
     //PATT BEGIN
-        // Recycle request
+    // Recycle request
     function recycle_request ( $ticket_id){
       global $wpscfunction, $current_user;
       if($current_user->ID){
-        $log_str = sprintf( __('Request has been moved to the recycle bin by %1$s','supportcandy'), '<strong>'. $current_user->display_name .'</strong>');
+        $log_str = sprintf( __('Request has been moved to the Archive by %1$s','supportcandy'), '<strong>'. $current_user->display_name .'</strong>');
       } else {
-        $log_str = sprintf( __('Request has been moved to the recycle bin by %1$s','supportcandy'), '<strong>'.$current_user->display_name.'</strong>' );
+        $log_str = sprintf( __('Request has been moved to the Archive','supportcandy') );
       }
       $args = array(
         'ticket_id'      => $ticket_id,

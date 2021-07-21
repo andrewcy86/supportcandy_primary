@@ -427,7 +427,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
 {
 ?>
-       { data: 'request_id' }, 
+       { data: 'request_id', 'title': 'Select All Checkbox' }, 
 <?php
 }
 ?>

@@ -680,7 +680,7 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 			?>
 			//jQuery('#create_ticket_body').html(wpsc_admin.loading_html);
 			//wpsc_doScrolling('.wpsc_tl_action_bar',1000);
-			console.log({dataform:dataform});
+			console.log({dataform_create:dataform});
 			
 		  jQuery.ajax({
 		    url: wpsc_admin.ajax_url,

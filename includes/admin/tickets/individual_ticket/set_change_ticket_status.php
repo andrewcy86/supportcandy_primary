@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $current_user,$wpscfunction;
 
-if (!($current_user->ID && $current_user->has_cap('wpsc_agent'))) {exit;}
+//if (!($current_user->ID && $current_user->has_cap('wpsc_agent'))) {exit;}
 
 $ticket_id    = isset($_POST['ticket_id'])  ? sanitize_text_field($_POST['ticket_id']) : '';
 $category_id = isset($_POST['category']) ? intval($_POST['category']) : 0 ;
@@ -12,7 +12,7 @@ $priority_id = isset($_POST['priority']) ? intval($_POST['priority']) : 0 ;
 $status_id   = isset($_POST['status']) ? intval($_POST['status']) : 0 ;
 
 if( !$status_id || !$category_id || !$priority_id ){
-  die();
+  //die();
 }
 
 $ticket_data = $wpscfunction->get_ticket($ticket_id);

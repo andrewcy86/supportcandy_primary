@@ -543,6 +543,42 @@ function wpsc_set_change_ticket_status(ticket_id){
   
 }
 
+function wppatt_set_change_ticket_status_targeted( ticket_id , status ){
+  
+  if (wpsc_check_desc_empty()) {
+    if(!confirm(wppatt_admin.warning_message)) {
+      wpsc_modal_close();
+      return;
+    }
+  }
+  //var dataform = new FormData(jQuery('#frm_get_ticket_change_status')[0]);
+  
+  
+  let data = {
+    action: "wpsc_tickets",
+    setting_action: "set_change_ticket_status",
+    ticket_id: ticket_id,
+    status: status
+  }
+  wpsc_modal_close();
+  jQuery('.wppatt_reply_widget').html(wpsc_admin.loading_html);
+  console.log( data );
+  console.log( wpsc_admin.ajax_url );
+  jQuery.ajax({
+    url: wpsc_admin.ajax_url,
+    type: 'POST',
+    data: data,
+    processData: false,
+    contentType: false
+  })
+  .done(function (response_str) {
+     console.log( 'The Response - TARGETED');
+     console.log( response_str )
+     wpsc_open_ticket(ticket_id);
+  });  
+  
+}
+
 function wpsc_get_change_assign_agent(ticket_id){
   wpsc_modal_open(wpsc_admin.assign_agent); 
   var data = {

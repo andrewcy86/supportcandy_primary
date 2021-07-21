@@ -8,7 +8,7 @@ $wpsc_appearance_modal_window = get_option('wpsc_modal_window');
 ?>
 
 <div class="bootstrap-iso">
-  
+<!-- PATT BEGIN -->  
    <h3>
     <?php
     $request_id = $_GET['id'];
@@ -18,12 +18,12 @@ $wpsc_appearance_modal_window = get_option('wpsc_modal_window');
     <?php
     } else {
     ?>
-    <?php _e('Tickets','supportcandy');?>
+    Requests Dashboard
     <?php
     }
     ?>
   </h3>
-  
+<!-- PATT END --> 
   <div id="wpsc_tickets_container" class="row" style="border-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;"></div>
   
   <div id="wpsc_alert_success" class="alert alert-success wpsc_alert" style="display:none;" role="alert">
