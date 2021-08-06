@@ -15,19 +15,21 @@
   border-radius: 5px;
 }
 
+/* PATT BEGIN */
 .wpsc_setting_pills > li > a {
-  color: #333333;
+  color: white;
   border-width: 0.5px;
   border-style: solid;
-  background-color: #ffffff !important;
+  background-color: black !important;
   border-color:#fff;
 }
 
 .wpsc_setting_pills > li.active > a, .wpsc_setting_pills > li.active > a:hover, .wpsc_setting_pills > li.active > a:focus {
   color: #ffffff;
-  background-color: #0088CC !important;
+  background-color: #005885 !important;
   border-color:#0088CC;
 }
+/* PATT END */
 
 .wpsc_setting_pills > li > a:hover, .wpsc_setting_pills > li > a:focus{
   color: #333333;

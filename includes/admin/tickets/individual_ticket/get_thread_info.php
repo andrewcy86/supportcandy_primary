@@ -52,10 +52,12 @@ ob_start();
 <div id="wpsc_raised_extra_info">
 	<table class="table table-hover">
 		<tr>
+		    <th scope="col"></th>
 			<td style="width:200px;"><strong><?php _e('IP Address','supportcandy'); ?></strong></td>
 			<td><?php echo htmlentities($ip_address); ?></td>
 		</tr>
 		<tr>
+		    <th scope="col"></th>
 			<?php if($source == 'raised_by'){ ?>
 			<td><strong><?php _e('Ticket Source','supportcandy'); ?></strong></td>
 		<?php } else { ?>
@@ -64,14 +66,17 @@ ob_start();
 			<td><?php echo htmlentities($reply_type); ?></td>
 		</tr>
 		<tr>
+		    <th scope="col"></th>
 			<td><strong><?php _e('Operating System','supportcandy'); ?></strong></td>
 			<td><?php echo htmlentities($os); ?></td>
 		</tr>
 		<tr>
+		    <th scope="col"></th>
 			<td><strong><?php _e('Browser','supportcandy'); ?></strong></td>
 			<td><?php echo htmlentities($browser); ?></td>
 		</tr>
 		<tr>
+		    <th scope="col"></th>
 			<td><strong><?php _e('Ticket URL','supportcandy'); ?></strong></td>
 			<td><?php echo ($ticket_url); ?></td>
 		</tr>

@@ -54,18 +54,16 @@ ob_start();
     
     $r3_array = array($shipped_tag->term_id,$complete_tag->term_id);
     
-    // NEW - START
     $is_ext_shipping = Patt_Custom_Func::using_ext_shipping( $ticket_id );
-    // NEW - END
-    //$debug_text = $is_ext_shipping ? 'true' : 'false';
     
-    //echo $debug_text;
     //PATT END
     ?>
 
 <div class="form-group">
 		<label for="wpsc_default_ticket_status"><?php _e('Ticket Status','supportcandy');?></label>
-		<select class="form-control" name="edit_status" id="edit_status">
+		<!--PATT BEGIN -->
+		<select class="form-control" name="edit_status" id="edit_status" aria-label="Edit Status">
+		<!--PATT END -->
 			<?php
 			//PATT BEGIN
 			$hidden_status = '';
@@ -104,7 +102,7 @@ ob_start();
                     $disabled = 'disabled';
                 }
                 
-                // NEW - START
+                
                 if( !$is_ext_shipping ) {
                   if (in_array($status->term_id, $shipping_array)) {
                       $disabled = 'disabled';
@@ -117,7 +115,6 @@ ob_start();
                   }
                 }
                 
-                // NEW - END
                 
                 if (in_array($status_id, $pre_received_array) && in_array($status->term_id, $post_received_array)) {
                     $disabled = 'disabled';
@@ -222,7 +219,9 @@ echo '<input type="hidden" name="category" value="'.Patt_Custom_Func::get_defaul
 
 	<div class="form-group">
 		<label for="wpsc_default_ticket_priority"><?php _e('Ticket priority','supportcandy');?></label>
-		<select class="form-control" name="priority">
+		<!--PATT BEGIN -->
+		<select class="form-control" name="priority" aria-label="Request Priority">
+		<!--PATT END -->
 			<?php
 			$priorities = get_terms([
 				'taxonomy'   => 'wpsc_priorities',

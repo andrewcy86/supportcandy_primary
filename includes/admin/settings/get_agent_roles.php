@@ -21,7 +21,9 @@ $agent_role = get_option('wpsc_agent_role');
 <ul class="wpsc-sortable">
 	<?php foreach ( $agent_role as $key => $val ) :?>
 		<li class="ui-state-default">
-			<div class="wpsc-flex-container" style="background-color:#1E90FF;color:#fff;">
+		    <!--PATT BEGIN-->
+			<div class="wpsc-flex-container" style="background-color:#005885;color:#fff;">
+			<!--PATT END-->
 				<div class="wpsc-sortable-label"><?php echo $val['label']?></div>
 				<div class="wpsc-sortable-edit" onclick="wpsc_get_edit_agent_role(<?php echo $key?>);" style="margin-left:40px;"><i class="fa fa-edit"></i></div>
 				<div class="wpsc-sortable-delete" onclick="wpsc_delete_agent_role(<?php echo $key?>);"><i class="fa fa-trash"></i></div>

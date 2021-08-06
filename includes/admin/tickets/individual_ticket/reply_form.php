@@ -54,7 +54,9 @@ if($allow_reply){
 							(in_array('agents',$wpsc_allow_attach_reply_form) && $current_user->has_cap('wpsc_agent')) || $current_user->has_cap('edit_published_posts') ){
 								$notice_flag = true;
 						?>
-						<span onclick="wpsc_attachment_upload('<?php echo 'attach_'.$term_id?>','desc_attachment');"><?php _e('Attach file','supportcandy')?></span>
+						<!--PATT BEGIN -->
+						<a href="#" onclick="wpsc_attachment_upload('<?php echo 'attach_'.$term_id?>','desc_attachment');" style="text-decoration:underline; color:#1d4289 !important"><?php _e('Attach file','supportcandy')?></a>
+						<!--PATT END -->
 						<?php
 					} ?>
 	        <?php if ($wpscfunction->has_permission('add_note',$ticket_id)):?>

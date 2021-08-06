@@ -27,7 +27,9 @@ $categories = get_terms([
 <ul class="wpsc-sortable">
 	<?php foreach ( $categories as $category ) :?>
 		<li class="ui-state-default" data-id="<?php echo $category->term_id?>">
-			<div class="wpsc-flex-container" style="background-color:#1E90FF;color:#fff;">
+		    <!--PATT BEGIN-->
+			<div class="wpsc-flex-container" style="background-color:#005885;color:#fff;">
+		    <!--PATT END-->
 				<div class="wpsc-sortable-handle"><i class="fa fa-bars"></i></div>
 				<div class="wpsc-sortable-label"><?php echo $category->name?></div>
 				<div class="wpsc-sortable-edit" onclick="wpsc_get_edit_category(<?php echo $category->term_id?>);"><i class="fa fa-edit"></i></div>

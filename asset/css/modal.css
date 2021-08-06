@@ -39,7 +39,9 @@
 
 #wpsc_popup_body{
   min-height: 100px;
-  max-height: 300px;
+  /*PATT BEGIN*/
+  max-height: calc(100vh - 210px);
+  /*PATT END*/
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #fff;
@@ -59,7 +61,7 @@
 }
 
 .wpsc_popup_close{
-  background-color: #AFAFAF;
+  background-color: #444444;
   color: #fff !important;
 }
 

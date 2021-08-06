@@ -3,14 +3,16 @@
   font-size: 13px !important;
 }
 
+/* PATT BEGIN */
 #wpsc_tickets_container {
   border-radius: 4px;
   border: 1px solid #1C5D8A;
   background-color: #fff;
-  color: #2C3E50;
+  color: black !important;
   min-height: 300px;
   width: 99%;
 }
+/* PATT END */
 
 #wpsc_tickets_container .wpsc_loading_icon{
   margin-top: 118px;

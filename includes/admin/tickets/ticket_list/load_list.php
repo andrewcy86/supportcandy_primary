@@ -24,10 +24,6 @@ include WPPATT_ABSPATH.'includes/admin/pages/scripts/request_cleanup.php';
 ?>
 <style>
 
-a:link, a:visited {
-  color:#107799;
-}
-
 div.dataTables_processing { 
     z-index: 1; 
 }
@@ -103,16 +99,16 @@ color: rgb(255, 255, 255) !important;
 </style>
 <div class="row wpsc_tl_action_bar" style="background-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;">
   <div class="col-sm-12">
-  	        <button type="button" id="wpsc_load_new_create_ticket_btn" onclick="wpsc_get_create_ticket();" class="btn btn-sm wpsc_create_ticket_btn" style="<?php echo $create_ticket_btn_css?>"><i class="fa fa-plus"></i> <?php _e('New Ticket','supportcandy')?></button>
-        <button type="button" id="wpsc_individual_ticket_list_btn" onclick="location.href='admin.php?page=wpsc-tickets';" class="btn btn-sm wpsc_action_btn" style="<?php echo $action_default_btn_css?>"><i class="fa fa-list-ul"></i> <?php _e('Ticket List','supportcandy')?> <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-request-list-button'); ?>" aria-label="Request Help"><i class="far fa-question-circle"></i></a></button>
-		<button type="button" class="btn btn-sm wpsc_action_btn" id="wpsc_individual_refresh_btn" style="<?php echo $action_default_btn_css?> margin-right: 30px !important;"><i class="fas fa-retweet"></i> <?php _e('Reset Filters','supportcandy')?></button>
+  	        <button type="button" id="wpsc_load_new_create_ticket_btn" onclick="wpsc_get_create_ticket();" class="btn btn-sm wpsc_create_ticket_btn" style="<?php echo $create_ticket_btn_css?>"><i class="fa fa-plus" aria-hidden="true" title="New Request"></i><span class="sr-only">New Ticket</span> <?php _e('New Ticket','supportcandy')?></button>
+        <button type="button" id="wpsc_individual_ticket_list_btn" onclick="location.href='admin.php?page=wpsc-tickets';" class="btn btn-sm wpsc_action_btn" style="<?php echo $action_default_btn_css?>"><i class="fa fa-list-ul" aria-hidden="true" title="Request List"></i><span class="sr-only">Ticket List</span> <?php _e('Ticket List','supportcandy')?> <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-request-list-button'); ?>" aria-label="Request Help"><i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a></button>
+		<button type="button" class="btn btn-sm wpsc_action_btn" id="wpsc_individual_refresh_btn" style="<?php echo $action_default_btn_css?> margin-right: 30px !important;"><i class="fas fa-retweet" aria-hidden="true" title="Reset Filters"></i><span class="sr-only">Reset Filters</span> <?php _e('Reset Filters','supportcandy')?></button>
 <?php		
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
 {
 ?>
-<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_delete_tickets" style="<?php echo $action_default_btn_css?>"><i class="fa fa-trash"></i> <?php _e('Archive','supportcandy')?></button>
-<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner_mobile" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-location';?>'"><i class="fas fa-barcode"></i> Barcode Scanner</button>
-<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner_desktop" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-manual-location';?>'"><i class="fas fa-barcode"></i> Barcode Scanner</button>
+<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_delete_tickets" style="<?php echo $action_default_btn_css?>"><i class="fa fa-trash" aria-hidden="true" title="Archive"></i><span class="sr-only">Archive</span> <?php _e('Archive','supportcandy')?></button>
+<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner_mobile" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-location';?>'"><i class="fas fa-barcode" aria-hidden="true" title="Barcode Scanner"></i><span class="sr-only">Barcode Scanner</span> Barcode Scanner</button>
+<button type="button" class="btn btn-sm wpsc_btn_bulk_action wpsc_action_btn checkbox_depend" id="btn_location_scanner_desktop" style="<?php echo $action_default_btn_css?>" onclick="window.location.href = '<?php echo WP_HOME . '/barcode-manual-location';?>'"><i class="fas fa-barcode" aria-hidden="true" title="Barcode Scanner"></i><span class="sr-only">Barcode Scanner Manual</span> Barcode Scanner</button>
 <?php
 }
 ?>		
@@ -124,7 +120,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 	<div class="col-sm-4 col-md-3 wpsc_sidebar individual_ticket_widget">
 
 							<div class="row" id="wpsc_status_widget" style="background-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_bg_color']?> !important;color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_text_color']?> !important;border-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_border_color']?> !important;">
-					      <h4 class="widget_header"><i class="fa fa-filter"></i> Filters <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-filters'); ?>" aria-label="Help Filters"><i class="far fa-question-circle"></i></a>
+					      <h4 class="widget_header"><i class="fa fa-filter" aria-hidden="true" title="Filters"></i><span class="sr-only">Filters</span> Filters <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-filters'); ?>" aria-label="Help Filters"><i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a>
 								</h4>
 								<hr class="widget_divider">
 
@@ -226,7 +222,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 												<div class="form-group wpsp_filter_display_element wpsc_assign_agents ">
 <!-- 													<div class="flex-container searched-user " style="padding:5px;font-size:1.0em;">  -->
 													<div class="flex-container searched-user staff-badge" style=""> 
-														<?php echo htmlentities($agent_name); ?><span class="remove-user staff-close"><i class="fa fa-times"></i></span>
+														<?php echo htmlentities($agent_name); ?><span class="remove-user staff-close"><i class="fa fa-times" aria-hidden="true" title="Remove User"></i><span class="sr-only">Remove User</span></span>
 														  <input type="hidden" name="assigned_agent[]" value="<?php echo htmlentities($agent) ?>" />
 					<!-- 									  <input type="hidden" name="new_requestor" value="<?php echo htmlentities($agent) ?>" /> -->
 													</div>
@@ -252,8 +248,8 @@ WHERE active = 0 AND id <> -99999"
 $pending_delete_count = $get_pending_delete_count->count;
 
 ?>
-<h4 class="widget_header"><i class="far fa-trash-alt"></i> <a href="admin.php?page=request_delete">Archive</a> <?php if ($pending_delete_count > 0) { ?><span class="update-plugins count-<?php echo $pending_delete_count ?>"><span class="update-count"><?php echo $pending_delete_count ?></span></span><?php }?></span>  
-<div class="large-tooltip" style="display:inline; padding-left:5px; width: 325px; position: absolute;"><a href="#" id="recycletooltip" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-recycle-bin'); ?>" aria-label="Archive Help"><i class="far fa-question-circle"></i></a></div>
+<h4 class="widget_header"><i class="far fa-trash-alt" aria-hidden="true" title="Archive"></i><span class="sr-only">Archive</span> <a href="admin.php?page=request_delete" style="text-decoration: underline;">Archive</a> <?php if ($pending_delete_count > 0) { ?><span class="update-plugins count-<?php echo $pending_delete_count ?>"><span class="update-count"><?php echo $pending_delete_count ?></span></span><?php }?></span>  
+<div class="large-tooltip" style="display:inline; padding-left:5px; width: 325px; position: absolute;"><a href="#" id="recycletooltip" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-recycle-bin'); ?>" aria-label="Archive Help"><i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a></div>
 
 <hr class="widget_divider">
 <?php		
@@ -274,7 +270,7 @@ $pending_delete_count = $get_pending_delete_count->count;
   <div class="col-sm-8 col-md-9 wpsc_it_body">
 <div class="table-responsive" style="overflow-x:auto;">
 <input type="text" id="searchGeneric" class="form-control" name="custom_filter[s]" value="" autocomplete="off" placeholder="Search..." aria-label="Search">
-<i class="fa fa-search wpsc_search_btn wpsc_search_btn_sarch"></i>
+<i class="fa fa-search wpsc_search_btn wpsc_search_btn_sarch" aria-hidden="true" title="Search"></i><span class="sr-only">Search</span>
 <br /><br />
 <table id="tbl_templates_requests" class="display nowrap" cellspacing="5" cellpadding="5" width="100%">
         <thead>
@@ -283,17 +279,16 @@ $pending_delete_count = $get_pending_delete_count->count;
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
 {
 ?>
-                <th class="datatable_header"></th>
+                <th class="datatable_header" scope="col"></th>
 <?php
 }
 ?>
-                <th class="datatable_header">Request ID</th>
-                <th class="datatable_header">Priority</th>
-                <th class="datatable_header">Status</th>
-                <!--<th class="datatable_header">Status <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" aria-label="Box Status Help" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-box-status'); ?>"><i class="far fa-question-circle" style="color:#FFFFFF"></i></a></th>-->
-                <th class="datatable_header">Name</th></th>
-                <th class="datatable_header">Location</th>
-                <th class="datatable_header">Last Updated</th>
+                <th class="datatable_header" scope="col">Request ID</th>
+                <th class="datatable_header" scope="col">Priority</th>
+                <th class="datatable_header" scope="col">Status</th>
+                <th class="datatable_header" scope="col">Name</th></th>
+                <th class="datatable_header" scope="col">Location</th>
+                <th class="datatable_header" scope="col">Last Updated</th>
             </tr>
         </thead>
     </table>
@@ -431,7 +426,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 <?php
 }
 ?>
-       { data: 'request_id_flag' },
+       { data: 'request_id_flag', 'class' : 'text_highlight' },
        { data: 'ticket_priority' },
        { data: 'ticket_status' },
        { data: 'customer_name' },
@@ -695,7 +690,7 @@ function get_display_user_html(user_name, termmeta_user_val) {
 // 						+'<div class="flex-container searched-user" style="padding:5px;font-size:1.0em;">'
 						+'<div class="flex-container searched-user staff-badge" style="">'
 							+user_name
-							+'<span  class="remove-user staff-close" ><i class="fa fa-times"></i></span>' 
+							+'<span  class="remove-user staff-close" ><i class="fa fa-times" aria-hidden="true" title="Remove User"></i><span class="sr-only">Remove User</span></span>' 
 						+'<input type="hidden" name="assigned_agent[]" value="'+termmeta_user_val+'" />'
 						+'</div>'
 					+'</div>';	

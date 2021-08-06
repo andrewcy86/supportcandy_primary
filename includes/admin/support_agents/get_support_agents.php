@@ -38,9 +38,11 @@ do_action('wpsc_pending_support_agents');
 
 <table class="table table-striped table-hover">
   <tr>
-    <th><?php _e('Agent Name','supportcandy')?></th>
-    <th><?php _e('Role','supportcandy')?></th>
-    <th><?php _e('Actions','supportcandy')?></th>
+    <!--PATT BEGIN-->
+    <th scope="col"><?php _e('Agent Name','supportcandy')?></th>
+    <th scope="col"><?php _e('Role','supportcandy')?></th>
+    <th scope="col"><?php _e('Actions','supportcandy')?></th>
+    <!--PATT END-->
   </tr>
   <?php foreach ( $agents as $agent ) :
     $agent_name = get_term_meta( $agent->term_id, 'label', true);
