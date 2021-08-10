@@ -33,6 +33,7 @@ jQuery(document).on('keydown', function(e) {
     
         if (e.keyCode == 13) {
             //alert('enter');
+			e.preventDefault();
             document.activeElement.click();
     }
     
