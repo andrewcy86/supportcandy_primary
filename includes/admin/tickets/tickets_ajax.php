@@ -35,6 +35,8 @@ switch ($setting_action) {
     case 'rfid': include WPPATT_ABSPATH . 'includes/admin/pages/rfid-init.php';
     break;
     
+    case 'todo': include WPPATT_ABSPATH . 'includes/admin/pages/todo-init.php';
+    break;
 // PATT END
 
 	case 'sign_in': include WPSC_ABSPATH . 'includes/admin/tickets/sign_in/sign_in.php';

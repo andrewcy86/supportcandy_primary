@@ -33,6 +33,14 @@ $role_id = get_user_option('wpsc_agent_role');
 
 //PATT START
 $is_active = Patt_Custom_Func::ticket_active( $ticket_id );
+$new_request_tag = get_term_by('slug', 'open', 'wpsc_statuses'); //3
+$tabled_tag = get_term_by('slug', 'tabled', 'wpsc_statuses'); //2763
+$initial_review_rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses'); //670
+$cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses'); //69
+$completed_dispositioned_tag = get_term_by('slug', 'completed-dispositioned', 'wpsc_statuses'); //1003
+
+//Raised By, Staff Only Fields, Recipients
+$status_id_arr = array($initial_review_rejected_tag->term_id, $cancelled_tag->term_id, $completed_dispositioned_tag->term_id);
 //PATT END
 
 include_once WPSC_ABSPATH . 'includes/admin/tickets/create_ticket/class-fields-formatting.php';
@@ -65,29 +73,29 @@ if((in_array('register_user',$wpsc_allow_rich_text_editor) && !$current_user->ha
 ?>
 
 <div class="row wpsc_tl_action_bar" style="background-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;">
-  
+
 	<div class="col-sm-12">
         <!--PATT BEGIN 508-->
 		<button type="button" id="wpsc_individual_new_ticket_btn" onclick="wpsc_get_create_ticket();" class="btn btn-sm wpsc_create_ticket_btn" style="<?php echo $create_ticket_btn_css?>"><i class="fa fa-plus" aria-hidden="true" title="New Request"></i><span class="sr-only">New Request</span> <?php _e('New Ticket','supportcandy')?></button>
         <!--PATT END-->
 		<?php if ($current_user->ID):?>
 		<!--PATT BEGIN 508-->
-			<button type="button" id="wpsc_individual_ticket_list_btn" onclick="wpsc_get_ticket_list();" class="btn btn-sm wpsc_action_btn" style="<?php echo $action_default_btn_css?> margin-right: 30px !important;"><i class="fa fa-list-ul" aria-hidden="true" title="Request List"></i><span class="sr-only">Request List</span> <?php _e('Ticket List','supportcandy')?> <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-request-list-button'); ?>"><i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a></button> 
+			<button type="button" id="wpsc_individual_ticket_list_btn" onclick="wpsc_get_ticket_list();" class="btn btn-sm wpsc_action_btn" style="<?php echo $action_default_btn_css?>"><i class="fa fa-list-ul" aria-hidden="true" title="Request List"></i><span class="sr-only">Request List</span> <?php _e('Ticket List','supportcandy')?> <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-request-list-button'); ?>"><i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a></button> 
 		<!--PATT END-->
 		<?php endif;?>
-		<!--PATT BEGIN 508-->
-		<button type="button" class="btn btn-sm wpsc_action_btn" id="wpsc_individual_refresh_btn" onclick="wpsc_open_ticket(<?php echo $ticket_id?>);" style="<?php echo $action_default_btn_css?>"><i class="fas fa-sync-alt" aria-hidden="true" title="Refresh"></i><span class="sr-only">Refresh</span> <?php _e('Refresh','supportcandy')?></button>
-		<!--PATT END-->
-		<?php if ($wpscfunction->has_permission('delete_ticket',$ticket_id) && !$ticket_status):?>
-		<!--PATT BEGIN 508-->
-			<button type="button" class="btn btn-sm wpsc_action_btn wpsc_restore_btn" id="wpsc_individual_restore_btn" onclick="get_restore_ticket(<?php echo $ticket_id?>);" style="<?php echo $action_default_btn_css?>"><i class="fa fa-window-restore" aria-hidden="true" title="Restore"></i><span class="sr-only">Restore</span> <?php _e('Restore','supportcandy')?></button>
-		<!--PATT END-->
-		<?php endif;?>
+		
 		<?php if ($wpscfunction->has_permission('delete_ticket',$ticket_id) && !$ticket_status ):?>
 		<!--PATT BEGIN 508-->
 			<button type="button" class="btn btn-sm wpsc_action_btn wpsc_restore_btn" id="wpsc_delete_ticket_permanently" onclick="wpsc_delete_ticket_permanently(<?php echo $ticket_id?>);" style="<?php echo $action_default_btn_css?>"><i class="fa fa-trash" aria-hidden="true" title="Archive"></i><span class="sr-only">Archive</span> <?php _e('Delete Permanently','supportcandy')?></button>
 		<!--PATT END-->
 		<?php endif;?>
+		
+		<?php if ($wpscfunction->has_permission('delete_ticket',$ticket_id) && !$ticket_status):?>
+		<!--PATT BEGIN 508-->
+			<button type="button" class="btn btn-sm wpsc_action_btn wpsc_restore_btn" id="wpsc_individual_restore_btn" onclick="get_restore_ticket(<?php echo $ticket_id?>);" style="<?php echo $action_default_btn_css?>"><i class="fa fa-window-restore" aria-hidden="true" title="Restore"></i><span class="sr-only">Restore</span> <?php _e('Restore','supportcandy')?></button>
+		<!--PATT END-->
+		<?php endif;?>
+		
 		<?php if ( ($customer_email == $current_user->user_email && get_option('wpsc_allow_customer_close_ticket')) || $wpscfunction->has_permission('change_status',$ticket_id) ):
 			if($ticket_status && ($status_id !=$wpsc_close_ticket_status)){?>
 			    <!--PATT BEGIN
@@ -103,8 +111,12 @@ if((in_array('register_user',$wpsc_allow_rich_text_editor) && !$current_user->ha
 		<!--PATT END-->
 		<?php endif;?>
 		
+		<!--PATT BEGIN-->
+		<?php do_action('wpsc_after_indidual_ticket_static_action_btn',$ticket_id);?>
+		<button tabindex="-1" style="cursor: default !important; background-color: none !important; border: none !important; background: none !important; margin-left:30px !important;"></button>
 		<?php do_action('wpsc_after_indidual_ticket_action_btn',$ticket_id);?>
-		
+		</span>
+        <!--PATT END-->
   </div>
 	
 </div>
@@ -289,7 +301,7 @@ echo $padded_request_id;
  echo '<span class="wpsp_admin_label" style="background-color:#000000;color:#ffffff;"><i class="fas fa-database" aria-hidden="true" title="ECMS"></i><span class="sr-only">ECMS</span> ECMS</span>';
             }
 if($is_active == 0){
-echo '<br /><br /><span style="font-size: 1.1em; color:#FF0000;"><i class="fas fa-archive" aria-hidden="true" title="Archive"></i><span class="sr-only">Archive</span> This request is archived</span><br />';
+echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas fa-archive" aria-hidden="true" title="Archive"></i><span class="sr-only">Archive</span> This request is archived</span><br />';
 }
 ?>
 <!--PATT END -->
@@ -700,7 +712,7 @@ PATT END */
 					          <?php echo $ticket_widget_name;?> <a href="#" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-status'); ?>" aria-label="Request Help">
 					            <!--PATT BEGIN 508-->  
 					              <i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a></a>
-					            <!--PATT END-->
+								<!--PATT END-->		
 									<?php if ($wpscfunction->has_permission('change_status',$ticket_id) && $wpscfunction->has_permission('change_agentonly_fields',$ticket_id) && $ticket_status):?>
 										<button id="wpsc_individual_change_ticket_status" onclick="wpsc_get_change_ticket_status(<?php echo $ticket_id?>)" class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>">
 									<!--PATT BEGIN 508-->	    
@@ -747,10 +759,12 @@ PATT END */
 							          <!--PATT END-->
 							          <span class="sr-only">Raised By</span> <?php echo $ticket_widget_name;?>
 											<?php if ($wpscfunction->has_permission('change_raised_by',$ticket_id) && $ticket_status):?>
+												<!--PATT BEGIN-->
 												<?php		
-                                                if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
+                                                if ( (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager')) && !in_array($status_id, $status_id_arr) )
                                                 {
                                                 ?>
+                                                <!--PATT END-->
                                                 <button id="wpsc_individual_change_raised_by" onclick="wpsc_get_change_raised_by(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" >
                                                     <!--PATT BEGIN 508-->
                                                     <i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span></button>
@@ -792,7 +806,7 @@ PATT END */
 							          <!--PATT END-->
 											<!--PATT START-->
                                             <?php 
-                                            if($is_active == 1) {
+                                            if($is_active == 1 && !in_array($status_id, $status_id_arr)) {
                                             ?>
                                             <button id="wpsc_individual_add_people" onclick="wpsc_get_add_ticket_users(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" ><i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span></button>
                                             <?php } ?>
@@ -882,9 +896,9 @@ PATT END */
 							<div class="row" id="wpsc_ticket_fields_widget" style="background-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_bg_color']?> !important;color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_text_color']?> !important;border-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_ticket_widgets_border_color']?> !important;">
 								<h4 class="widget_header">
 								    <!--PATT BEGIN 508-->
-								    <i class="fab fa-wpforms" aria-hidden="true" title="Staff Only Fields"></i>
+								    <i class="fab fa-wpforms" aria-hidden="true" title="Staff Only Fields"></i><span class="sr-only">Staff Only Fields</span>
 								    <!--PATT END-->
-								    <span class="sr-only">Staff Only Fields</span> <?php echo $ticket_widget_name;?>
+								    <?php echo $ticket_widget_name;?>
 									<?php if ( apply_filters('wpsc_get_user_permission',$wpscfunction->has_permission('change_ticket_fields',$ticket_id)) && $ticket_status):?>
 										<button id="wpsc_individual_change_ticket_fields" onclick="wpsc_get_change_ticket_fields(<?php echo $ticket_id ?>);" class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" >
 										    <!--PATT BEGIN 508-->
@@ -947,7 +961,9 @@ PATT END */
 						          <i class="fab fa-wpforms" aria-hidden="true" title="Staff Only Fields"></i><span class="sr-only">Staff Only Fields</span>
 						          <!--PATT END-->
 						          <?php echo $ticket_widget_name;?>
-										<?php if ($wpscfunction->has_permission('change_agentonly_fields',$ticket_id) && $ticket_status):?>
+						            <!--PATT BEGIN-->
+										<?php if (!in_array($status_id, $status_id_arr) && $wpscfunction->has_permission('change_agentonly_fields',$ticket_id) && $ticket_status):?>
+								    <!--PATT END-->			
 											<button id="wpsc_individual_change_agent_fields" onclick="wpsc_get_change_agent_fields(<?php echo $ticket_id ?>)" class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" >
 											    <!--PATT BEGIN 508-->
 											    <i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span>

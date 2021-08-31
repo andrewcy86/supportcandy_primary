@@ -33,8 +33,10 @@ jQuery(document).on('keydown', function(e) {
     
         if (e.keyCode == 13) {
             //alert('enter');
-			e.preventDefault();
-            document.activeElement.click();
+                    if (jQuery(target).parents('[id=wpsc_popup_footer]').length) { 
+                    e.preventDefault();
+                    document.activeElement.click();
+                    }
     }
     
     return true;

@@ -23,7 +23,7 @@ $r3_check = $wpscfunction->get_ticket_meta($ticket_id,'r3_preset');
 $customer_name   	= $ticket_data['customer_name'];
 
 $agent_permissions = $wpscfunction->get_current_agent_permissions();
-$agent_permissions['label'];
+$agent_type = $agent_permissions['label']; 
 //PATT END
 ob_start();
 ?>
@@ -31,10 +31,15 @@ ob_start();
 <div id="comment-alert" class=" alert alert-danger">Please enter a rejection reason.  Saving Disabled.</div>
 <!-- PATT END -->
 
+
 <form id="frm_get_ticket_change_status" method="post">
     <?php
     //PATT BEGIN
+    
+    $box_cancelled_tag = get_term_by('slug', 'cancelled', 'wpsc_box_statuses');
+    
     $new_tag = get_term_by('slug', 'open', 'wpsc_statuses');
+    $tabled_tag = get_term_by('slug', 'tabled', 'wpsc_statuses');
     $complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'wpsc_statuses');
     $rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses');
     $shipped_tag = get_term_by('slug', 'awaiting-agent-reply', 'wpsc_statuses');   
@@ -47,7 +52,8 @@ ob_start();
     $sems_tag = get_term_by('slug', 'sems', 'wpsc_statuses');
     $inprocess_tag = get_term_by('slug', 'in-process', 'wpsc_statuses');
     $completed_tag = get_term_by('slug', 'completed-dispositioned', 'wpsc_statuses');
-
+    $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses');
+    
     $post_received_array = array($ecms_tag->term_id,$inprocess_tag->term_id,$completed_tag->term_id);
 
     $shipping_array = array($shipped_tag->term_id,$received_tag->term_id);
@@ -56,6 +62,25 @@ ob_start();
     
     $is_ext_shipping = Patt_Custom_Func::using_ext_shipping( $ticket_id );
     
+    $cancelled_array = array($new_tag->term_id,$tabled_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $completed_array = array($new_tag->term_id,$tabled_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$cancelled_tag->term_id);
+    $ecms_sems_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$cancelled_tag->term_id);
+    $inprocess_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id);
+    $received_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,);
+ 
+    //Note to do for all external shipping
+    $shipped_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$inprocess_tag->term_id,$received_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $r3_shipped_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+   
+    $rejected_array = array($new_tag->term_id,$complete_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    
+    $complete_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $r3_complete_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    
+    $tabled_array = array($new_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,);
+    $new_array = array($new_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+
+
     //PATT END
     ?>
 
@@ -96,13 +121,14 @@ ob_start();
 				//PATT BEGIN
                 $disabled = '';
                 $hidden_status = '<input type="hidden" name="status" id="status" value="'.$status_id.'" />';
-                
-                
+
                 if ( in_array($status->term_id, array($new_tag->term_id)) ) {
                     $disabled = 'disabled';
-                }
+                } 
                 
-                
+if($agent_type == 'Manager') {
+
+/*
                 if( !$is_ext_shipping ) {
                   if (in_array($status->term_id, $shipping_array)) {
                       $disabled = 'disabled';
@@ -115,11 +141,69 @@ ob_start();
                   }
                 }
                 
-                
                 if (in_array($status_id, $pre_received_array) && in_array($status->term_id, $post_received_array)) {
                     $disabled = 'disabled';
                 }
+*/
+
+
+                if ($status_id == $cancelled_tag->term_id && in_array($status->term_id, $cancelled_array)) {
+                    $disabled = 'disabled';
+                }
                 
+                if ($status_id == $completed_tag->term_id && in_array($status->term_id, $completed_array)) {
+                    $disabled = 'disabled';
+                }
+                
+                if (($status_id == $sems_tag->term_id || $status_id == $ecms_tag->term_id) && in_array($status->term_id, $ecms_sems_array)) {
+                    $disabled = 'disabled';
+                }
+                
+                if ($status_id == $inprocess_tag->term_id && in_array($status->term_id, $inprocess_array)) {
+                    $disabled = 'disabled';
+                }
+                
+                if ($status_id == $received_tag->term_id && in_array($status->term_id, $received_array)) {
+                    $disabled = 'disabled';
+                }
+                
+                if(in_array("1", $r3_check)) {
+                if ($status_id == $shipped_tag->term_id && in_array($status->term_id, $shipped_array)) {
+                    $disabled = 'disabled';
+                }         
+                } else {
+                if ($status_id == $shipped_tag->term_id && in_array($status->term_id, $r3_shipped_array)) {
+                    $disabled = 'disabled';
+                } 
+                
+                }
+                
+
+                if ($status_id == $rejected_tag->term_id && in_array($status->term_id, $rejected_array)) {
+                    $disabled = 'disabled';
+                }     
+                
+                
+                if(in_array("1", $r3_check)) {
+                if ($status_id == $complete_tag->term_id && in_array($status->term_id, $r3_complete_array)) {
+                    $disabled = 'disabled';
+                }            
+                } else {
+                if ($status_id == $complete_tag->term_id && in_array($status->term_id, $complete_array)) {
+                    $disabled = 'disabled';
+                } 
+                
+                }
+                
+                if ($status_id == $tabled_tag->term_id && in_array($status->term_id, $tabled_array)) {
+                    $disabled = 'disabled';
+                }  
+                
+                if ($status_id == $new_tag->term_id && in_array($status->term_id, $new_array)) {
+                    $disabled = 'disabled';
+                }  
+                
+}
                 echo '<option '.$selected.' value="'.$status->term_id.'" '.$disabled.'>'.$wpsc_custom_status_localize['custom_status_'.$status->term_id].'</option>';
                 
                 //PATT END
@@ -233,7 +317,7 @@ echo '<input type="hidden" name="category" value="'.Patt_Custom_Func::get_defaul
 			
 			//PATT BEGIN
 			$key = array_search('Critical', array_column($priorities, 'name'));
-			if ($agent_permissions['label'] == 'Agent')
+			if ($agent_type == 'Agent')
             {
                  unset($priorities[$key]);
             }
@@ -356,7 +440,6 @@ postvartktid: '<?php echo $ticket_id ?>',
 postvardcname: jQuery("[name=category]").val()
 },
 function (response) {
-    
 
 		let data = {
 			action: 'wppatt_loc_instant',
@@ -374,7 +457,7 @@ function (response) {
 		
 		});		
 
-	
+alert(response);
 //if(jQuery("[name='category']").val()) {
 //alert(response);
 //}

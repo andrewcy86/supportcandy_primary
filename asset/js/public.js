@@ -78,7 +78,7 @@ function wpsc_open_ticket(ticket_id){
 }
 
 function wpsc_get_create_ticket(){
-  
+    
   var is_tinymce = (typeof tinyMCE != "undefined") && tinyMCE.activeEditor && !tinyMCE.activeEditor.isHidden();
   if (jQuery('#wpsc_individual_new_ticket_btn').is(":visible") && is_tinymce){
     var description = tinyMCE.activeEditor.getContent().trim();
