@@ -173,13 +173,49 @@ $critical_tag = get_term_by('slug', 'high', 'wpsc_priorities');
 			<option value="<?php echo $critical_tag->term_id; ?>">Critical</option>
          </select>
 <br /><br />
-        <select id='searchByDigitizationCenter' aria-label="Search by Digitization Center">
-           <option value=''>-- Select Digitization Center --</option>
-           <option value='East'>East</option>
-           <option value='West'>West</option>
-           <option value='Not Assigned'>Not Assigned</option>
-         </select>
-<br /><br />
+
+<?php	
+$user_digitization_center = get_user_meta( $current_user->ID, 'user_digization_center',true);
+
+if ( !empty($user_digitization_center) && $user_digitization_center == 'East' && $agent_permissions['label'] == 'Agent') { 
+?>
+<input type="hidden" id="searchByDigitizationCenter" value="East" />
+<?php 
+} 
+?>
+
+<?php
+if ( !empty($user_digitization_center) && $user_digitization_center == 'West' && $agent_permissions['label'] == 'Agent') { 
+?>
+<input type="hidden" id="searchByDigitizationCenter" value="West" />
+<?php 
+} 
+?>
+
+<?php
+if ( !empty($user_digitization_center) && (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Manager'))) { 
+?>
+				<select id='searchByDigitizationCenter' aria-label="Search by Digitization Center">
+					<option value=''>-- Select Digitization Center --</option>
+					<option value='East' <?php if(!empty($user_digitization_center) && $user_digitization_center == 'East'){ echo 'selected'; } ?>>East</option>
+					<option value='West' <?php if(!empty($user_digitization_center) && $user_digitization_center == 'West'){ echo 'selected'; } ?>>West</option>
+					<option value='Not Assigned'>Not Assigned</option>
+				</select>
+    <br /><br />
+<?php 
+} elseif(($agent_permissions['label'] == 'Requester') || ($agent_permissions['label'] == 'Requester Pallet')) {
+?>
+				<select id='searchByDigitizationCenter' aria-label="Search by Digitization Center">
+					<option value=''>-- Select Digitization Center --</option>
+					<option value='East'>East</option>
+					<option value='West'>West</option>
+					<option value='Not Assigned'>Not Assigned</option>
+				</select>
+    <br /><br />
+<?php
+}
+?>	
+
         <select id='searchByRecallDecline' aria-label='Search by Recall or Decline'>
                <option value=''>-- Select Recall or Decline --</option>
                <option value='Recall'>Recall</option>
@@ -319,7 +355,14 @@ jQuery('[data-toggle="tooltip"]').tooltip();
       data.sg = jQuery('#searchGeneric').val();
       data.rid = jQuery('#searchByRequestID').val();
       data.po = jQuery('#searchByProgramOffice').val();
+			<?php
+			if (($agent_permissions['label'] == 'Requester') || ($agent_permissions['label'] == 'Requester Pallet'))
+            {
+			?>      
       data.dc = jQuery('#searchByDigitizationCenter').val();
+   			<?php
+            }
+			?>   
       data.rd = jQuery('#searchByRecallDecline').val();
       data.es = jQuery('#searchByECMSSEMS').val();
       data.sbu = jQuery('#searchByUser').val(); 
@@ -333,7 +376,14 @@ jQuery('[data-toggle="tooltip"]').tooltip();
       jQuery('#searchGeneric').val(data.sg);
       jQuery('#searchByRequestID').val(data.rid);
       jQuery('#searchByProgramOffice').val(data.po);
+			<?php
+			if (($agent_permissions['label'] == 'Requester') || ($agent_permissions['label'] == 'Requester Pallet'))
+            {
+			?>      
       jQuery('#searchByDigitizationCenter').val(data.dc);
+			<?php
+            }
+			?>      
       jQuery('#searchByRecallDecline').val(data.rd);
       jQuery('#searchByECMSSEMS').val(data.es);
 <?php		
