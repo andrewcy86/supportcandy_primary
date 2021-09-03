@@ -432,7 +432,7 @@ function (response) {
 }
 
 if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $tabled_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
-    alert('No automatic shelf assignments made.');
+    //alert('No automatic shelf assignments made.');
 } else {
 jQuery.post(
 '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',{
