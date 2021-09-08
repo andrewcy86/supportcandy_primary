@@ -457,7 +457,7 @@ function (response) {
 		
 		});		
 
-alert(response);
+//alert(response);
 //if(jQuery("[name='category']").val()) {
 //alert(response);
 //}

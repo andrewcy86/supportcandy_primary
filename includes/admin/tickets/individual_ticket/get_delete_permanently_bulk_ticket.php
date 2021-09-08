@@ -29,6 +29,7 @@ ob_start();
 ?>
 <button type="button" class="btn wpsc_popup_close" onclick="wpsc_modal_close();"><?php _e('Cancel','supportcandy');?></button>
 <button type="button" class="btn wpsc_popup_action" onclick="wpsc_set_delete_permanently_bulk_ticket();"><?php _e('Confirm','supportcandy');?></button>
+
 <?php
 
 $footer = ob_get_clean();

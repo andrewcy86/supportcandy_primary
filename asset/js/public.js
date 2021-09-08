@@ -929,8 +929,11 @@ function wpsc_set_bulk_restore_ticket(){
    })
    .done(function (response_str) {
      toggle_ticket_list_actions();
-     wpsc_get_tickets();
-     location.reload();
+//PATT BEGIN
+     //wpsc_get_tickets();
+     //location.reload();
+     jQuery('#tbl_templates_requests_delete').DataTable().ajax.reload(null, false);
+//PATT END
    });
 
 }
@@ -1213,8 +1216,11 @@ function wpsc_set_delete_permanently_bulk_ticket(){
 		});
 //PATT END
      toggle_ticket_list_actions();
-     wpsc_get_tickets();
-     location.reload();
+//PATT BEGIN
+     //wpsc_get_tickets();
+     //location.reload();
+     jQuery('#tbl_templates_requests_delete').DataTable().ajax.reload(null, false);
+//PATT END
    });
   
 }
