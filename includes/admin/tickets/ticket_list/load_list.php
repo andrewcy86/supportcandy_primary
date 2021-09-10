@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $wpdb, $current_user, $wpscfunction;
 
-$blog_id = get_current_blog_id();
-
 $general_appearance = get_option('wpsc_appearance_general_settings');
 
 $create_ticket_btn_css       = 'background-color:'.$general_appearance['wpsc_crt_ticket_btn_action_bar_bg_color'].' !important;color:'.$general_appearance['wpsc_crt_ticket_btn_action_bar_text_color'].' !important;';
