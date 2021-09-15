@@ -3,6 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+// PATT BEGIN
+include_once( WPPATT_ABSPATH . 'includes/term-ids.php' );
+// PATT END
+
 $wpsc_captcha = get_option('wpsc_captcha',0);
 $wpsc_recaptcha_type = get_option('wpsc_recaptcha_type');
 $wpsc_get_secret_key = get_option('wpsc_get_secret_key');
@@ -33,7 +37,9 @@ if($wpsc_captcha){
 	setcookie('wpsc_secure_code','123');
 }
 
-global $current_user, $wpscfunction;
+//PATT BEGIN
+global $wpdb, $current_user, $wpscfunction;
+//PATT END
 
 $args = array();
 
@@ -184,6 +190,7 @@ $data = [];
 Patt_Custom_Func::insert_new_notification('email-new-request-created-id',$pattagentid_array,$padded_request_id,$data,$email);
 
 Patt_Custom_Func::update_init_timestamp_request($ticket_id);
+
 //PATT END
 
 ob_start();
@@ -227,6 +234,27 @@ set_ticket_id_attachment_id();
 
 
 	</script>";
+	
+//Immediately Assign Digitization Center
+
+$dc = Patt_Custom_Func::get_default_digitization_center($ticket_id);
+
+$get_dc_unassigned_boxes = $wpdb->get_results("SELECT a.storage_location_id
+FROM " . $wpdb->prefix . "wpsc_epa_boxinfo a
+INNER JOIN " . $wpdb->prefix . "wpsc_epa_storage_location b ON b.id = a.storage_location_id
+WHERE b.digitization_center = '" . $dc_not_assigned_tag->term_id . "' AND a.ticket_id = '" . $ticket_id . "'");
+
+$data_update = array('ticket_category' => $dc);
+$data_where = array('id' => $ticket_id);
+$wpdb->update($wpdb->prefix.'wpsc_ticket', $data_update, $data_where);
+
+foreach ($get_dc_unassigned_boxes as $info) {
+$storage_location_id = $info->storage_location_id;
+$data_update = array('digitization_center' => $dc);
+$data_where = array('id' => $storage_location_id);
+$wpdb->update($wpdb->prefix.'wpsc_epa_storage_location', $data_update, $data_where);
+}
+
 //PATT END		
 	echo html_entity_decode(stripslashes($thankyou_html))?>
 </div>

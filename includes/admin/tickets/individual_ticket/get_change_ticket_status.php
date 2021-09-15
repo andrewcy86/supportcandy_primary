@@ -18,6 +18,8 @@ $wpsc_custom_category_localize = get_option('wpsc_custom_category_localize');
 $wpsc_custom_priority_localize = get_option('wpsc_custom_priority_localize');
 //PATT BEGIN
 
+include_once( WPPATT_ABSPATH . 'includes/term-ids.php' );
+
 $r3_check = $wpscfunction->get_ticket_meta($ticket_id,'r3_preset');
 
 $customer_name   	= $ticket_data['customer_name'];
@@ -35,50 +37,33 @@ ob_start();
 <form id="frm_get_ticket_change_status" method="post">
     <?php
     //PATT BEGIN
-    
-    $box_cancelled_tag = get_term_by('slug', 'cancelled', 'wpsc_box_statuses');
-    
-    $new_tag = get_term_by('slug', 'open', 'wpsc_statuses');
-    $tabled_tag = get_term_by('slug', 'tabled', 'wpsc_statuses');
-    $complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'wpsc_statuses');
-    $rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses');
-    $shipped_tag = get_term_by('slug', 'awaiting-agent-reply', 'wpsc_statuses');   
-    
-    $pre_received_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id);
+    $pre_received_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id);
 
-    $received_tag = get_term_by('slug', 'received', 'wpsc_statuses');
+    $post_received_array = array($request_ecms_tag->term_id,$request_in_process_tag->term_id,$request_completed_dispositioned_tag->term_id);
 
-    $ecms_tag = get_term_by('slug', 'ecms', 'wpsc_statuses');
-    $sems_tag = get_term_by('slug', 'sems', 'wpsc_statuses');
-    $inprocess_tag = get_term_by('slug', 'in-process', 'wpsc_statuses');
-    $completed_tag = get_term_by('slug', 'completed-dispositioned', 'wpsc_statuses');
-    $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses');
+    $shipping_array = array($request_shipped_tag->term_id,$request_received_tag->term_id);
     
-    $post_received_array = array($ecms_tag->term_id,$inprocess_tag->term_id,$completed_tag->term_id);
-
-    $shipping_array = array($shipped_tag->term_id,$received_tag->term_id);
-    
-    $r3_array = array($shipped_tag->term_id,$complete_tag->term_id);
+    $r3_array = array($request_shipped_tag->term_id,$request_initial_review_complete_tag->term_id);
     
     $is_ext_shipping = Patt_Custom_Func::using_ext_shipping( $ticket_id );
     
-    $cancelled_array = array($new_tag->term_id,$tabled_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
-    $completed_array = array($new_tag->term_id,$tabled_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$cancelled_tag->term_id);
-    $ecms_sems_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$cancelled_tag->term_id);
-    $inprocess_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id);
-    $received_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,);
+    $cancelled_array = array($request_new_request_tag->term_id,$request_tabled_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
+    $completed_array = array($request_new_request_tag->term_id,$request_tabled_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_cancelled_tag->term_id);
+    $ecms_sems_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_cancelled_tag->term_id);
+    $inprocess_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id);
+    $received_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,);
  
     //Note to do for all external shipping
-    $shipped_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$inprocess_tag->term_id,$received_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
-    $r3_shipped_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $shipped_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_in_process_tag->term_id,$request_received_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
+    $r3_shipped_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
    
-    $rejected_array = array($new_tag->term_id,$complete_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $rejected_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
     
-    $complete_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
-    $r3_complete_array = array($new_tag->term_id,$complete_tag->term_id,$rejected_tag->term_id,$shipped_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $complete_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
+    $r3_complete_array = array($request_new_request_tag->term_id,$request_initial_review_complete_tag->term_id,$request_initial_review_rejected_tag->term_id,$request_shipped_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
     
-    $tabled_array = array($new_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,);
-    $new_array = array($new_tag->term_id,$shipped_tag->term_id,$received_tag->term_id,$inprocess_tag->term_id,$ecms_tag->term_id,$sems_tag->term_id,$completed_tag->term_id);
+    $tabled_array = array($request_new_request_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,);
+    $new_array = array($request_new_request_tag->term_id,$request_shipped_tag->term_id,$request_received_tag->term_id,$request_in_process_tag->term_id,$request_ecms_tag->term_id,$request_sems_tag->term_id,$request_completed_dispositioned_tag->term_id);
 
 
     //PATT END
@@ -100,7 +85,7 @@ ob_start();
 				'hide_empty' => false,
 				'orderby'    => 'meta_value_num',
 				'order'    	 => 'ASC',
-				'exclude'    => $ecms_tag->term_id,
+				'exclude'    => $request_ecms_tag->term_id,
 				'meta_query' => array('order_clause' => array('key' => 'wpsc_status_load_order')),
 			]);
             
@@ -110,7 +95,7 @@ ob_start();
 				'hide_empty' => false,
 				'orderby'    => 'meta_value_num',
 				'order'    	 => 'ASC',
-				'exclude'    => $sems_tag->term_id,
+				'exclude'    => $request_sems_tag->term_id,
 				'meta_query' => array('order_clause' => array('key' => 'wpsc_status_load_order')),
 			]);
 			
@@ -122,7 +107,7 @@ ob_start();
                 $disabled = '';
                 $hidden_status = '<input type="hidden" name="status" id="status" value="'.$status_id.'" />';
 
-                if ( in_array($status->term_id, array($new_tag->term_id)) ) {
+                if ( in_array($status->term_id, array($request_new_request_tag->term_id)) ) {
                     $disabled = 'disabled';
                 } 
                 
@@ -147,59 +132,59 @@ if($agent_type == 'Manager') {
 */
 
 
-                if ($status_id == $cancelled_tag->term_id && in_array($status->term_id, $cancelled_array)) {
+                if ($status_id == $request_cancelled_tag->term_id && in_array($status->term_id, $cancelled_array)) {
                     $disabled = 'disabled';
                 }
                 
-                if ($status_id == $completed_tag->term_id && in_array($status->term_id, $completed_array)) {
+                if ($status_id == $request_completed_dispositioned_tag->term_id && in_array($status->term_id, $completed_array)) {
                     $disabled = 'disabled';
                 }
                 
-                if (($status_id == $sems_tag->term_id || $status_id == $ecms_tag->term_id) && in_array($status->term_id, $ecms_sems_array)) {
+                if (($status_id == $request_sems_tag->term_id || $status_id == $request_ecms_tag->term_id) && in_array($status->term_id, $ecms_sems_array)) {
                     $disabled = 'disabled';
                 }
                 
-                if ($status_id == $inprocess_tag->term_id && in_array($status->term_id, $inprocess_array)) {
+                if ($status_id == $request_in_process_tag->term_id && in_array($status->term_id, $inprocess_array)) {
                     $disabled = 'disabled';
                 }
                 
-                if ($status_id == $received_tag->term_id && in_array($status->term_id, $received_array)) {
+                if ($status_id == $request_received_tag->term_id && in_array($status->term_id, $received_array)) {
                     $disabled = 'disabled';
                 }
                 
                 if(in_array("1", $r3_check)) {
-                if ($status_id == $shipped_tag->term_id && in_array($status->term_id, $shipped_array)) {
+                if ($status_id == $request_shipped_tag->term_id && in_array($status->term_id, $shipped_array)) {
                     $disabled = 'disabled';
                 }         
                 } else {
-                if ($status_id == $shipped_tag->term_id && in_array($status->term_id, $r3_shipped_array)) {
+                if ($status_id == $request_shipped_tag->term_id && in_array($status->term_id, $r3_shipped_array)) {
                     $disabled = 'disabled';
                 } 
                 
                 }
                 
 
-                if ($status_id == $rejected_tag->term_id && in_array($status->term_id, $rejected_array)) {
+                if ($status_id == $request_initial_review_rejected_tag->term_id && in_array($status->term_id, $rejected_array)) {
                     $disabled = 'disabled';
                 }     
                 
                 
                 if(in_array("1", $r3_check)) {
-                if ($status_id == $complete_tag->term_id && in_array($status->term_id, $r3_complete_array)) {
+                if ($status_id == $request_initial_review_complete_tag->term_id && in_array($status->term_id, $r3_complete_array)) {
                     $disabled = 'disabled';
                 }            
                 } else {
-                if ($status_id == $complete_tag->term_id && in_array($status->term_id, $complete_array)) {
+                if ($status_id == $request_initial_review_complete_tag->term_id && in_array($status->term_id, $complete_array)) {
                     $disabled = 'disabled';
                 } 
                 
                 }
                 
-                if ($status_id == $tabled_tag->term_id && in_array($status->term_id, $tabled_array)) {
+                if ($status_id == $request_tabled_tag->term_id && in_array($status->term_id, $tabled_array)) {
                     $disabled = 'disabled';
                 }  
                 
-                if ($status_id == $new_tag->term_id && in_array($status->term_id, $new_array)) {
+                if ($status_id == $request_new_request_tag->term_id && in_array($status->term_id, $new_array)) {
                     $disabled = 'disabled';
                 }  
                 
@@ -242,9 +227,7 @@ array_push($dc_array, $dc_details);
 array_push($pl_array, $physical_location);
 }
 
-$not_assigned_tag = get_term_by('slug', 'not-assigned', 'wpsc_priorities');
-
-if (count(array_keys($dc_array, $not_assigned_tag->term_id)) == count($dc_array) && !in_array('-99999', $pl_array) && !in_array(6, $pl_array)) {
+if (count(array_keys($dc_array, $priority_not_assigned_tag->term_id)) == count($dc_array) && !in_array('-99999', $pl_array) && !in_array(6, $pl_array)) {
 //PATT END
 ?>
 <!--
@@ -273,17 +256,12 @@ if (count(array_keys($dc_array, $not_assigned_tag->term_id)) == count($dc_array)
 		<select class="form-control" name="category" >
 <?php
 //Digitization centers
-$not_assigned_tag = get_term_by('slug', 'not-assigned-digi-center', 'wpsc_categories');
-$east_tag = get_term_by('slug', 'e', 'wpsc_categories');
-$east_cui_tag = get_term_by('ecui', 'medium', 'wpsc_categories');
-$west_tag = get_term_by('slug', 'w', 'wpsc_categories');
-$west_cui_tag = get_term_by('slug', 'wcui', 'wpsc_categories');
 ?>
-<option value="<?php echo $not_assigned_tag->term_id; ?>">Not Assigned</option>
-<option selected="selected" value="<?php echo $east_tag->term_id; ?>">East</option>
-<option value="<?php echo $east_cui_tag->term_id; ?>" disabled>East CUI</option>
-<option value="<?php echo $west_tag->term_id; ?>" disabled>West</option>
-<option value="<?php echo $west_cui_tag->term_id; ?>" disabled>West CUI</option>
+<option value="<?php echo $dc_not_assigned_tag->term_id; ?>">Not Assigned</option>
+<option selected="selected" value="<?php echo $dc_east_tag->term_id; ?>">East</option>
+<option value="<?php echo $dc_east_cui_tag->term_id; ?>" disabled>East CUI</option>
+<option value="<?php echo $dc_west_tag->term_id; ?>" disabled>West</option>
+<option value="<?php echo $dc_west_cui_tag->term_id; ?>" disabled>West CUI</option>
 		</select>
 	</div>
 -->
@@ -349,94 +327,19 @@ $body = ob_get_clean();
 ob_start();
 ?>
 <button type="button" class="btn wpsc_popup_close"  style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_text_color']?> !important;"    onclick="wpsc_modal_close();"><?php _e('Close','supportcandy');?></button>
-<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;" onclick="wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);"><?php _e('Save','supportcandy');?></button>
+<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;" onclick="wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);wppatt_set_auto_assignment(<?php echo htmlentities($ticket_id)?>);"><?php _e('Save','supportcandy');?></button>
 <script>
 // PATT BEGIN
-jQuery(document).ready(function() {
- 
-jQuery("#edit_status").change(function() {
 
-    var value = jQuery(this).val();
+function wppatt_set_auto_assignment(ticketid){
 
-    jQuery('#status').val(value);
-
-});
-
-       jQuery("#comment-alert").hide();
-       
 var request_status = jQuery('[name=status]').val();
 
-        <?php
-        $new_request_tag = get_term_by('slug', 'open', 'wpsc_statuses');
-        $tabled_request_tag = get_term_by('slug', 'tabled', 'wpsc_statuses');
-        $initial_review_rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses');
-        $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses');
-        ?>
-       if(request_status == <?php echo $initial_review_rejected_tag->term_id; ?>) {
-       jQuery('#reject_comment').show();
-       } else {
-       jQuery('#reject_comment').hide(); 
-       }
-       
-jQuery('#reject_comment').bind('input propertychange', function() {
+if(request_status == <?php echo $request_initial_review_complete_tag->term_id; ?>) {
 
-        jQuery(".wpsc_popup_action").hide();
-        jQuery("#comment-alert").show();
-        
-      if(request_status == <?php echo $initial_review_rejected_tag->term_id; ?> && this.value.length){
-        jQuery(".wpsc_popup_action").show();
-        jQuery("#comment-alert").hide();
-      }
-});
-
-
-jQuery('[name=edit_status]').on('change', function() {
-request_status = jQuery('[name=status]').val();
-       
-       if(request_status == <?php echo $initial_review_rejected_tag->term_id; ?>) {
-       jQuery('#reject_comment').show();
-       jQuery(".wpsc_popup_action").hide();
-       jQuery("#comment-alert").show();
-       
-var reject_comment = '<?php $rejected_comment_check = $wpscfunction->get_ticket_meta($ticket_id,'rejected_comment'); $rejected_comment = implode(" ",$rejected_comment_check); echo $rejected_comment;?>';
-
-jQuery('#reject_comment').bind('input propertychange', function() {
-
-        jQuery(".wpsc_popup_action").hide();
-        jQuery("#comment-alert").show();
-        
-      if(request_status == <?php echo $initial_review_rejected_tag->term_id; ?> && this.value.length){
-        jQuery(".wpsc_popup_action").show();
-        jQuery("#comment-alert").hide();
-      }
-});
-
-       } else {
-       jQuery('#reject_comment').hide();
-       jQuery(".wpsc_popup_action").show();
-       jQuery("#comment-alert").hide();
-       }
-});
-
-
-jQuery(".wpsc_popup_action").click(function () {
-
-if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $tabled_request_tag->term_id; ?>) {
-jQuery.post(
-'<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/dc_assignment.php',{
-postvartktid: '<?php echo $ticket_id ?>',
-postvardcname: jQuery("[name=category]").val()
-},
-function (response) {
-});
-}
-
-if(request_status == <?php echo $new_request_tag->term_id; ?> || request_status == <?php echo $tabled_request_tag->term_id; ?> || request_status == <?php echo $initial_review_rejected_tag->term_id; ?> || request_status == <?php echo $cancelled_tag->term_id; ?>) {
-    //alert('No automatic shelf assignments made.');
-} else {
 jQuery.post(
 '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',{
-postvartktid: '<?php echo $ticket_id ?>',
+postvartktid: ticketid,
 postvardcname: jQuery("[name=category]").val()
 },
 function (response) {
@@ -455,25 +358,92 @@ function (response) {
 				console.log( response );	
 			}
 		
-		});		
-
-//alert(response);
-//if(jQuery("[name='category']").val()) {
-//alert(response);
-//}
+		});
+		
+		//alert(response);
 });
+
+} else {
+  console.log('no auto assignment made');  
 }
+
+
+}
+jQuery(document).ready(function() {
+
+//Set rejected processing
+jQuery(".wpsc_popup_action").click(function () {
 
 jQuery.post(
 '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/rejected_processing.php',{
 postvartktid: '<?php echo $ticket_id ?>',
 postvarstatus: jQuery("[name=status]").val(),
-postvarcomment: jQuery("[name=reject_comment]").val()
+postvarcomment: jQuery("[name=reject_comment]").val(),
+postvardcname: jQuery("[name=category]").val()
 },
 function (response) {
 });
 
 });
+
+jQuery("#edit_status").change(function() {
+
+    var value = jQuery(this).val();
+
+    jQuery('#status').val(value);
+
+});
+
+       jQuery("#comment-alert").hide();
+       
+        var request_status = jQuery('[name=status]').val();
+
+       if(request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?>) {
+       jQuery('#reject_comment').show();
+       } else {
+       jQuery('#reject_comment').hide(); 
+       }
+       
+jQuery('#reject_comment').bind('input propertychange', function() {
+
+        jQuery(".wpsc_popup_action").hide();
+        jQuery("#comment-alert").show();
+        
+      if(request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?> && this.value.length){
+        jQuery(".wpsc_popup_action").show();
+        jQuery("#comment-alert").hide();
+      }
+});
+
+
+jQuery('[name=edit_status]').on('change', function() {
+request_status = jQuery('[name=status]').val();
+       
+       if(request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?>) {
+       jQuery('#reject_comment').show();
+       jQuery(".wpsc_popup_action").hide();
+       jQuery("#comment-alert").show();
+       
+var reject_comment = '<?php $rejected_comment_check = $wpscfunction->get_ticket_meta($ticket_id,'rejected_comment'); $rejected_comment = implode(" ",$rejected_comment_check); echo $rejected_comment;?>';
+
+jQuery('#reject_comment').bind('input propertychange', function() {
+
+        jQuery(".wpsc_popup_action").hide();
+        jQuery("#comment-alert").show();
+        
+      if(request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?> && this.value.length){
+        jQuery(".wpsc_popup_action").show();
+        jQuery("#comment-alert").hide();
+      }
+});
+
+       } else {
+       jQuery('#reject_comment').hide();
+       jQuery(".wpsc_popup_action").show();
+       jQuery("#comment-alert").hide();
+       }
+});
+
 
 });
 // PATT END
