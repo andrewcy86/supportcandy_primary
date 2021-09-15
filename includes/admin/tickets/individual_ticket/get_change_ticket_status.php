@@ -327,7 +327,7 @@ $body = ob_get_clean();
 ob_start();
 ?>
 <button type="button" class="btn wpsc_popup_close"  style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_text_color']?> !important;"    onclick="wpsc_modal_close();"><?php _e('Close','supportcandy');?></button>
-<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;" onclick="wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);wppatt_set_auto_assignment(<?php echo htmlentities($ticket_id)?>);"><?php _e('Save','supportcandy');?></button>
+<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;" onclick="wppatt_set_auto_assignment(<?php echo htmlentities($ticket_id)?>);wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);"><?php _e('Save','supportcandy');?></button>
 <script>
 // PATT BEGIN
 
@@ -337,30 +337,13 @@ var request_status = jQuery('[name=status]').val();
 
 if(request_status == <?php echo $request_initial_review_complete_tag->term_id; ?>) {
 
+
 jQuery.post(
 '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',{
 postvartktid: ticketid,
 postvardcname: jQuery("[name=category]").val()
 },
 function (response) {
-
-		let data = {
-			action: 'wppatt_loc_instant',
-			dc_id : jQuery("[name=category]").val()
-		}
-		
-		jQuery.ajax({
-			type: "POST",
-			url: wpsc_admin.ajax_url,
-			data: data,
-			success: function( response ){
-				console.log('update location done');
-				console.log( response );	
-			}
-		
-		});
-		
-		//alert(response);
 });
 
 } else {
@@ -369,6 +352,9 @@ function (response) {
 
 
 }
+
+
+
 jQuery(document).ready(function() {
 
 //Set rejected processing
