@@ -327,25 +327,17 @@ $body = ob_get_clean();
 ob_start();
 ?>
 <button type="button" class="btn wpsc_popup_close"  style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_text_color']?> !important;"    onclick="wpsc_modal_close();"><?php _e('Close','supportcandy');?></button>
-<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;" onclick="wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);wppatt_set_auto_assignment();wppatt_rejected();"><?php _e('Save','supportcandy');?></button>
+<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;"><?php _e('Save','supportcandy');?></button>
 <script>
 // PATT BEGIN
 
-function wppatt_set_auto_assignment(){
+jQuery(document).ready(function() {
+
+jQuery(".wpsc_popup_action").click(function () {
 
 var request_status = jQuery('[name=status]').val();
 
 if(request_status == <?php echo $request_initial_review_complete_tag->term_id; ?>) {
-
-/*
-jQuery.post(
-'<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',{
-postvartktid: '<?php echo $ticket_id ?>',
-postvardcname: jQuery("[name=category]").val()
-},
-function (response) {
-});
-*/
 
 jQuery.ajax({
     url: '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',
@@ -356,36 +348,14 @@ jQuery.ajax({
     },
     success: function(response) {
     //alert(response);
-    wpsc_open_ticket('<?php echo $ticket_id ?>');
+    wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);
+    //wpsc_open_ticket('<?php echo $ticket_id ?>');
     },
     error: function(xhr) {
     console.log('auto assignment processing error');  
     }
 });
-
-} else {
-  console.log('no auto assignment made');  
-}
-
-}
-
-
-function wppatt_rejected(){
-
-var request_status = jQuery('[name=status]').val();
-
-if(request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?>) {
-alert('test');
-/*
-jQuery.post(
-'<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/rejected_processing.php',{
-postvartktid: '<?php echo $ticket_id ?>',
-postvarcomment: jQuery("[name=reject_comment]").val(),
-postvardcname: jQuery("[name=category]").val()
-},
-function (response) {
-});
-*/
+} else if (request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?>) {
 
 jQuery.ajax({
     url: '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/rejected_processing.php',
@@ -397,24 +367,20 @@ jQuery.ajax({
     },
     success: function(response) {
     //alert(response);
-    wpsc_open_ticket('<?php echo $ticket_id ?>');
+    wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);
+    //wpsc_open_ticket('<?php echo $ticket_id ?>');
     },
     error: function(xhr) {
     console.log('rejected processing error');  
     }
 });
-
-
-
-
 } else {
-  console.log('rejected actions not made');  
+    wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);
+    //wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);
 }
 
-}
+});
 
-
-jQuery(document).ready(function() {
 
 jQuery("#edit_status").change(function() {
 
