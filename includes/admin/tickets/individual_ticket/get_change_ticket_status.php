@@ -334,7 +334,7 @@ ob_start();
 
 jQuery(document).ready(function() {
 
-jQuery(".wpsc_popup_action").click(function () {
+jQuery("#save-button").click(function () {
 
 var request_status = jQuery('[name=status]').val();
 
@@ -355,6 +355,7 @@ jQuery.ajax({
     success: function(response) {
     //alert(response);
     wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);
+    jQuery("#sending_notification").css('display', 'none');
     //wpsc_open_ticket('<?php echo $ticket_id ?>');
     },
     error: function(xhr) {
@@ -379,6 +380,7 @@ jQuery.ajax({
     success: function(response) {
     //alert(response);
     wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);
+    jQuery("#sending_notification").css('display', 'none');
     //wpsc_open_ticket('<?php echo $ticket_id ?>');
     },
     error: function(xhr) {
@@ -388,6 +390,7 @@ jQuery.ajax({
 } else {
     wpsc_set_change_ticket_status(<?php echo htmlentities($ticket_id)?>);
     //wpsc_open_ticket(<?php echo htmlentities($ticket_id)?>);
+    jQuery("#sending_notification").css('display', 'none');
 }
 
 });
