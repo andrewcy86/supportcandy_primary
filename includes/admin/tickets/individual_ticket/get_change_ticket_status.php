@@ -327,7 +327,8 @@ $body = ob_get_clean();
 ob_start();
 ?>
 <button type="button" class="btn wpsc_popup_close"  style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_close_button_text_color']?> !important;"    onclick="wpsc_modal_close();"><?php _e('Close','supportcandy');?></button>
-<button type="button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;"><?php _e('Save','supportcandy');?></button>
+<button type="button" id="save-button" class="btn wpsc_popup_action" style="background-color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_modal_window['wpsc_action_button_text_color']?> !important;"><?php _e('Save','supportcandy');?></button>
+<div id="sending_notification" style="display:none;"><img id="loading-gif" src="<?php echo WPSC_PLUGIN_URL.'asset/images/ajax-loader@2x.gif'; ?>"></div>
 <script>
 // PATT BEGIN
 
@@ -338,6 +339,11 @@ jQuery(".wpsc_popup_action").click(function () {
 var request_status = jQuery('[name=status]').val();
 
 if(request_status == <?php echo $request_initial_review_complete_tag->term_id; ?>) {
+
+jQuery("#sending_notification").css('display', 'inline-block');
+jQuery("#loading-gif").css('width', '25px');
+jQuery("#loading-gif").css('height', 'auto');
+jQuery("#save-button").html( 'Processing...' );
 
 jQuery.ajax({
     url: '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/auto_assignment.php',
@@ -356,6 +362,11 @@ jQuery.ajax({
     }
 });
 } else if (request_status == <?php echo $request_initial_review_rejected_tag->term_id; ?>) {
+
+jQuery("#sending_notification").css('display', 'inline-block');
+jQuery("#loading-gif").css('width', '25px');
+jQuery("#loading-gif").css('height', 'auto');
+jQuery("#save-button").html( 'Processing...' );
 
 jQuery.ajax({
     url: '<?php echo WPPATT_PLUGIN_URL; ?>includes/admin/pages/scripts/rejected_processing.php',
