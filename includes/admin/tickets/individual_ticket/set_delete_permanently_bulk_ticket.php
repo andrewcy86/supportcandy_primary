@@ -50,32 +50,9 @@ WHERE id = '" . $associated_storage_ids . "'"
 			$box_storage_aisle = $box_details->aisle;
 			$box_storage_bay = $box_details->bay;
 			$box_storage_shelf = $box_details->shelf;
-			$box_sotrage_shelf_id = $box_storage_aisle . '_' . $box_storage_bay . '_' . $box_storage_shelf;
-
-$box_storage_status = $wpdb->get_row(
-"SELECT 
-occupied,
-remaining
-FROM " . $wpdb->prefix . "wpsc_epa_storage_status
-WHERE shelf_id = '" . $box_sotrage_shelf_id . "'"
-			);
-
-$box_storage_status_occupied = $box_storage_status->occupied;
-$box_storage_status_remaining = $box_storage_status->remaining;
-$box_storage_status_remaining_added = $box_storage_status->remaining + 1;
-
-if ($box_storage_status_remaining >= 0 && $box_storage_status_remaining <= 4) {
-$table_ss = $wpdb->prefix .'wpsc_epa_storage_status';
-$ssr_update = array('remaining' => 999);
-$ssr_where = array('shelf_id' => $box_sotrage_shelf_id, 'digitization_center' => $box_storage_digitization_center);
-$wpdb->update($table_ss , $ssr_update, $ssr_where);
-}
-
-if($box_storage_status_remaining == 4){
-$sso_update = array('occupied' => 0);
-$sso_where = array('shelf_id' => $box_sotrage_shelf_id, 'digitization_center' => $box_storage_digitization_center);
-$wpdb->update($table_ss , $sso_update, $sso_where);
-}
+			$box_storage_shelf_id = $box_storage_aisle . '_' . $box_storage_bay . '_' . $box_storage_shelf;
+    
+        Patt_Custom_Func::update_remaining_occupied($box_storage_digitization_center,array($box_storage_shelf_id));
 
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_storage_location', array( 'id' => $associated_storage_ids));
 		$wpdb->delete($wpdb->prefix.'wpsc_epa_shipping_tracking', array( 'ticket_id' => $ticket_id));
