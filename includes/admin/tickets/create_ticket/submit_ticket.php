@@ -44,14 +44,24 @@ global $wpdb, $current_user, $wpscfunction;
 $args = array();
 
 // Customer name
+//PATT BEGIN SECURITY FINDING FIX CSS Injection Fix
+/*
 if(is_user_logged_in() && !$current_user->has_cap('wpsc_agent') ){
 	$customer_name = $current_user->display_name;
 }else{
 	$customer_name = isset($_POST['customer_name']) ? sanitize_text_field($_POST['customer_name']) : '';
 }
 $args['customer_name'] = $customer_name;
+//PATT END 
+*/
 
-// Customer email
+//PATT BEGIN
+$args['customer_name'] = $current_user->display_name;
+//PATT END
+
+// Customer email SECURITY FINDING FIX CSS Injection Fix
+//PATT BEGIN 
+/*
 if(is_user_logged_in() && !$current_user->has_cap('wpsc_agent') ){
 	$customer_email = $current_user->user_email;
 	$args['customer_email']	= $customer_email;
@@ -59,6 +69,12 @@ if(is_user_logged_in() && !$current_user->has_cap('wpsc_agent') ){
 	$customer_email = isset($_POST['customer_email']) ? sanitize_text_field($_POST['customer_email']) : '';
 	$args['customer_email'] = $customer_email;
 }
+//PATT END 
+*/
+
+//PATT BEGIN
+$args['customer_email'] = $current_user->user_email;
+//PATT END
 
 //PATT BEGIN
 // CR - Add data to request
