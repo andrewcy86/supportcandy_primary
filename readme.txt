@@ -405,4 +405,4 @@ Fix: Agents not able to see deleted tickets
 * Incorrect cron command fix
 
 = V 1.0.0 (August 15, 2018) =
-* Initial release.
+* Initial release. 
