@@ -2579,10 +2579,10 @@
   color: #337ab7;
   background-color: #ffffff;
 }
+/* PATT START */
 .bootstrap-iso .btn-success {
   color: #ffffff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #2f631d;
 }
 .bootstrap-iso .btn-success:hover,
 .bootstrap-iso .btn-success:focus,
@@ -2591,7 +2591,6 @@
 .bootstrap-iso .btn-success.active,
 .bootstrap-iso .open > .dropdown-toggle.btn-success {
   color: #ffffff;
-  background-color: #449d44;
   border-color: #398439;
 }
 .bootstrap-iso .btn-success:active,
@@ -2620,6 +2619,7 @@
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
+/* PATT END */
 .bootstrap-iso .btn-success .badge {
   color: #5cb85c;
   background-color: #ffffff;
@@ -5632,32 +5632,34 @@
   background-color: #265a88;
   background-image: none;
 }
+/* PATT START
 .bootstrap-iso .btn-success {
-  background-image: -webkit-linear-gradient(top, #5cb85c 0%, #419641 100%);
-  background-image: -o-linear-gradient(top, #5cb85c 0%, #419641 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#5cb85c), to(#419641));
-  background-image: linear-gradient(to bottom, #5cb85c 0%, #419641 100%);
+  background-image: -webkit-linear-gradient(top, #2f631d 0%, #419641 100%);
+  background-image: -o-linear-gradient(top, #2f631d 0%, #419641 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2f631d), to(#419641));
+  background-image: linear-gradient(to bottom, #2f631d 0%, #419641 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
   background-repeat: repeat-x;
-  border-color: #3e8f3e;
+  border-color: #2f631d;
 }
+PATT END */
+
+/* PATT START */
 .bootstrap-iso .btn-success:hover,
 .bootstrap-iso .btn-success:focus {
-  background-color: #419641;
   background-position: 0 -15px;
 }
 .bootstrap-iso .btn-success:active,
 .bootstrap-iso .btn-success.active {
-  background-color: #419641;
   border-color: #3e8f3e;
 }
 .bootstrap-iso .btn-success.disabled,
 .bootstrap-iso .btn-success:disabled,
 .bootstrap-iso .btn-success[disabled] {
-  background-color: #419641;
   background-image: none;
 }
+/* PATT END */
 .bootstrap-iso .btn-info {
   background-image: -webkit-linear-gradient(top, #5bc0de 0%, #2aabd2 100%);
   background-image: -o-linear-gradient(top, #5bc0de 0%, #2aabd2 100%);

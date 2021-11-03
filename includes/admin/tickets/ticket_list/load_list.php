@@ -313,7 +313,7 @@ $pending_delete_count = $get_pending_delete_count->count;
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
 {
 ?>
-                <th class="datatable_header" scope="col"></th>
+                <th class="datatable_header" id="selectall" scope="col"></th>
 <?php
 }
 ?>
@@ -334,6 +334,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 
 jQuery(document).ready(function(){
   jQuery('[data-toggle="tooltip"]').tooltip();
+
   var dataTable = jQuery('#tbl_templates_requests').DataTable({
     'autoWidth': true,
     'processing': true,
@@ -346,6 +347,9 @@ jQuery('[data-toggle="tooltip"]').tooltip();
     'serverSide': true,
     'stateSave': true,
     'scrollX': true,
+    'initComplete': function (settings, json) {
+		    jQuery('#selectall').append('<span class="sr-only">Select All</span>');
+		},
     'paging' : true,
     'stateSaveParams': function(settings, data) {
       data.ss = jQuery('#searchByStatus').val();
@@ -450,7 +454,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 ?>
     	    'columnDefs': [	
          {	
-            'width' : 5,
+            'width' : 0,
             'targets': 0,	
             'checkboxes': {	
                'selectRow': true	

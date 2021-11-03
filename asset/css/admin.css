@@ -99,7 +99,9 @@
 .wpsp_filter_display_element .flex-container{
   display: flex;
   border-radius: 4px;
-  background-color:#1E90FF;
+  /* PATT START */
+  background-color:#045E8B;
+  /* PATT END */
   color:#fff;
   font-size: 10px;
 }

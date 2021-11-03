@@ -1129,7 +1129,10 @@ Patt_Custom_Func::insert_new_notification('email-cancelled',$pattagentid_array,$
       $response       = false;
       switch ($permission) {
         case 'view_ticket':
-          $response = $customer_email == strtolower($current_user->user_email) || $this->agent_has_permission( 'view_unassigned', $ticket_id ) || $this->agent_has_permission( 'view_assigned_me', $ticket_id ) || $this->agent_has_permission( 'view_assigned_others', $ticket_id ) ? true : false;
+          /* PATT START */
+          $get_aa_ship_groups = Patt_Custom_Func::get_requestor_group($current_user->ID);
+          $response = in_array($current_user->ID, $get_aa_ship_groups) || $customer_email == strtolower($current_user->user_email) || $this->agent_has_permission( 'view_unassigned', $ticket_id ) || $this->agent_has_permission( 'view_assigned_me', $ticket_id ) || $this->agent_has_permission( 'view_assigned_others', $ticket_id ) ? true : false;
+          /* PATT END */
           break;
           
         case 'assign_agent':

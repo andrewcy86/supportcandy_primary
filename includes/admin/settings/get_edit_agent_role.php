@@ -20,7 +20,9 @@ ob_start();
   
   <div class="form-group">
     <label style="font-size:16px;"><?php _e('Label','supportcandy');?></label>
-    <input id="wpsc_role_label" class="form-control" name="agentrole[label]" value="<?php echo $agent_role_item['label']?>" />
+    <!-- PATT START -->
+    <input id="wpsc_role_label" aria-label="Enter Label" class="form-control" name="agentrole[label]" value="<?php echo $agent_role_item['label']?>" />
+    <!-- PATT END -->
   </div>
   
   <label style="margin-bottom:20px; font-size:16px;"><?php _e('Ticket Permissions','supportcandy');?></label>

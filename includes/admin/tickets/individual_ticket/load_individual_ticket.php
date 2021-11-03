@@ -68,8 +68,13 @@ if((in_array('register_user',$wpsc_allow_rich_text_editor) && !$current_user->ha
 	$flag = true;
 }
 
-//print_r(Patt_Custom_Func::agents_assigned_request($ticket_id));
 
+// PATT BEGIN
+
+// Restrict access to only the original requester, associated RLO groups or users with elevated privileges
+$get_aa_ship_groups = Patt_Custom_Func::get_requestor_group($customer_name);
+if( in_array($current_user->ID, $get_aa_ship_groups) || $current_user->display_name == $customer_name || (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Manager') || ($agent_permissions['label'] == 'Agent')) ) {
+// PATT END
 ?>
 
 <div class="row wpsc_tl_action_bar" style="background-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;">
@@ -387,7 +392,7 @@ echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas f
 									<i onclick="wpsc_get_create_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);" class="fa fa-plus-square thread_action_btn wpsc_create_ticket_thread" title="<?php _e('Create new ticket from this thread','supportcandy');?>"></i>
 								PATT END-->
 								<!--PATT BEGIN-->
-									<a href="#" onclick="wpsc_get_thread_info(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>,'thread');"><i class="fas fa-info-circle thread_action_btn wpsc_thread_info" aria-hidden="true" title="<?php _e('Thread Info','supportcandy');?>"></i><span class="sr-only">Thread Info</span></a>
+									<a href="#" tabindex="0" onclick="wpsc_get_thread_info(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>,'thread');"><i class="fas fa-info-circle thread_action_btn wpsc_thread_info" aria-hidden="true" title="<?php _e('Thread Info','supportcandy');?>"></i><span class="sr-only">Thread Info</span></a>
 								    <span class="sr-only"><?php _e('Thread Info','supportcandy');?></span>
 								<!--PATT END-->
 								<?php endif;?>
@@ -563,7 +568,9 @@ echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas f
 					<?php
 				endif;
 
-				if ( $thread_type == 'note' && apply_filters('wpsc_private_note_visibility',$current_user->has_cap('wpsc_agent'), $thread) &&  $wpscfunction->has_permission('view_note',$ticket_id) ):
+                // PATT BEGIN
+				if ( $thread_type == 'note' ):
+				// PATT END
 					?>
 					<div class="wpsc_thread note" style="background-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_private_note_bg_color']?> !important;color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_private_note_text_color']?> !important;border-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_private_note_border_color']?> !important;">
 						<div class="thread_avatar">
@@ -716,7 +723,7 @@ PATT END */
 									<?php if ($wpscfunction->has_permission('change_status',$ticket_id) && $wpscfunction->has_permission('change_agentonly_fields',$ticket_id) && $ticket_status):?>
 										<button id="wpsc_individual_change_ticket_status" onclick="wpsc_get_change_ticket_status(<?php echo $ticket_id?>)" class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>">
 									<!--PATT BEGIN 508-->	    
-										    <i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span></button>
+										    <i class="fas fa-edit" aria-hidden="true" title="Edit Request Status"></i><span class="sr-only">Edit Request Status</span></button>
 									<!--PATT END-->
 									<?php endif;?>
 								</h4>
@@ -767,7 +774,7 @@ PATT END */
                                                 <!--PATT END-->
                                                 <button id="wpsc_individual_change_raised_by" onclick="wpsc_get_change_raised_by(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" >
                                                     <!--PATT BEGIN 508-->
-                                                    <i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span></button>
+                                                    <i class="fas fa-edit" aria-hidden="true" title="Edit Raised By"></i><span class="sr-only">Edit Raised By</span></button>
                                                     <!--PATT END-->
                                                 <?php } ?>
 											<?php endif;?>	
@@ -808,7 +815,7 @@ PATT END */
                                             <?php 
                                             if($is_active == 1 && !in_array($status_id, $status_id_arr)) {
                                             ?>
-                                            <button id="wpsc_individual_add_people" onclick="wpsc_get_add_ticket_users(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" ><i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span></button>
+                                            <button id="wpsc_individual_add_people" onclick="wpsc_get_add_ticket_users(<?php echo $ticket_id ?>);"  class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" ><i class="fas fa-edit" aria-hidden="true" title="Edit Email Recipients"></i><span class="sr-only">Edit Email Recipients</span></button>
                                             <?php } ?>
                                             <!--PATT END-->
 										</h4>
@@ -902,7 +909,7 @@ PATT END */
 									<?php if ( apply_filters('wpsc_get_user_permission',$wpscfunction->has_permission('change_ticket_fields',$ticket_id)) && $ticket_status):?>
 										<button id="wpsc_individual_change_ticket_fields" onclick="wpsc_get_change_ticket_fields(<?php echo $ticket_id ?>);" class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" >
 										    <!--PATT BEGIN 508-->
-										    <i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span></button>
+										    <i class="fas fa-edit" aria-hidden="true" title="Edit Staff Only Fields"></i><span class="sr-only">Edit Staff Only Fields</span></button>
 										    <!--PATT END-->
 									<?php endif;?>
 								</h4>
@@ -966,7 +973,7 @@ PATT END */
 								    <!--PATT END-->			
 											<button id="wpsc_individual_change_agent_fields" onclick="wpsc_get_change_agent_fields(<?php echo $ticket_id ?>)" class="btn btn-sm wpsc_action_btn" style="<?php echo $edit_btn_css ?>" >
 											    <!--PATT BEGIN 508-->
-											    <i class="fas fa-edit" aria-hidden="true" title="Edit"></i><span class="sr-only">Edit</span>
+											    <i class="fas fa-edit" aria-hidden="true" title="Edit Staff Only Fields"></i><span class="sr-only">Edit Staff Only Fields</span>
 											    <!--PATT END-->
 											    </button>
 										<?php endif;?>
@@ -1346,3 +1353,11 @@ postvarsrequest_id : <?php echo $ticket_id;?>
 </script>
 
 <?php do_action('wpsc_after_individual_ticket',$ticket_id) ?>
+
+<?php }
+
+else {
+    echo "<br/> You are not authorized to access this page.";
+}
+
+?>

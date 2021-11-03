@@ -37,7 +37,7 @@ if($allow_reply){
 	<div class="row wpsc_reply_widget">
 	  <form id="wpsc_frm_tkt_reply" action="index.html" method="post">
 	      <!--PATT BEGIN-->
-        <h4>Submit Comment Related to Request</h4>
+        <h4>Submit Comment Related to Request <a href="#" aria-label="Request list button" data-toggle="tooltip" data-placement="right" data-html="true" title="<?php echo Patt_Custom_Func::helptext_tooltip('help-comments-tools'); ?>" aria-label="Request Help"><i class="far fa-question-circle" aria-hidden="true" title="Help"></i><span class="sr-only">Help</span></a> </h4>
         <!--PATT END-->
 	    <textarea id="wpsc_reply_box" name="reply_body" class="wpsc_textarea"></textarea>
 		<?php
@@ -83,18 +83,18 @@ if($allow_reply){
 		</div>
 	    <div class="col-sm-6 submit">
 				
-				<?php if ($wpscfunction->has_permission('reply_ticket',$ticket_id)):?>
+				<!-- PATT BEGIN -->
 								<button type="button" id="wpsc_individual_submit_reply_btn" onclick="javascript:wpsc_submit_reply('reply');" class="btn" style="background-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_submit_reply_btn_bg_color']?> !important;color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_submit_reply_btn_text_color']?> !important;border-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_submit_reply_btn_border_color']?> !important;">
 									<!--PATT BEGIN-->
                                     <i class="fa fa-reply"></i> <?php _e('Submit','supportcandy')?> 
                                     <!--PATT END-->	
 								</button>
-	      <?php endif;?>
-				<?php if ($wpscfunction->has_permission('add_note',$ticket_id)):?>
+	      <!-- PATT END -->
+	      <!-- PATT BEGIN -->
 		            <button type="button" id="wpsc_individual_add_note_btn" onclick="javascript:wpsc_submit_reply('note');" class="btn"style="background-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_other_reply_form_btn_bg_color']?> !important;color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_other_reply_form_btn_text_color']?> !important;border-color:<?php echo $wpsc_appearance_individual_ticket_page['wpsc_other_reply_form_btn_border_color']?> !important;">
 				          <i class="far fa-comment"></i> <?php _e('Add Note','supportcandy')?> 
 				        </button>
-	      <?php endif;?>
+	      <!-- PATT END -->
 				<?php do_action('wpsc_add_addon_reply_tab');?>
 	    </div>
 			<input type="file" id="attachment_upload" class="hidden" onchange="">
