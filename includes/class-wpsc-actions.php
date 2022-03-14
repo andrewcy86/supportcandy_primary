@@ -758,6 +758,27 @@ if ( ! class_exists( 'WPSC_Actions' ) ) :
        update_term_meta($agent->term_id, 'email', $new_user_data->user_email);
        
      }
+     
+     // Fires after the update profile button has been clicked
+     // Checks if the RLO checkbox was checked on submission
+     // Then checks the user_meta table to see if current user has an RLO meta key currently
+     // if not then the current user has RLO added to their user_meta data
+     // Otherwise delete/remove old record of user being an RLO since the checkbox is unchecked or empty
+     if($_REQUEST['RLO'] == 'RLO'){
+        if(get_user_meta($user_id, 'RLO', $single = true == '1') ){
+          echo '';
+        } 
+        else if(get_user_meta($user_id, 'RLO', $single = true == '0') ){
+          update_user_meta($user_id, 'RLO', true);
+        } 
+        else {
+          add_user_meta($user_id, 'RLO', true);
+        }
+     }
+     
+     if($_REQUEST['RLO'] == NULL) {
+      update_user_meta($user_id, 'RLO', 0);
+    }
    }
    
    //Send email notification for change category 

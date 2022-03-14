@@ -269,9 +269,13 @@ echo " (".$rejected_comment.")";
 ?>
 
 <style>
-.wpsc_seen_info {
-    cursor: auto !important;
-}
+  .wpsc_seen_info {
+      cursor: auto !important;
+  }
+  
+  .wpsc_delete_thread:focus-visible{
+		outline: 1px solid #000;
+	}
 </style>
 <!--PATT END -->
 <!--
@@ -303,7 +307,7 @@ echo $padded_request_id;
             if(in_array("true", $sems_check)) {
  echo '<span class="wpsp_admin_label" style="background-color:#000000;color:#ffffff;"><i class="fas fa-database" aria-hidden="true" title="SEMS"></i><span class="sr-only">SEMS</span> SEMS</span>';
             } else {
- echo '<span class="wpsp_admin_label" style="background-color:#000000;color:#ffffff;"><i class="fas fa-database" aria-hidden="true" title="ECMS"></i><span class="sr-only">ECMS</span> ECMS</span>';
+ echo '<span class="wpsp_admin_label" style="background-color:#000000;color:#ffffff;"><i class="fas fa-database" aria-hidden="true" title="ARMS"></i><span class="sr-only">ARMS</span> ARMS</span>';
             }
 if($is_active == 0){
 echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas fa-archive" aria-hidden="true" title="Archive"></i><span class="sr-only">Archive</span> This request is archived</span><br />';
@@ -381,7 +385,7 @@ echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas f
 								<?php }?>
 								<?php if ($wpscfunction->has_permission('edit_delete_ticket',$ticket_id) && $ticket_status):?>
 								<!--PATT BEGIN-->
-									<a href="#" onclick="wpsc_get_delete_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i class="fa fa-trash thread_action_btn wpsc_delete_thread" aria-hidden="true" title="<?php _e('Delete this thread','supportcandy');?>"></i><span class="sr-only">Delete Thread</span></a>
+									<a href="#" onclick="wpsc_get_delete_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i tabindex="0" class="fa fa-trash thread_action_btn wpsc_delete_thread" aria-hidden="true" title="<?php _e('Delete this thread','supportcandy');?>"></i><span class="sr-only">Delete Thread</span></a>
 									<span class="sr-only"><?php _e('Delete this thread','supportcandy');?></span>
 									<a href="#" onclick="wpsc_get_edit_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i class="fa fa-edit thread_action_btn wpsc_edit_thread" aria-hidden="true" title="<?php _e('Edit this thread','supportcandy');?>"></i><span class="sr-only">Edit Thread</span></a>
 									<span class="sr-only"><?php _e('Edit this thread','supportcandy');?></span>
@@ -489,7 +493,7 @@ echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas f
 								<?php }?>
 								<?php if ($wpscfunction->has_permission('edit_delete_ticket',$ticket_id) && $ticket_status):?>
 									<!--PATT BEGIN-->
-									<a href="#" onclick="wpsc_get_delete_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i class="fa fa-trash thread_action_btn wpsc_delete_thread" title="<?php _e('Delete this thread','supportcandy');?>" aria-hidden="true"></i><span class="sr-only">Delete this thread</span></a>
+									<a href="#" onclick="wpsc_get_delete_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i tabindex="0" class="fa fa-trash thread_action_btn wpsc_delete_thread" title="<?php _e('Delete this thread','supportcandy');?>" aria-hidden="true"></i><span class="sr-only">Delete this thread</span></a>
 									<span class="sr-only"><?php _e('Delete this thread','supportcandy');?></span>
 									<a href="#" onclick="wpsc_get_edit_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i class="fa fa-edit thread_action_btn wpsc_edit_thread"  title="<?php _e('Edit this thread','supportcandy');?>" aria-hidden="true"></i><span class="sr-only">Edit this thread</span></a>
 									<span class="sr-only"><?php _e('Edit this thread','supportcandy');?></span>
@@ -591,7 +595,7 @@ echo '<br /><br /><span style="font-size: 1.1em; color:#B4081A;"><i class="fas f
 								<?php }?>
 								<?php if ($wpscfunction->has_permission('edit_delete_ticket',$ticket_id) && $ticket_status):?>
 									<!--PATT BEGIN-->
-									<a href="#" onclick="wpsc_get_delete_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i aria-hidden="true" class="fa fa-trash thread_action_btn wpsc_delete_thread" title="Delete Thread"></i></a>
+									<a href="#" onclick="wpsc_get_delete_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i tabindex="0" aria-hidden="true" class="fa fa-trash thread_action_btn wpsc_delete_thread" title="Delete Thread"></i></a>
 									<span class="sr-only">Delete Thread</span>
 									<a href="#" onclick="wpsc_get_edit_thread(<?php echo $ticket_id ?>,<?php echo $thread->ID ?>);"><i aria-hidden="true" class="fa fa-edit thread_action_btn wpsc_edit_thread" title="Edit Thread"></i></a>
 								    <span class="sr-only">Edit Thread</span>
