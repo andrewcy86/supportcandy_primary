@@ -468,7 +468,7 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 		});
 		if (!validation) {
 			alert("<?php _e('Required fields can not be empty!','supportcandy')?>");
-			return false;
+			return;
 		}
 		
 		/*

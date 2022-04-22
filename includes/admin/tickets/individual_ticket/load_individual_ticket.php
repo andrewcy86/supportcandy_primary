@@ -224,12 +224,15 @@ if ($days <= 7 && $year == 0 && $months == 0 ) {
 ?>
 <div class="alert alert-success" role="alert">
 <?php 
-} elseif ($days > 14 && $year == 0 && $months == 0 ) {
+//} elseif ($days > 14 && $year == 0 && $months == 0 ) {
+} elseif ($days >= 8 && $year == 0 && $months == 0 ) {
 ?>
-<div class="alert alert-warning" role="alert">
+<!-- <div class="alert alert-warning" role="alert"> -->
+<div class="alert alert-danger" role="alert">
 <?php } elseif ($days >= 0 && $year >= 0 && $months >= 0 ) {
 ?>
-<div class="alert alert-danger" role="alert">
+<!-- <div class="alert alert-danger" role="alert"> -->
+<div class="alert alert-warning" role="alert">
 <?php } else { ?>
 <div class="alert alert-success" role="alert">
 <?php } ?>

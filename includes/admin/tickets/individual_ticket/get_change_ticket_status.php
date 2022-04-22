@@ -110,7 +110,13 @@ ob_start();
                 if ( in_array($status->term_id, array($request_new_request_tag->term_id)) ) {
                     $disabled = 'disabled';
                 } 
-                
+/*
+                if (Patt_Custom_Func::check_initial_review_complete( $ticket_id ) == 1) {
+                if ( in_array($status->term_id, array($request_tabled_tag->term_id)) ) {
+                    $disabled = 'disabled';
+                }
+                }  
+*/
 if($agent_type == 'Manager') {
 
 /*

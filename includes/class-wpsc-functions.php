@@ -603,12 +603,17 @@ $email = 1;
 //sends an email/notification if status changes from New to Initial Review Complete
 $new_request_tag = get_term_by('slug', 'open', 'wpsc_statuses'); //3
 $initial_review_complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'wpsc_statuses'); //4
+$tabled_tag = get_term_by('slug', 'tabled', 'wpsc_statuses'); //1727
 $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses'); //69
 $rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses'); //670
 
 //if($status_id == 4 && $prev_status == 3){
 if($status_id == $initial_review_complete_tag->term_id && $prev_status == $new_request_tag->term_id) {
 Patt_Custom_Func::insert_new_notification('email-prepare-request-shipment',$pattagentid_array,$requestid,$data,$email);
+}
+      
+if($status_id == $tabled_tag->term_id) {
+Patt_Custom_Func::insert_new_notification('email-tabled',$pattagentid_array,$requestid,$data,$email);
 }
 
 //sends an email/notification if status changes to Initial Review Rejected
