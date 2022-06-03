@@ -202,6 +202,12 @@ switch ($setting_action) {
   case 'set_bulk_restore_ticket' : include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/set_bulk_restore_ticket.php';
 		break;
 	
+    case 'patt_transfer_get_bulk_restore_ticket' : include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/patt_transfer_get_bulk_restore_ticket.php';
+	  break;
+			
+  	case 'patt_transfer_set_bulk_restore_ticket' : include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/patt_transfer_set_bulk_restore_ticket.php';
+		break;
+    
 	case 'get_change_agent_fields' : 	include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/get_change_agent_fields.php';
 		break;
 		
@@ -218,6 +224,12 @@ switch ($setting_action) {
 	  break;
 	
 	case 'set_delete_permanently_bulk_ticket'  : include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/set_delete_permanently_bulk_ticket.php';
+		break;
+    
+    case 'patt_transfer_get_delete_permanently_bulk_ticket' : include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/patt_transfer_get_delete_permanently_bulk_ticket.php';
+	  	break;
+	
+	case 'patt_transfer_set_delete_permanently_bulk_ticket'  : include WPSC_ABSPATH . 'includes/admin/tickets/individual_ticket/patt_transfer_set_delete_permanently_bulk_ticket.php';
 		break;
 				
 	case 'rb_upload_file': include WPSC_ABSPATH . 'includes/admin/tickets/upload_file_rb.php';
