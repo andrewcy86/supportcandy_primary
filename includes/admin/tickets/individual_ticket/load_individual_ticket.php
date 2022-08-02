@@ -71,6 +71,31 @@ if((in_array('register_user',$wpsc_allow_rich_text_editor) && !$current_user->ha
 
 // PATT BEGIN
 
+$removeRestoreBtn = false;
+$error_ticket_arr = [];
+  
+// Database query for all tickets that are inactive and are missing a box_list_post_id link
+$get_ticketmeta = $wpdb->get_results("SELECT DISTINCT ticket_id, request_id FROM wpqa_wpsc_ticketmeta 
+              INNER JOIN wpqa_wpsc_ticket
+              ON wpqa_wpsc_ticket.id = wpqa_wpsc_ticketmeta.ticket_id
+              WHERE ticket_id NOT IN 
+              (SELECT ticket_id FROM wpqa_wpsc_ticketmeta WHERE META_KEY = 'box_list_post_id' AND meta_value REGEXP'^[0-9]*$' AND meta_value <> '' )");
+
+              foreach($get_ticketmeta as $item) {
+                $ticketmeta_ticket_id = $item->ticket_id;
+                $request_id = $item->request_id;
+                
+                
+               array_push($error_ticket_arr, $ticketmeta_ticket_id);
+
+              }
+
+ if(in_array($ticket_id, $error_ticket_arr)){
+   $removeRestoreBtn = true;
+ } else {
+   $removeRestoreBtn = false;
+ }
+
 // Restrict access to only the original requester, associated RLO groups or users with elevated privileges
 $get_aa_ship_groups = Patt_Custom_Func::get_requestor_group($customer_name);
 if( in_array($current_user->ID, $get_aa_ship_groups) || $current_user->display_name == $customer_name || (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Manager') || ($agent_permissions['label'] == 'Agent')) ) {
@@ -95,7 +120,7 @@ if( in_array($current_user->ID, $get_aa_ship_groups) || $current_user->display_n
 		<!--PATT END-->
 		<?php endif;?>
 		
-		<?php if ($wpscfunction->has_permission('delete_ticket',$ticket_id) && !$ticket_status):?>
+		<?php if ($wpscfunction->has_permission('delete_ticket',$ticket_id) && !$ticket_status && $removeRestoreBtn == false):?>
 		<!--PATT BEGIN 508-->
 			<button type="button" class="btn btn-sm wpsc_action_btn wpsc_restore_btn" id="wpsc_individual_restore_btn" onclick="get_restore_ticket(<?php echo $ticket_id?>);" style="<?php echo $action_default_btn_css?>"><i class="fa fa-window-restore" aria-hidden="true" title="Restore"></i><span class="sr-only">Restore</span> <?php _e('Restore','supportcandy')?></button>
 		<!--PATT END-->
