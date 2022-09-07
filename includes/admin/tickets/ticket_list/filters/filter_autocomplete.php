@@ -14,6 +14,7 @@ if (!isset($source)) {
 	$field_slug = isset($_REQUEST) && isset($_REQUEST['field']) ? sanitize_text_field($_REQUEST['field']) : '';
 	// PATT Start // Adds optional ability to filter out requesters
 	$no_requesters = isset($_REQUEST) && isset($_REQUEST['no_requesters']) ? sanitize_text_field($_REQUEST['no_requesters']) : false;
+  	$digitization_center = isset($_REQUEST) && isset($_REQUEST['digitization_center']) ? sanitize_text_field($_REQUEST['digitization_center']) : '';
 	// PATT End
 }
 
@@ -182,7 +183,57 @@ switch ($field_slug) {
 			'slug'     => $field_slug,
 		);
 		break;
-		
+    // PATT Start
+    case 'assigned_staff_location':
+    	$users = get_users(array('search'=>'*'.$term.'*','number' => 5));
+    	//$users = get_users( array( 'fields' => array( 'ID' ) ) );
+        foreach($users as $user){
+          // Get the digitization center each user is assigned to
+          $user_digitization_center = get_user_meta($user->ID, 'user_digization_center', true);
+          $user_first_name = get_user_meta($user->ID, 'first_name', true);
+          $user_last_name = get_user_meta($user->ID, 'last_name', true);
+          $user_full_name = $user_first_name . '' . $user_last_name;
+
+          $user_nickname = get_user_meta($user->ID, 'nickname', true);
+
+          if($user_digitization_center == 'East' && $user_digitization_center == $digitization_center){
+            //print_r('Nickname: ' . $user_nickname . '<br><br>');
+            $output[] = array(
+						'label' => $user->display_name,
+						'value' => '',
+						'flag_val' => $user->display_name,
+						'slug'     => $field_slug,
+					);
+          }
+          else if($user_digitization_center == 'West' && $user_digitization_center == $digitization_center){
+            $output[] = array(
+						'label' => $user->display_name,
+						'value' => '',
+						'flag_val' => $user->display_name,
+						'slug'     => $field_slug,
+					);
+          }
+          else if($digitization_center == 'All Staff'){
+            $output[] = array(
+						'label' => $user->display_name,
+						'value' => '',
+						'flag_val' => $user->display_name,
+						'slug'     => $field_slug,
+					);
+          }
+         /* else if($user_digitization_center == 'Not Assigned' && $user_digitization_center == $digitization_center){
+            $output[] = array(
+              'label'    => $user_nickname,
+              'value'    => '',
+              'flag_val' => "user",
+              'slug'     => $field_slug,
+            );
+          }*/
+          //print_r(get_user_meta ($user->ID));
+        }
+    	break;
+   	// PATT End
+    
 	default:
 		
 			$output = apply_filters('wpsc_filter_autocomplete',$output,$term,$field_slug);

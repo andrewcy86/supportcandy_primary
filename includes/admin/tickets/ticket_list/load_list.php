@@ -427,6 +427,9 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
           var dc = jQuery('#searchByDigitizationCenter').val();
           var rd = jQuery('#searchByRecallDecline').val();
           var es = jQuery('#searchByECMSSEMS').val();
+         
+         //aaName = aaName.replace('Remove User','');
+
           
           console.log('Names:');
           console.log(aaName);
@@ -676,6 +679,8 @@ postvarsrequest_id : rows_selected.join(",")
 		select: function (event, ui) {
 			console.log('label: '+ui.item.label+' flag_val: '+ui.item.flag_val); 							
 			html_str = get_display_user_html(ui.item.label, ui.item.flag_val);
+          
+          console.log(html_str);
 // 			jQuery('#assigned_agents').append(html_str);	
 			
 			// when adding new item, event listener functon must be added. 
@@ -749,7 +754,7 @@ function get_display_user_html(user_name, termmeta_user_val) {
 // 						+'<div class="flex-container searched-user" style="padding:5px;font-size:1.0em;">'
 						+'<div class="flex-container searched-user staff-badge" style="">'
 							+user_name
-							+'<span  class="remove-user staff-close" ><i class="fa fa-times" aria-hidden="true" title="Remove User"></i><span class="sr-only">Remove User</span></span>' 
+							+'<span  class="remove-user staff-close" ><i class="fa fa-times" aria-hidden="true" title="Remove User"></i><span class="sr-only"></span></span>' 
 						+'<input type="hidden" name="assigned_agent[]" value="'+termmeta_user_val+'" />'
 						+'</div>'
 					+'</div>';	
