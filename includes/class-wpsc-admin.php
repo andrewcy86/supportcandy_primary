@@ -152,6 +152,12 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 {
 do_action('wpsc_add_admin_page');
 }
+
+// Menu items that only Admins and Managers should see
+if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Manager'))
+{
+do_action('wpsc_add_admin_manager_page');
+}
 // END PATT Menu Items
 
       add_submenu_page(

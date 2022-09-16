@@ -185,8 +185,7 @@ switch ($field_slug) {
 		break;
     // PATT Start
     case 'assigned_staff_location':
-    	$users = get_users(array('search'=>'*'.$term.'*','number' => 5));
-    	//$users = get_users( array( 'fields' => array( 'ID' ) ) );
+    	$users = get_users(array('search'=>'*'.$term.'*','number' => 5, 'exclude' => array($current_user->ID)));
         foreach($users as $user){
           // Get the digitization center each user is assigned to
           $user_digitization_center = get_user_meta($user->ID, 'user_digization_center', true);
