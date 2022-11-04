@@ -564,7 +564,7 @@ if ( ! class_exists( 'WPSC_Functions' ) ) :
     }
         
     function change_status($ticket_id,$status_id){
-      global $wpscfunction,$wpdb;
+      global $wpscfunction,$wpdb,$current_user;
       $prev_status = $wpscfunction->get_ticket_fields($ticket_id,'ticket_status');
       $values=array(
          'ticket_status'=>$status_id
@@ -590,10 +590,17 @@ if ( ! class_exists( 'WPSC_Functions' ) ) :
 $get_customer_name = $wpdb->get_row('SELECT customer_name FROM wpqa_wpsc_ticket WHERE id = "' . $ticket_id . '"');
 $get_user_id = $wpdb->get_row('SELECT ID FROM wpqa_users WHERE display_name = "' . $get_customer_name->customer_name . '"');
 
-$user_id_array = [$get_user_id->ID];
+//$user_id_array = [$current_user->ID];
+//$requestor_group_array = Patt_Custom_Func::get_requestor_group($current_user->ID);
+$user_id_array = [(int)$get_user_id->ID];
+$int_user_id = (int)$get_user_id->ID;
+$requestor_group_array = Patt_Custom_Func::get_requestor_group($int_user_id);
+$user_id_array = array_merge($user_id_array,$requestor_group_array);
+$user_id_array = array_unique( $user_id_array );
 $convert_patt_id = Patt_Custom_Func::translate_user_id($user_id_array,'agent_term_id');
 $patt_agent_id = implode($convert_patt_id);
-$pattagentid_array = [$patt_agent_id];
+$pattagentid_array = $convert_patt_id;
+//$pattagentid_array = [2909,2941];
 $data = [];
 $requestid = Patt_Custom_Func::convert_request_db_id($ticket_id);
 
