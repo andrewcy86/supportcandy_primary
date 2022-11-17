@@ -379,14 +379,7 @@ jQuery('[data-toggle="tooltip"]').tooltip();
       jQuery('#searchGeneric').val(data.sg);
       jQuery('#searchByRequestID').val(data.rid);
       jQuery('#searchByProgramOffice').val(data.po);
-			<?php
-			if (($agent_permissions['label'] == 'Requester') || ($agent_permissions['label'] == 'Requester Pallet'))
-            {
-			?>      
-      jQuery('#searchByDigitizationCenter').val(data.dc);
-			<?php
-            }
-			?>      
+			   
       jQuery('#searchByRecallDecline').val(data.rd);
       jQuery('#searchByECMSSEMS').val(data.es);
 <?php		
