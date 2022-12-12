@@ -100,6 +100,16 @@ if(!$wpsc_ticket_id_type){
 
 $ticket_id = $wpscfunction->create_new_ticket($values);
 
+// Set the due date for box requests
+$due_date_check = $wpscfunction->get_ticket_meta($ticket_id,'due_date');
+if(empty($due_date_check)) {
+  $due_date_obj = date_create($_POST['due_date']);
+  $due_date = date_format($due_date_obj,"m-d-Y ");
+
+  $wpscfunction->add_ticket_meta($ticket_id,'due_date', $due_date);
+
+}
+
 //PATT BEGIN
 $data['ticket_id'] = $ticket_id;
 $data['box_info'] = $args["box_info"];

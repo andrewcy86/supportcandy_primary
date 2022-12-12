@@ -318,6 +318,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 <?php
 }
 ?>
+              	<th class="datatable_header" scope="col">Due Date</th>
                 <th class="datatable_header" scope="col">Request ID</th>
                 <th class="datatable_header" scope="col">Priority</th>
                 <th class="datatable_header" scope="col">Status</th>
@@ -480,6 +481,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
 <?php
 }
 ?>
+       { data: 'due_date' },
        { data: 'request_id_flag', 'class' : 'text_highlight' },
        { data: 'ticket_priority' },
        { data: 'ticket_status' },

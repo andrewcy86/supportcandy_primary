@@ -163,7 +163,35 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
           do_action('pattracking_request_litigation_letter', WPSC_PLUGIN_URL);
           //PATT END
 		?>
-		
+      
+      	<!-- PATT BEGIN -->
+      	<div class="row create_ticket_fields_container date_dropdown" style="display:none;">
+			<div  data-fieldtype="dropdown" data-visibility class="col-sm-4 visible wpsc_required form-group wpsc_form_field field_736">
+				<label class="wpsc_ct_field_label" for="date_dropdown">
+				Is there a date the digital record(s) are needed by to fufill Region/Program Office requirements of the Litigation, Congressional, or FOIA requests? <span style="color:red;">*</span>
+				</label>
+
+				<select id="date" class="form-control wpsc_drop_down" name="date" >
+					
+					<option value=""><?php esc_html_e( 'Please Select', 'supportcandy' ); ?></option>
+					<option value="no" selected><?php esc_html_e( 'No', 'supportcandy' ); ?></option>
+					<option value="yes"><?php esc_html_e( 'Yes', 'supportcandy' ); ?></option>
+					
+				</select>
+			</div>
+		</div>
+
+		<div class="row create_ticket_fields_container due_date_calendar" style="display:none;">
+			<div id="due_date_container"  data-fieldtype="dropdown" data-visibility="<?php echo $this->visibility_conditions?>" class="col-sm-2 visible wpsc_required form-group wpsc_form_field field_736">
+				<div class="form-group wpsc_display_assign_agent date_picker_start">
+					<label for="due_date"><strong>Date</strong></label>
+					<input type='date' id='due_date' class="form-control  wpsc_assign_agents_filter ui-autocomplete-input" aria-label='Start Date' autocomplete="off" placeholder= ''>
+					<ui class="wpsp_filter_display_container"></ui>
+				</div>
+			</div>
+		</div>
+		<!-- PATT END -->
+      
 		<div class="row create_ticket_frm_submit">
 			<button type="submit" id="wpsc_create_ticket_submit" class="btn" style="background-color:<?php echo $wpsc_appearance_create_ticket['wpsc_submit_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_create_ticket['wpsc_submit_button_text_color']?> !important;border-color:<?php echo $wpsc_appearance_create_ticket['wpsc_submit_button_border_color']?> !important;"><?php _e('Submit Ticket','supportcandy')?></button>
 			<button type="button" id="wpsc_create_ticket_reset" onclick="wpsc_get_create_ticket();" class="btn" style="background-color:<?php echo $wpsc_appearance_create_ticket['wpsc_reset_button_bg_color']?> !important;color:<?php echo $wpsc_appearance_create_ticket['wpsc_reset_button_text_color']?> !important;border-color:<?php echo $wpsc_appearance_create_ticket['wpsc_reset_button_border_color']?> !important;"><?php _e('Reset Form','supportcandy')?></button>
