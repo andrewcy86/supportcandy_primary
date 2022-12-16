@@ -89,6 +89,9 @@ $args['super_fund'] = $super_fund;
 
 $superfund_data = $_POST["superfund_data"];
 $args['superfund_data'] = $superfund_data;
+
+$due_date = $_POST["due_date"];
+$args['due_date'] = $due_date;
 //PATT END
 
 // Subject
@@ -282,6 +285,7 @@ $response = array(
   'thank_you_page' => $thankyou_html,
   'ticket_id' => $ticket_id,
   'is_super_fund' => $args['super_fund'], // PATT Addition
+  'due_date' => $args['due_date'],
 );
 
 echo json_encode($response);
