@@ -182,7 +182,7 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 		</div>
 
 		<div class="row create_ticket_fields_container due_date_calendar" style="display:none;">
-			<div id="due_date_container"  data-fieldtype="dropdown" data-visibility="<?php echo $this->visibility_conditions?>" class="col-sm-2 visible wpsc_required form-group wpsc_form_field field_736">
+			<div id="due_date_container"  data-fieldtype="dropdown" data-visibility class="col-sm-2 visible wpsc_required form-group wpsc_form_field field_736">
 				<div class="form-group wpsc_display_assign_agent date_picker_start">
 					<label for="due_date"><strong>Date</strong></label>
 					<input type='date' id='due_date' class="form-control  wpsc_assign_agents_filter ui-autocomplete-input" aria-label='Start Date' autocomplete="off" placeholder= ''>
@@ -598,6 +598,8 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 			} else if( super_fund == 'no' ) {
 				super_fund_bool = false;
 			}
+          
+          	let due_date = jQuery('#due_date').val();
 			
 			var dataform = new FormData(jQuery('#wpsc_frm_create_ticket')[0]);
 			
@@ -625,6 +627,8 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 			
             
             dataform.append('super_fund', super_fund_bool);
+          
+          	dataform.append('due_date', due_date);
             
             //dataform.append('boxinfo', SEMS_data);
             
@@ -708,7 +712,9 @@ echo '<div class="wpsc_loading_icon_submit_ticket"><img src="'.WPSC_PLUGIN_URL.'
 			?>
 			//jQuery('#create_ticket_body').html(wpsc_admin.loading_html);
 			//wpsc_doScrolling('.wpsc_tl_action_bar',1000);
+          	console.log('dataform');
 			console.log({dataform_create:dataform});
+          	console.log(JSON.stringify(dataform));
 			
 		  jQuery.ajax({
 		    url: wpsc_admin.ajax_url,
