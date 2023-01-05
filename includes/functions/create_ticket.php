@@ -102,7 +102,7 @@ $ticket_id = $wpscfunction->create_new_ticket($values);
 
 // Set the due date for box requests
 $due_date_check = $wpscfunction->get_ticket_meta($ticket_id,'due_date');
-if(empty($due_date_check)) {
+if(empty($due_date_check) && $args["due_date"] != '' && $args["due_date"] != null) {
   $due_date_obj = date_create($args["due_date"]);
   $due_date = date_format($due_date_obj,"m-d-Y ");
 
