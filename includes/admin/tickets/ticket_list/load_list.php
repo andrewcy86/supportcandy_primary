@@ -605,7 +605,7 @@ jQuery('#wpsc_individual_refresh_btn').on('click', function(e){
     dataTable.column(0).checkboxes.deselectAll();
 	dataTable.state.clear();
 	dataTable.destroy();
-	location.reload();
+	window.location.reload();
 });
 
 //delete button
