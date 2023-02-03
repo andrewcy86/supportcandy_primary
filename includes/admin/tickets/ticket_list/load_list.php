@@ -468,7 +468,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
         	var response = settings.json;
 	        console.log(response);
      },
-      'order': [[1, 'asc']],
+      'order': [[3, 'asc']],
 <?php
 }
 ?>
