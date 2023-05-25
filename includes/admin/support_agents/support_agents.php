@@ -8,15 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="bootstrap-iso">
   
   <h3>
-    <?php _e('Support Agents','supportcandy');?>
+    <?php _e('Support Users','supportcandy');?>
     <a href="https://supportcandy.net/support/" class="btn btn-info wpsc-help-site-link" style="float:right;margin-right:1% !important;margin-top:-9px !important;"><?php _e('Need Help? Click Here!','supportcandy');?></a>
   </h3>
   
   <div class="wpsc_padding_space"></div>
   <div class="row" style="margin-bottom:20px;">
     <ul class="nav nav-pills wpsc_setting_pills">
-      <li id="wpsc_support_agents" role="presentation" class="active"><a href="javascript:wpsc_get_support_agents();"><?php _e('Support Agents','supportcandy');?></a></li>
-      <li id="wpsc_settings_agent_roles" role="presentation"><a href="javascript:wpsc_get_agent_roles();"><?php _e('Agent Roles','supportcandy');?></a></li>
+      <li id="wpsc_support_agents" role="presentation" class="active"><a href="javascript:wpsc_get_support_agents();"><?php _e('Support Users','supportcandy');?></a></li>
+      <li id="wpsc_settings_agent_roles" role="presentation"><a href="javascript:wpsc_get_agent_roles();"><?php _e('User Roles','supportcandy');?></a></li>
       <?php do_action('wpsc_after_support_agent_pills');?>
     </ul>
   </div>

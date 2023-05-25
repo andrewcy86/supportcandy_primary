@@ -24,7 +24,7 @@ $agent_role = get_option('wpsc_agent_role');
 
 ?>
 <h4>
-	<?php _e('Support Agents','supportcandy');?>
+	<?php _e('Support Users','supportcandy');?>
 	<button style="margin-left:10px;" class="btn btn-success btn-sm" id="wpsc_add_new_support_agent_btn" onclick="wpsc_get_add_support_agent();"><?php _e('+Add New','supportcandy');?></button>
 </h4>
 
@@ -39,7 +39,7 @@ do_action('wpsc_pending_support_agents');
 <table class="table table-striped table-hover">
   <tr>
     <!--PATT BEGIN-->
-    <th scope="col"><?php _e('Agent Name','supportcandy')?></th>
+    <th scope="col"><?php _e('PATT User Name','supportcandy')?></th>
     <th scope="col"><?php _e('Role','supportcandy')?></th>
     <th scope="col"><?php _e('Actions','supportcandy')?></th>
     <!--PATT END-->
