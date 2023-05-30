@@ -22,6 +22,14 @@ $agents = get_terms([
 
 $agent_role = get_option('wpsc_agent_role');
 
+
+$get_agents = $wpdb->get_results("
+      SELECT *
+      FROM " . $wpdb->prefix . "termmeta
+      WHERE
+      meta_key = 'label' ORDER BY meta_value ASC;
+      ");
+
 ?>
 <h4>
 	<?php _e('Support Users','supportcandy');?>
@@ -44,9 +52,10 @@ do_action('wpsc_pending_support_agents');
     <th scope="col"><?php _e('Actions','supportcandy')?></th>
     <!--PATT END-->
   </tr>
-  <?php foreach ( $agents as $agent ) :
+  <?php foreach ( $get_agents as $agent ) :
     $agent_name = get_term_meta( $agent->term_id, 'label', true);
     $role_id = get_term_meta( $agent->term_id, 'role', true);
+      
     ?>
     <tr>
       <td><?php echo htmlentities($agent_name)?></td>
