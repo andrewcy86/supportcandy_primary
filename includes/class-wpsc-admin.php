@@ -162,8 +162,8 @@ do_action('wpsc_add_admin_manager_page');
 
       add_submenu_page(
         'wpsc-tickets',
-        __( 'Support Agents', 'supportcandy' ),
-        __( 'Support Agents', 'supportcandy' ),
+        __( 'Support Users', 'supportcandy' ),
+        __( 'Support Users', 'supportcandy' ),
         'edit_published_posts',
         'wpsc-support-agents',
         array($this,'support_agents')
