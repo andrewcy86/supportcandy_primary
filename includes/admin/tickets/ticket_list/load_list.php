@@ -445,6 +445,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
        }
     },
     'lengthMenu': [[10, 25, 50, 100], [10, 25, 50, 100]],
+    'pageLength': 4,   
     'fixedColumns': true,
 <?php		
 if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['label'] == 'Agent') || ($agent_permissions['label'] == 'Manager'))
@@ -468,7 +469,7 @@ if (($agent_permissions['label'] == 'Administrator') || ($agent_permissions['lab
         	var response = settings.json;
 	        console.log(response);
      },
-      'order': [[3, 'asc']],
+      'order': [[3, 'desc']],
 <?php
 }
 ?>
