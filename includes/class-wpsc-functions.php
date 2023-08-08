@@ -624,8 +624,13 @@ Patt_Custom_Func::insert_new_notification('email-tabled',$pattagentid_array,$req
 }
 
 //sends an email/notification if status changes to Initial Review Rejected
+$rejected_comment_check = $wpscfunction->get_ticket_meta($ticket_id,'rejected_comment'); $rejected_comment = implode(" ",$rejected_comment_check); echo $rejected_comment;
+if($rejected_comment_check == false || $rejected_comment_check == null){
+  $rejected_comment_check = '';
+}
+
 if($status_id == $rejected_tag->term_id) {
-Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$pattagentid_array,$requestid,$data,$email);
+Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$pattagentid_array,$requestid,$data,$email, $rejected_comment_check);
 }
 
 //sends an email/notification if status changes to Cancelled
