@@ -613,9 +613,14 @@ $initial_review_complete_tag = get_term_by('slug', 'awaiting-customer-reply', 'w
 $tabled_tag = get_term_by('slug', 'tabled', 'wpsc_statuses'); //1727
 $cancelled_tag = get_term_by('slug', 'destroyed', 'wpsc_statuses'); //69
 $rejected_tag = get_term_by('slug', 'initial-review-rejected', 'wpsc_statuses'); //670
+$in_process_tag = get_term_by('slug', 'in-process', 'wpsc_statuses'); //997
+$shipped_tag = get_term_by('slug', 'awaiting-agent-reply', 'wpsc_statuses'); //5
+$received_tag = get_term_by('slug', 'received', 'wpsc_statuses'); //63
+$arms_tag = get_term_by('slug', 'ecms', 'wpsc_statuses'); //998
+$completed_dispositioned_tag = get_term_by('slug', 'completed-dispositioned', 'wpsc_statuses'); //1003
 
 //if($status_id == 4 && $prev_status == 3){
-if($status_id == $initial_review_complete_tag->term_id && $prev_status == $new_request_tag->term_id) {
+if(($status_id == $initial_review_complete_tag->term_id && $prev_status == $new_request_tag->term_id) || ($status_id == $initial_review_complete_tag->term_id && $prev_status == $tabled_tag->term_id)) {
 Patt_Custom_Func::insert_new_notification('email-prepare-request-shipment',$pattagentid_array,$requestid,$data,$email);
 }
       
@@ -630,7 +635,7 @@ if($rejected_comment_check == false || $rejected_comment_check == null){
 }
 
 if($status_id == $rejected_tag->term_id) {
-Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$pattagentid_array,$requestid,$data,$email, $rejected_comment_check);
+Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$pattagentid_array,$requestid,$data,$email);
 }
 
 //sends an email/notification if status changes to Cancelled
@@ -638,6 +643,34 @@ Patt_Custom_Func::insert_new_notification('email-initial-review-rejected',$patta
 if($status_id == $cancelled_tag->term_id && Patt_Custom_Func::ticket_active($ticket_id) == 1) {
 Patt_Custom_Func::insert_new_notification('email-cancelled',$pattagentid_array,$requestid,$data,$email);
 }
+      
+      
+//sends an email/notification if status changes to Shipped
+/*if($status_id == $shipped_tag->term_id && $prev_status == $initial_review_complete_tag->term_id) {
+Patt_Custom_Func::insert_new_notification('email-request-shipped',$pattagentid_array,$requestid,$data,$email);
+}
+      
+//sends an email/notification if status changes to Recieved
+if($status_id == $received_tag->term_id && $prev_status == $shipped_tag->term_id ) {
+Patt_Custom_Func::insert_new_notification('email-request-received',$pattagentid_array,$requestid,$data,$email);
+}
+    
+//sends an email/notification if status changes to In Process
+if($status_id == $in_process_tag->term_id && $prev_status == $received_tag->term_id ) {
+Patt_Custom_Func::insert_new_notification('email-in-process',$pattagentid_array,$requestid,$data,$email);
+}
+      
+//sends an email/notification if status changes to ARMS
+if($status_id == $arms_tag->term_id && $prev_status == $in_process_tag->term_id) {
+Patt_Custom_Func::insert_new_notification('email-patt-to-arms',$pattagentid_array,$requestid,$data,$email);
+}
+      
+//sends an email/notification if status changes to Completed Dispositioned
+if($status_id == $completed_dispositioned_tag->term_id && $prev_status == $arms_tag->term_id ) {
+Patt_Custom_Func::insert_new_notification('email-completed-dispositioned',$pattagentid_array,$requestid,$data,$email);
+}*/
+
+
 
 // PATT END
 		    
