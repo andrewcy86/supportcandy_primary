@@ -12,6 +12,8 @@ $default_status = get_option('wpsc_default_ticket_status');
 $ticket_status = isset($args['ticket_status']) ? intval($args['ticket_status']) : $default_status;
 $ticket_status = apply_filters('wpsc_create_ticket_status', $ticket_status, $args);
 
+
+
 // Customer name
 $customer_name = isset($args['customer_name']) ? $args['customer_name'] : '';
 
@@ -109,6 +111,15 @@ if(empty($due_date_check) && $args["due_date"] != '' && $args["due_date"] != nul
   $wpscfunction->add_ticket_meta($ticket_id,'due_date', $due_date);
 
 }
+
+// Set the manually selected ndc for box requests
+// $ndc_override_check = $wpscfunction->get_ticket_meta($ticket_id,'ndc-selector');
+// if(empty($ndc_override_check) && $args["ndc-selector"] != '' && $args["ndc-selector"] != null) {
+//   $ndc_override = $args["ndc-selector"];
+
+//   $wpscfunction->add_ticket_meta($ticket_id,'ndc-selector', $ndc_override);
+
+// }
 
 //PATT BEGIN
 $data['ticket_id'] = $ticket_id;

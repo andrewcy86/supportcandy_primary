@@ -17,6 +17,7 @@ $wpsc_on_and_off_auto_refresh = get_option('wpsc_on_and_off_auto_refresh');
 $agent_permissions = $wpscfunction->get_current_agent_permissions();
 //include WPSC_ABSPATH.'includes/admin/tickets/ticket_list/filters/get_label_count.php';
 
+
 include WPPATT_ABSPATH.'includes/admin/pages/scripts/request_cleanup.php';
 
 ?>
@@ -95,6 +96,13 @@ color: rgb(255, 255, 255) !important;
 }
 
 </style>
+
+<script>
+ if(location.href.includes('#1')) {
+    wpsc_get_create_ticket();
+ }
+</script>
+
 <div class="row wpsc_tl_action_bar" style="background-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;">
   <div class="col-sm-12">
   	        <button type="button" id="wpsc_load_new_create_ticket_btn" onclick="wpsc_get_create_ticket();" class="btn btn-sm wpsc_create_ticket_btn" style="<?php echo $create_ticket_btn_css?>"><i class="fa fa-plus" aria-hidden="true" title="New Request"></i><span class="sr-only">New Request</span> <?php _e('New Ticket','supportcandy')?></button>

@@ -92,6 +92,9 @@ $args['superfund_data'] = $superfund_data;
 
 $due_date = $_POST["due_date"];
 $args['due_date'] = $due_date;
+
+$ndc_override = $_POST["ndc-selector"];
+$args['ndc-selector'] = $ndc_override;
 //PATT END
 
 // Subject
@@ -256,7 +259,18 @@ set_ticket_id_attachment_id();
 	
 //Immediately Assign Digitization Center
 
-$dc = Patt_Custom_Func::get_default_digitization_center($ticket_id);
+// $manual_dc = 2;
+$ndc_override_term_id = 0;
+
+if($ndc_override == 'e'){
+    $ndc_override_term_id = 62;
+}
+
+if($ndc_override == 'w'){
+    $ndc_override_term_id = 2;
+}
+
+$dc = Patt_Custom_Func::get_default_digitization_center_override($ticket_id, $ndc_override_term_id);
 
 $get_dc_unassigned_boxes = $wpdb->get_results("SELECT a.storage_location_id
 FROM " . $wpdb->prefix . "wpsc_epa_boxinfo a
@@ -286,6 +300,7 @@ $response = array(
   'ticket_id' => $ticket_id,
   'is_super_fund' => $args['super_fund'], // PATT Addition
   'due_date' => $args['due_date'],
+  'ndc-selector' => $args['ndc-selector'],
 );
 
 echo json_encode($response);
