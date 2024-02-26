@@ -98,8 +98,9 @@ color: rgb(255, 255, 255) !important;
 </style>
 
 <script>
-
+ /* Multi Line Comment
  // Redirection to create ticket page
+ */
  if(location.href.includes('#1')) {
     wpsc_get_create_ticket();
  }

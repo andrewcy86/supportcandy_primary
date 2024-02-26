@@ -49,6 +49,7 @@ $wpsc_desc_status = get_term_meta( $description->term_id, 'wpsc_tf_status', true
   <div class="col-sm-12">
     <button type="button" id="wpsc_load_new_create_ticket_btn" onclick="wpsc_get_create_ticket();" class="btn btn-sm wpsc_create_ticket_btn" style="<?php echo $create_ticket_btn_css?>"><!--PATT BEGIN --><i class="fa fa-plus" aria-hidden="true" title="New Request"></i><span class="sr-only">New Request</span><!--PATT END --> <?php _e('New Ticket','supportcandy')?></button>
     <?php if($current_user->ID):?>
+            <!-- HTML Comment -->
 			<!--<button type="button" id="wpsc_load_ticket_list_btn" onclick="wpsc_get_ticket_list();" class="btn btn-sm wpsc_action_btn" style="<?php echo $action_default_btn_css?>"><!--PATT BEGIN --> <!--<i class="fa fa-list-ul" aria-hidden="true" title="Request List"></i><span class="sr-only">Request List</span><!--PATT END --> <!-- <?php _e('Ticket List','supportcandy')?></button>-->
             <button type="button" id="wpsc_load_ticket_list_btn" onclick="location.href='admin.php?page=wpsc-tickets';" class="btn btn-sm wpsc_action_btn" style="<?php echo $action_default_btn_css?>"><!--PATT BEGIN --><i class="fa fa-list-ul" aria-hidden="true" title="Request List"></i><span class="sr-only">Request List</span><!--PATT END --> <?php _e('Ticket List','supportcandy')?></button>
 		<?php endif;?>
