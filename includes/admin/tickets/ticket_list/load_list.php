@@ -98,9 +98,12 @@ color: rgb(255, 255, 255) !important;
 </style>
 
 <script>
+
+ // Redirection to create ticket page
  if(location.href.includes('#1')) {
     wpsc_get_create_ticket();
  }
+
 </script>
 
 <div class="row wpsc_tl_action_bar" style="background-color:<?php echo $general_appearance['wpsc_action_bar_color']?> !important;">
